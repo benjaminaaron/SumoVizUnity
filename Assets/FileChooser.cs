@@ -13,7 +13,7 @@ public class FileChooser : MonoBehaviour {
 
 		string assetsPath = Application.dataPath;
 
-		flj.loadJSONFile (assetsPath + "/Data/vadere_output/New_scenario.scenario");
+		flj.loadScenarioFile (assetsPath + "/Data/vadere_output/New_scenario.scenario");
 
 
 		//fl.loadXMLFile(assetsPath + "/Data/out_flughafen-modell-gruppen.xml");

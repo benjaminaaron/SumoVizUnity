@@ -5,16 +5,16 @@ using SimpleJSON;
 
 public class FileLoaderJSON {
 
-	public void loadJSONFile(string filename) {
+	public void loadScenarioFile(string filename) {
 
 		// set scence
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
 		gl.setTheme (new NatureThemingMode ());
 
 	
-		string jsonStr = System.IO.File.ReadAllText (filename);
+		string data = System.IO.File.ReadAllText (filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
 
-		JSONNode rootnode = JSON.Parse(jsonStr);
+		JSONNode rootnode = JSON.Parse(data);
 		JSONArray obstacles = rootnode["vadere"]["topography"]["obstacles"].AsArray;
 
 
@@ -25,7 +25,35 @@ public class FileLoaderJSON {
 			ObstacleExtrudeGeometry.create("wall", parsePoints(obstacle), height);
 		}
 
+		//TODO create other objects, distinguish them by their ID: agree with Vadere group on IDs for object types
+
+
+		loadTrajectoriesFile (filename.Split('.') [0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
 	
+	}
+
+	private void loadTrajectoriesFile(string filename){
+		string data = System.IO.File.ReadAllText (filename); //TODO check if it exists
+
+		string[] lines = data.Split("\n"[0]);
+
+		for (int i = 1; i < lines.Length; i++) { // skip first line, which is "step time id x y targetId sourceId"
+			string line = lines[i];
+			string[] parts = line.Split(' ');
+			if(line.Length > 0){
+				int step, id;
+				decimal time;
+				float x, y;
+				int.TryParse(parts[0], out step);
+				decimal.TryParse(parts[1], out time);
+				int.TryParse(parts[2], out id);
+				float.TryParse(parts[3], out x);
+				float.TryParse(parts[4], out y);
+				//Debug.Log(step + " / " + time + " / " + id + " / " + x + " / " + y);
+
+				//TODO create the pedestrian object as in FileLoadXML.cs or FileLoader.cs
+			}
+		}
 	}
 
 
