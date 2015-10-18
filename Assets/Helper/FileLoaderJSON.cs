@@ -33,9 +33,8 @@ public class FileLoaderJSON {
 	}
 
 	private void loadTrajectoriesFile(string filename){
-		var file = filename;
-
-		while (!System.IO.File.Exists(file)) {
+		
+		/*while (!System.IO.File.Exists(file)) {
 			Debug.LogError (filename + "was not found. Choose your trajectories file!");
 			OpenFileDialog myOpenFileDialog = new OpenFileDialog();		
 			myOpenFileDialog.Filter = "Trajectories Files|*.trajectories";
@@ -43,18 +42,13 @@ public class FileLoaderJSON {
 				file = myOpenFileDialog.FileName;
 			else 
 				return;
-		}
-
-
-
-		//Das kann man benutzen wenn die Lösung mit dem Dialog nicht funktioniert
-		/*if (!System.IO.File.Exists (filename)) {
+		}*/
+		
+		if (!System.IO.File.Exists (filename)) {
 			Debug.LogError (filename + "was not found!");
 			return;
 		} else {
-			string data = System.IO.File.ReadAllText(filename); */
-
-			string data = System.IO.File.ReadAllText(file);
+			string data = System.IO.File.ReadAllText(filename); 
 
 			string[] lines = data.Split ("\n" [0]);
 
@@ -75,7 +69,7 @@ public class FileLoaderJSON {
 					//TODO create the pedestrian object as in FileLoadXML.cs or FileLoader.cs
 				}
 			}
-		//}
+		}
 	}
 
 
