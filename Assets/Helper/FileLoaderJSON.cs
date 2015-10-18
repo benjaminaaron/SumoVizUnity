@@ -13,7 +13,7 @@ public class FileLoaderJSON {
 
 	
 		string data = System.IO.File.ReadAllText (filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
-
+		
 		JSONNode rootnode = JSON.Parse(data);
 		JSONArray obstacles = rootnode["vadere"]["topography"]["obstacles"].AsArray;
 
@@ -33,27 +33,49 @@ public class FileLoaderJSON {
 	}
 
 	private void loadTrajectoriesFile(string filename){
-		string data = System.IO.File.ReadAllText (filename); //TODO check if it exists
+		var file = filename;
 
-		string[] lines = data.Split("\n"[0]);
-
-		for (int i = 1; i < lines.Length; i++) { // skip first line, which is "step time id x y targetId sourceId"
-			string line = lines[i];
-			string[] parts = line.Split(' ');
-			if(line.Length > 0){
-				int step, id;
-				decimal time;
-				float x, y;
-				int.TryParse(parts[0], out step);
-				decimal.TryParse(parts[1], out time);
-				int.TryParse(parts[2], out id);
-				float.TryParse(parts[3], out x);
-				float.TryParse(parts[4], out y);
-				//Debug.Log(step + " / " + time + " / " + id + " / " + x + " / " + y);
-
-				//TODO create the pedestrian object as in FileLoadXML.cs or FileLoader.cs
-			}
+		while (!System.IO.File.Exists(file)) {
+			Debug.LogError (filename + "was not found. Choose your trajectories file!");
+			OpenFileDialog myOpenFileDialog = new OpenFileDialog();		
+			myOpenFileDialog.Filter = "Trajectories Files|*.trajectories";
+			if (myOpenFileDialog.ShowDialog() == DialogResult.OK) 
+				file = myOpenFileDialog.FileName;
+			else 
+				return;
 		}
+
+
+
+		//Das kann man benutzen wenn die Lösung mit dem Dialog nicht funktioniert
+		/*if (!System.IO.File.Exists (filename)) {
+			Debug.LogError (filename + "was not found!");
+			return;
+		} else {
+			string data = System.IO.File.ReadAllText(filename); */
+
+			string data = System.IO.File.ReadAllText(file);
+
+			string[] lines = data.Split ("\n" [0]);
+
+			for (int i = 1; i < lines.Length; i++) { // skip first line, which is "step time id x y targetId sourceId"
+				string line = lines [i];
+				string[] parts = line.Split (' ');
+				if (line.Length > 0) {
+					int step, id;
+					decimal time;
+					float x, y;
+					int.TryParse (parts [0], out step);
+					decimal.TryParse (parts [1], out time);
+					int.TryParse (parts [2], out id);
+					float.TryParse (parts [3], out x);
+					float.TryParse (parts [4], out y);
+					//Debug.Log(step + " / " + time + " / " + id + " / " + x + " / " + y);
+
+					//TODO create the pedestrian object as in FileLoadXML.cs or FileLoader.cs
+				}
+			}
+		//}
 	}
 
 
