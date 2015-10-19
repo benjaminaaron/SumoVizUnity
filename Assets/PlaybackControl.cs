@@ -11,7 +11,7 @@ public class PlaybackControl : MonoBehaviour {
 	public bool playing = true;
 	public decimal current_time;
 	public decimal slider_value;
-	public decimal total_time;
+	public decimal total_time = 0;
 	public int tiles = 0;
 	public bool drawLine;
 	public TileColoringMode tileColoringMode = TileColoringMode.TileColoringNone;
@@ -37,8 +37,8 @@ public class PlaybackControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		current_time = 0;
-		total_time = 0;
-		playing = false;
+		//total_time = 0; // this took me 2h+ to find ^^ apparently this Start() is called AFTER addPedestrianPosition in PlaybackControl has set total_time, but it wasn't like that in danielbuechele's version
+		playing = true;
 		threshold = 2.0f;
 	}
 
