@@ -27,7 +27,7 @@ public class FileChooser : MonoBehaviour {
 						fl.loadXMLFile(fb.outputFile.FullName);
 						break;
 					case ".scenario":
-						flj.loadScenarioFile (fb.outputFile.FullName);
+						flj.loadScenarioFile (fb.outputFile.DirectoryName, fb.outputFile.Name);
 						break;
 					default:
 						Debug.LogError("can't open this file");

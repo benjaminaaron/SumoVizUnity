@@ -5,7 +5,7 @@ using SimpleJSON;
 
 public class FileLoaderJSON {
 
-	public void loadScenarioFile(string filename) {
+	public void loadScenarioFile(string parentdir, string filename) {
 
 		// set scence
 
@@ -15,7 +15,7 @@ public class FileLoaderJSON {
 
 		//load topography objects from .scenario file
 
-		string data = System.IO.File.ReadAllText (filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
+		string data = System.IO.File.ReadAllText (parentdir + "/" + filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
 		JSONNode topography = JSON.Parse (data) ["vadere"] ["topography"];
 
 		JSONArray obstacles = topography["obstacles"].AsArray;
@@ -39,7 +39,7 @@ public class FileLoaderJSON {
 
 		//TODO distinguish objects by their ID: agree with Vadere group on IDs for object types
 
-		loadTrajectoriesFile (filename.Split('.') [0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
+		loadTrajectoriesFile (parentdir + "/" + filename.Split ('.')[0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
 	}
 
 	private void loadTrajectoriesFile(string filename){
