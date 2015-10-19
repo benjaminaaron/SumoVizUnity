@@ -8,69 +8,79 @@ public class FileLoaderJSON {
 	public void loadScenarioFile(string filename) {
 
 		// set scence
+
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
 		gl.setTheme (new NatureThemingMode ());
 
-	
+
+		//load topography objects from .scenario file
+
 		string data = System.IO.File.ReadAllText (filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
-		
-		JSONNode rootnode = JSON.Parse(data);
-		JSONArray obstacles = rootnode["vadere"]["topography"]["obstacles"].AsArray;
+		JSONNode topography = JSON.Parse (data) ["vadere"] ["topography"];
 
-
+		JSONArray obstacles = topography["obstacles"].AsArray;
 		for (int i = 0; i < obstacles.Count; i++) {
-			JSONNode obstacle = obstacles[i];
-			Debug.Log (obstacle);
+			JSONNode shape = obstacles[i]["shape"];
 			float height = 4;
-			ObstacleExtrudeGeometry.create("wall", parsePoints(obstacle), height);
+			ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 		}
 
-		//TODO create other objects, distinguish them by their ID: agree with Vadere group on IDs for object types
+		JSONArray sources = topography["sources"].AsArray;
+		for (int i = 0; i < sources.Count; i++) {
+			JSONNode shape = sources[i]["shape"];
+			AreaGeometry.create("source", parsePoints(shape));
+		}
 
+		JSONArray targets = topography["targets"].AsArray;
+		for (int i = 0; i < targets.Count; i++) {
+			JSONNode shape = targets[i]["shape"];
+			AreaGeometry.create("target", parsePoints(shape));
+		}
+
+		//TODO distinguish objects by their ID: agree with Vadere group on IDs for object types
 
 		loadTrajectoriesFile (filename.Split('.') [0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
-	
 	}
 
 	private void loadTrajectoriesFile(string filename){
 
 		if (!System.IO.File.Exists (filename)) {
-			Debug.LogError (filename + "was not found!");
-			return;
+			Debug.LogError ("file " + filename + " was not found!"); //TODO open FileOpenDialog to search for it
 		} else {
-			System.IO.StreamReader sr = new System.IO.StreamReader(filename);
+			PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
-			string line;
+			System.IO.StreamReader sr = new System.IO.StreamReader(filename);
+			string line = sr.ReadLine(); // skip the first line containing column labels
 
 			while ((line = sr.ReadLine()) != null) {
-				if (line.Contains("step")) continue;
-
 				string[] parts = line.Split (' ');
 				if (line.Length > 0) {
-					int step, id;
+					int id;
 					decimal time;
 					float x, y;
-					int.TryParse (parts [0], out step);
+					//int.TryParse (parts [0], out step);
 					decimal.TryParse (parts [1], out time);
 					int.TryParse (parts [2], out id);
 					float.TryParse (parts [3], out x);
 					float.TryParse (parts [4], out y);
-					//Debug.Log(step + " / " + time + " / " + id + " / " + x + " / " + y);
-					
-					//TODO create the pedestrian object as in FileLoadXML.cs or FileLoader.cs
+					//Debug.Log(time + " / " + id + " / " + x + " / " + y);
+
+					pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
 				}
 			}
+
+			pl.createPedestrians ();
 		}
 	}
 
 
-	static List<Vector2> parsePoints(JSONNode obstacle) {
+	static List<Vector2> parsePoints(JSONNode shape) {
 		List<Vector2> list = new List<Vector2>();
 
-		var x = obstacle["shape"]["x"].AsFloat;
-		var y = obstacle["shape"]["y"].AsFloat;
-		var width = obstacle["shape"]["width"].AsFloat;
-		var height = obstacle["shape"]["height"].AsFloat;
+		var x = shape["x"].AsFloat;
+		var y = shape["y"].AsFloat;
+		var width = shape["width"].AsFloat;
+		var height = shape["height"].AsFloat;
 
 		list.Add(new Vector2(x, y));
 		list.Add(new Vector2(x + width, y));
@@ -79,5 +89,5 @@ public class FileLoaderJSON {
 
 		return list;
 	}
-
+	
 }
