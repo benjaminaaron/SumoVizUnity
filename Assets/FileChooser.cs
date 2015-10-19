@@ -30,7 +30,7 @@ public class FileChooser : MonoBehaviour {
 						flj.loadScenarioFile (fb.outputFile.FullName);
 						break;
 					default:
-						Debug.Log("can't open this file");
+						Debug.LogError("can't open this file");
 						break;
 				}
 

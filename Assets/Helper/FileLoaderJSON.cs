@@ -77,15 +77,36 @@ public class FileLoaderJSON {
 	static List<Vector2> parsePoints(JSONNode shape) {
 		List<Vector2> list = new List<Vector2>();
 
-		var x = shape["x"].AsFloat;
-		var y = shape["y"].AsFloat;
-		var width = shape["width"].AsFloat;
-		var height = shape["height"].AsFloat;
+		float x, y;
 
-		list.Add(new Vector2(x, y));
-		list.Add(new Vector2(x + width, y));
-		list.Add(new Vector2(x + width, y + height));
-		list.Add(new Vector2(x, y + height));
+		switch (shape ["type"]) {
+
+			case "RECTANGLE":
+				x = shape["x"].AsFloat;
+				y = shape["y"].AsFloat;
+				var width = shape["width"].AsFloat;
+				var height = shape["height"].AsFloat;
+
+				list.Add(new Vector2(x, y));
+				list.Add(new Vector2(x + width, y));
+				list.Add(new Vector2(x + width, y + height));
+				list.Add(new Vector2(x, y + height));
+				break;
+
+			case "POLYGON":
+				JSONArray points = shape["points"].AsArray;
+				for (int i = 0; i < points.Count; i++) {
+					JSONNode point = points[i];
+					x = point["x"].AsFloat;
+					y = point["y"].AsFloat;
+					list.Add(new Vector2(x, y));
+				}
+				break;
+
+			default:
+				Debug.LogError("I can't handle the type " + shape ["type"] + " yet");
+				break;
+		}
 
 		return list;
 	}
