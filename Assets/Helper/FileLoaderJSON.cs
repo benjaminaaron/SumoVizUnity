@@ -8,41 +8,38 @@ public class FileLoaderJSON {
 	public void loadScenarioFile(string parentdir, string filename) {
 
 		// set scence
-
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
 		gl.setTheme (new NatureThemingMode ());
 
-
 		//load config file for IDmappings 2D -> 3D //TODO check if exists, if not use default behaviour
-		
 		var IDmappings = getIDmappings (Application.dataPath + "/data/IDmappings.config");
 
 		//load topography objects from .scenario file
-
 		string data = System.IO.File.ReadAllText (parentdir + "/" + filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
 		JSONNode topography = JSON.Parse (data) ["vadere"] ["topography"];
 
+		List<Vector2> roofpoints = new List<Vector2>();
+
 		JSONArray obstacles = topography["obstacles"].AsArray;
+
 		for (int i = 0; i < obstacles.Count; i++) {
 			string obstacleID = obstacles[i]["id"];
 			JSONNode shape = obstacles[i]["shape"];
-			//Debug.Log(shape);
 
-			float height = 0.5f;
-			float x, y;
+			float height = 2; // just a hack until we have all DesiredobjectExtrudeGeometry objects that have height assigned internally
 
 			if(IDmappings.ContainsKey (obstacleID)){
 				switch (IDmappings[obstacleID]) {
 					case "bench":
-						height = 1;
+						height = 0.75f;
 						break;
 					case "table":
 						height = 1.5f;
 						break;
 					case "roofpoints":
-
-						//TODO 
-
+						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
+						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
+						roofpoints.Add(new Vector2(x, y));
 						break;		
 					default:
 						break;
@@ -50,6 +47,11 @@ public class FileLoaderJSON {
 			}
 
 			ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
+		}
+
+		if (roofpoints.Count > 0) {
+			//TODO use roofpoints here to create a roof ObstacleExtrudeGeometry.create("wall", roofpoints, 6);
+			// what if more than one roof? exclude that case or make clear through ID-namespacing?
 		}
 
 		JSONArray sources = topography["sources"].AsArray;
@@ -67,6 +69,7 @@ public class FileLoaderJSON {
 
 		loadTrajectoriesFile (parentdir + "/" + filename.Split ('.')[0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
 	}
+
 
 	private void loadTrajectoriesFile(string filename){
 
