@@ -13,6 +13,10 @@ public class FileLoaderJSON {
 		gl.setTheme (new NatureThemingMode ());
 
 
+		//load config file for IDmappings 2D -> 3D //TODO check if exists, if not use default behaviour
+		
+		var IDmappings = getIDmappings (Application.dataPath + "/data/IDmappings.config");
+
 		//load topography objects from .scenario file
 
 		string data = System.IO.File.ReadAllText (parentdir + "/" + filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
@@ -20,13 +24,37 @@ public class FileLoaderJSON {
 
 		JSONArray obstacles = topography["obstacles"].AsArray;
 		for (int i = 0; i < obstacles.Count; i++) {
+			string obstacleID = obstacles[i]["id"];
 			JSONNode shape = obstacles[i]["shape"];
-			float height = 4;
+			//Debug.Log(shape);
+
+			float height = 0.5f;
+			float x, y;
+
+			if(IDmappings.ContainsKey (obstacleID)){
+				switch (IDmappings[obstacleID]) {
+					case "bench":
+						height = 1;
+						break;
+					case "table":
+						height = 1.5f;
+						break;
+					case "roofpoints":
+
+						//TODO 
+
+						break;		
+					default:
+						break;
+				}
+			}
+
 			ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 		}
 
 		JSONArray sources = topography["sources"].AsArray;
 		for (int i = 0; i < sources.Count; i++) {
+			//TODO identify different source-types
 			JSONNode shape = sources[i]["shape"];
 			AreaGeometry.create("source", parsePoints(shape));
 		}
@@ -36,8 +64,6 @@ public class FileLoaderJSON {
 			JSONNode shape = targets[i]["shape"];
 			AreaGeometry.create("target", parsePoints(shape));
 		}
-
-		//TODO distinguish objects by their ID: agree with Vadere group on IDs for object types
 
 		loadTrajectoriesFile (parentdir + "/" + filename.Split ('.')[0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
 	}
@@ -74,7 +100,7 @@ public class FileLoaderJSON {
 	}
 
 
-	static List<Vector2> parsePoints(JSONNode shape) {
+	private static List<Vector2> parsePoints(JSONNode shape) {
 		List<Vector2> list = new List<Vector2>();
 
 		float x, y;
@@ -109,6 +135,29 @@ public class FileLoaderJSON {
 		}
 
 		return list;
+	}
+
+
+	private Dictionary<string, string> getIDmappings(string filename){
+		var IDmappings = new Dictionary<string, string>();
+		foreach (string line in System.IO.File.ReadAllLines(filename)) {
+			string content = line.Trim();
+			
+			if(content.Length == 0) // is empty line
+				continue;
+			
+			if(content[0].Equals('#')) // is comment
+				continue;
+			
+			if(content.Split('=').Length != 2) // must be exactly one =
+				continue;
+			
+			// TODO catch more error possibilites
+			
+			//Debug.Log("added mapping: " + type + " <-> " + id);
+			IDmappings.Add(content.Split('=')[0], content.Split('=')[1]);
+		}
+		return IDmappings;
 	}
 	
 }
