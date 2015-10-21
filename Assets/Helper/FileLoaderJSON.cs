@@ -50,7 +50,9 @@ public class FileLoaderJSON {
 		}
 
 		if (roofpoints.Count > 0) {
-			//TODO use roofpoints here to create a roof ObstacleExtrudeGeometry.create("wall", roofpoints, 6);
+			float floatingHeight = 8; // distance from ground to ceiling
+			float roofThickness = 1;
+			RoofFloatingGeometry.create("roof", roofpoints, floatingHeight, roofThickness);
 			// what if more than one roof? exclude that case or make clear through ID-namespacing?
 		}
 
@@ -158,7 +160,7 @@ public class FileLoaderJSON {
 			// TODO catch more error possibilites
 			
 			//Debug.Log("added mapping: " + type + " <-> " + id);
-			IDmappings.Add(content.Split('=')[0], content.Split('=')[1]);
+			IDmappings.Add(content.Split('=')[0].Trim(), content.Split('=')[1].Trim ());
 		}
 		return IDmappings;
 	}

@@ -6,6 +6,13 @@ public class ExtrudeGeometry : Geometry  {
 
 	public static void create (string name, List<Vector2> verticesList, float height, Material topMaterial, Material sideMaterial) {
 
+		/*
+		Debug.Log (">> " + name);
+		foreach (Vector2 v in verticesList) {
+			Debug.Log (v.x + " / " + v.y);
+		}
+		*/
+		
 		GameObject obstacle = new GameObject (name, typeof(MeshFilter), typeof(MeshRenderer));
 		MeshFilter mesh_filter = obstacle.GetComponent<MeshFilter> ();
 		
