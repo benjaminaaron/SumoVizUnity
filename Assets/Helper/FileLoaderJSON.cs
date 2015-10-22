@@ -69,7 +69,7 @@ public class FileLoaderJSON {
 			AreaGeometry.create("target", parsePoints(shape));
 		}
 
-		loadTrajectoriesFile (parentdir + "/" + filename.Split ('.')[0] + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
+		loadTrajectoriesFile (parentdir + "/" + filename.Substring(0, filename.Length - ".scenario".Length) + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
 	}
 
 
