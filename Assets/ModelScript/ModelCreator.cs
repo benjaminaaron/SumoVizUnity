@@ -14,29 +14,29 @@ public class ModelCreator : MonoBehaviour {
 	
 	}
 
-	void createModel (string modelType, List<Vector2> edges) {
+	public static void createModel (string modelType, List<Vector2> edges) {
 		bool initTest = false;
 		switch (modelType) {
 		case "bench":
 			initTest = initObject ("Bierbank_merged", edges);
 			break;
 		case "table":
-			initTest = initObject ("Biertisch_merged", edges);
+			//initTest = initObject ("Biertisch_merged", edges);
 			break;
 		}
 		if(!initTest) throw new UnityException();
 
 	}
 
-	bool initObject (string prefabName, List<Vector2> edges) {
-		GameObject p = (GameObject)Instantiate(Resources.Load(prefabName));
-		if (p == null)
-			return false;
-		Vector2 xy = edges [1];
-		Vector2 widthHeight = edges [3];
-		widthHeight = (xy - widthHeight) / 2;
-		Vector2 location = xy + widthHeight;
-		p.transform.position = location;
+	private static bool initObject (string prefabName, List<Vector2> edges) {
+		GameObject p = (GameObject)Instantiate (Resources.Load (prefabName));
+	//	if (p == null)
+	//		return false;
+		Vector2 xy = edges [0];
+	//Vector2 widthHeight = edges [3];
+		//widthHeight = (xy - widthHeight) / 2;
+		//Vector2 location = xy + widthHeight;
+		p.transform.position =new  Vector3(xy.x,0.4f,xy.y);
 		return true;
 	}
 	
