@@ -5,3 +5,5 @@ Temp
 *.userprefs
 obj
 .vs
+ProjectSettings/ProjectSettings.asset
+ProjectSettings/ProjectVersion.txt

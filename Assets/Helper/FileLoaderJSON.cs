@@ -32,7 +32,7 @@ public class FileLoaderJSON {
 				switch (IDmappings[obstacleID]) {
 					case "bench":
 						height = 0.75f;
-					ModelCreator.createModel("bench",parsePoints(shape));
+					ModelCreator.create("bench",parsePoints(shape));
 						
 						break;
 					case "table":
