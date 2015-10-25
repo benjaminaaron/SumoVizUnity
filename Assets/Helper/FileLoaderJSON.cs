@@ -36,8 +36,10 @@ public class FileLoaderJSON {
 						
 						break;
 					case "table":
-						height = 1.5f;
+						height = 0.8f;
+					ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 						break;
+						
 					case "roofpoints":
 						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
 						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;

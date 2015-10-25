@@ -39,8 +39,9 @@ public class ModelCreator : Geometry {
 
 		//for getting transformed from the middle
 
-		//widthHeight = (xy - widthHeight) / 2;
-		//Vector2 location = xy + widthHeight;
+		Vector2 widthHeight = (xy - edges[2]) / 2;
+		widthHeight = new Vector2(Mathf.Abs (widthHeight.x),Mathf.Abs(widthHeight.y));
+		xy = xy + widthHeight;
 
 
 		p.transform.position =new  Vector3(xy.x,0.5f,xy.y);

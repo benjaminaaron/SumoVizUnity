@@ -10,7 +10,7 @@ public class FileChooser : MonoBehaviour {
 	void Start () {
 		//fb.searchPattern = "*.xml"; //TODO how to have both *.xml and *.scenario? couldn't figure it out
 
-		flj.loadScenarioFile("C:/Users/Stefan/Documents/workspace/modellierungsseminar/scenario","smallTent.scenario");
+		flj.loadScenarioFile("C:/Users/Stefan/Documents/workspace/modellierungsseminar/Modell/Zelt/output/Modell_2015-10-23_21-02-10.113","Modell.scenario");
 	}
 
 	/*
