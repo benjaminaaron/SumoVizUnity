@@ -18,7 +18,7 @@ public class ModelCreator : Geometry {
 
 		switch (modelType) {
 		case "bench":
-			 initObject ("Bierbank_merged", edges);
+			 initObject ("Bierbank", edges);
 			break;
 		case "table":
 			//initTest = initObject ("Biertisch_merged", edges);
