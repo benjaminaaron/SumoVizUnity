@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 
 public class FileLoaderJSON {
 
-	public void loadScenarioFile(string parentdir, string filename) {
+	public void loadScenarioFile(FileInfo file) {
 
 		// set scence
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
@@ -15,7 +16,7 @@ public class FileLoaderJSON {
 		var IDmappings = getIDmappings (Application.dataPath + "/data/IDmappings.config");
 
 		//load topography objects from .scenario file
-		string data = System.IO.File.ReadAllText (parentdir + "/" + filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
+		string data = System.IO.File.ReadAllText (file.FullName);
 		JSONNode topography = JSON.Parse (data) ["vadere"] ["topography"];
 
 		List<Vector2> roofpoints = new List<Vector2>();
@@ -76,18 +77,18 @@ public class FileLoaderJSON {
 			AreaGeometry.create("target", parsePoints(shape));
 		}
 
-		loadTrajectoriesFile (parentdir + "/" + filename.Substring(0, filename.Length - ".scenario".Length) + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
+		loadTrajectoriesFile(new FileInfo(file.DirectoryName + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (file.FullName) + ".trajectories")); //we expect it to have to the exact same filename
 	}
 
 
-	private void loadTrajectoriesFile(string filename){
+	private void loadTrajectoriesFile(FileInfo file){
 
-		if (!System.IO.File.Exists (filename)) {
-			Debug.LogError ("file " + filename + " was not found!"); //TODO open FileOpenDialog to search for it
+		if (!file.Exists) {
+			Debug.LogError ("file " + file.Name + " was not found!"); //TODO open FileOpenDialog to search for it?
 		} else {
 			PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
-			System.IO.StreamReader sr = new System.IO.StreamReader(filename);
+			System.IO.StreamReader sr = new System.IO.StreamReader(file.FullName);
 			string line = sr.ReadLine(); // skip the first line containing column labels
 
 			while ((line = sr.ReadLine()) != null) {
