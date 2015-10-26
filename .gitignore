@@ -3,3 +3,7 @@ Temp
 *.csproj
 *.sln
 *.userprefs
+obj
+.vs
+ProjectSettings/ProjectSettings.asset
+ProjectSettings/ProjectVersion.txt

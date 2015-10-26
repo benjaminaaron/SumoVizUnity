@@ -32,21 +32,28 @@ public class FileLoaderJSON {
 				switch (IDmappings[obstacleID]) {
 					case "bench":
 						height = 0.75f;
+					ModelCreator.create("bench",parsePoints(shape));
+						
 						break;
 					case "table":
-						height = 1.5f;
+						height = 0.8f;
+					ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 						break;
+						
 					case "roofpoints":
 						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
 						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
 						roofpoints.Add(new Vector2(x, y));
 						break;		
 					default:
+
+					//Now only all not model objects gets created as cubic
+					ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 						break;
 				}
 			}
 
-			ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
+
 		}
 
 		if (roofpoints.Count > 0) {
