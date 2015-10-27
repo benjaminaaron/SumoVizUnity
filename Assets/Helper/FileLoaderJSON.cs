@@ -32,12 +32,12 @@ public class FileLoaderJSON {
 				switch (IDmappings[obstacleID]) {
 					case "bench":
 						height = 0.75f;
-					ModelCreator.create("bench",parsePoints(shape));
+					ModelCreator.create("Bench",parsePoints(shape),0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
 						
 						break;
 					case "table":
 						height = 0.8f;
-					ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
+					ModelCreator.create("Table", parsePoints(shape),0.78f); //Measurements Table: 220x70x77 (l,w,h)
 						break;
 						
 					case "roofpoints":

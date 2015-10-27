@@ -13,22 +13,9 @@ public class ModelCreator : Geometry {
 	void Update () {
 	
 	}
+	
 
-	public static void create (string modelType, List<Vector2> edges) {
-
-		switch (modelType) {
-		case "bench":
-			 initObject ("Bierbank", edges);
-			break;
-		case "table":
-			//initTest = initObject ("Biertisch_merged", edges);
-			break;
-		}
-
-
-	}
-
-	private static  void initObject (string prefabName, List<Vector2> edges) {
+	public static  void create (string prefabName, List<Vector2> edges, float height) {
 		GameObject p = (GameObject)Instantiate (Resources.Load (prefabName));
 
 
@@ -44,7 +31,7 @@ public class ModelCreator : Geometry {
 		xy = xy + widthHeight;
 
 
-		p.transform.position =new  Vector3(xy.x,0.5f,xy.y);
+		p.transform.position =new  Vector3(xy.x,height,xy.y);
 
 
 		//TODO rotating the bench or table 
