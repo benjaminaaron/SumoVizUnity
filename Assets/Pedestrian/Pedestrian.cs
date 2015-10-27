@@ -32,7 +32,8 @@ public class Pedestrian : MonoBehaviour {
 	void Start () {
 		gameObject.AddComponent<BoxCollider>();
 		transform.Rotate (0,90,0);
-		myColor = new Color (Random.value, Random.value, Random.value);
+		//sets the color for the pedestrians
+		myColor = Color.red;
 		GetComponentInChildren<Renderer>().materials[1].color = myColor;
 		addTile ();
 
