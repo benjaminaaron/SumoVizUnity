@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class FileChooser : MonoBehaviour {
 
@@ -12,11 +13,11 @@ public class FileChooser : MonoBehaviour {
 
 
 
-		flj.loadScenarioFile(Application.dataPath + "/data/Vadere_output","Modell.scenario");
+		flj.loadScenarioFile(new FileInfo(Application.dataPath + "/data/Vadere_output/Modell.scenario"));
 	}
 
 	/*
-	void OnGUI(){	
+	void OnGUI(){ // TODO check if is properly checked for correctness of file (exists and has allowed extension)
 
 		if (fb.draw()) {
 			if (fb.outputFile == null){

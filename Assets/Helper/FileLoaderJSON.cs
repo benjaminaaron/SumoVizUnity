@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
 
 public class FileLoaderJSON {
 
-	public void loadScenarioFile(string parentdir, string filename) {
+	/**
+	 * Loads the vadere output file .scenario and creates 3D objects from the 2D objects based on the IDmappings.config file.
+	 * Concludes with calling the method to load the .trajectories file.
+	 * @param FileInfo object wrapped around the .scenario file
+	 */
+	public void loadScenarioFile(FileInfo file) {
 
 		// set scence
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
@@ -15,7 +21,7 @@ public class FileLoaderJSON {
 		var IDmappings = getIDmappings (Application.dataPath + "/data/IDmappings.config");
 
 		//load topography objects from .scenario file
-		string data = System.IO.File.ReadAllText (parentdir + "/" + filename); //TODO better use file-reading as in FileLoader.cs, performance/safety?
+		string data = System.IO.File.ReadAllText (file.FullName);
 		JSONNode topography = JSON.Parse (data) ["vadere"] ["topography"];
 
 		List<Vector2> roofpoints = new List<Vector2>();
@@ -76,18 +82,21 @@ public class FileLoaderJSON {
 			AreaGeometry.create("target", parsePoints(shape));
 		}
 
-		loadTrajectoriesFile (parentdir + "/" + filename.Substring(0, filename.Length - ".scenario".Length) + ".trajectories"); //we expect it to have to the same filename, should always be like that, right?
+		loadTrajectoriesFile(new FileInfo(file.DirectoryName + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (file.FullName) + ".trajectories")); //we expect it to have to the exact same filename
 	}
 
+	/**
+	 * Loads the vadere output file .trajectories and create pedestrians with their respective trajectories.
+	 * @param FileInfo object wrapped around the .trajectories file
+	 */
+	private void loadTrajectoriesFile(FileInfo file){
 
-	private void loadTrajectoriesFile(string filename){
-
-		if (!System.IO.File.Exists (filename)) {
-			Debug.LogError ("file " + filename + " was not found!"); //TODO open FileOpenDialog to search for it
+		if (!file.Exists) {
+			Debug.LogError ("file " + file.Name + " was not found!"); //TODO open FileOpenDialog to search for it?
 		} else {
 			PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
-			System.IO.StreamReader sr = new System.IO.StreamReader(filename);
+			System.IO.StreamReader sr = new System.IO.StreamReader(file.FullName);
 			string line = sr.ReadLine(); // skip the first line containing column labels
 
 			while ((line = sr.ReadLine()) != null) {
@@ -111,7 +120,11 @@ public class FileLoaderJSON {
 		}
 	}
 
-
+	/**
+	 * Parses points from obstacles in the .scenario file to a Vector2 list that can be passed to classes extending the Geometry class.
+	 * @param one 2D object encapsulated in a JSONNode
+	 * @return list of Vector2 objects
+	 */
 	private static List<Vector2> parsePoints(JSONNode shape) {
 		List<Vector2> list = new List<Vector2>();
 
@@ -149,8 +162,12 @@ public class FileLoaderJSON {
 		return list;
 	}
 
-
-	private Dictionary<string, string> getIDmappings(string filename){
+	/**
+	 * Parses an ID mapping config file to a dictionary that is used to decide what type of 3D object to create based on a 2D object.
+	 * @param filename of the config file
+	 * @return Dictionary<string, string> containing the mapping from 2D-ID to 3D-typename
+	 */
+	private Dictionary<string, string> getIDmappings(string filename){ //TODO use FileInfo here as well and check for exists
 		var IDmappings = new Dictionary<string, string>();
 		foreach (string line in System.IO.File.ReadAllLines(filename)) {
 			string content = line.Trim();

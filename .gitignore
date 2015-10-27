@@ -1,9 +1,12 @@
-Library
-Temp
+Library/
+Temp/
 *.csproj
 *.sln
 *.userprefs
-obj
-.vs
+obj/
+.vs/
 ProjectSettings/ProjectSettings.asset
 ProjectSettings/ProjectVersion.txt
+
+# doxygen
+html/
