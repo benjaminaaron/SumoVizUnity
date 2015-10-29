@@ -13,7 +13,7 @@ public class FileChooser : MonoBehaviour {
 
 
 
-		flj.loadScenarioFile(new FileInfo(Application.dataPath + "/data/Vadere_output/Modell.scenario"));
+		flj.loadScenarioFile("Modell"); //add _scenario or _trajectories, but no extension!
 	}
 
 	/*

@@ -11,18 +11,19 @@ public class FileLoaderJSON {
 	 * Concludes with calling the method to load the .trajectories file.
 	 * @param FileInfo object wrapped around the .scenario file
 	 */
-	public void loadScenarioFile(FileInfo file) {
+	public void loadScenarioFile(string filename) {
 
 		// set scence
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
 		gl.setTheme (new NatureThemingMode ());
 
-		//load config file for IDmappings 2D -> 3D //TODO check if exists, if not use default behaviour
-		var IDmappings = getIDmappings (Application.dataPath + "/data/IDmappings.config");
+		//load config file for IDmappings 2D -> 3D
+		var IDmappings = getIDmappings ((Resources.Load ("vadere_output/IDmappings") as TextAsset).text);
 
 		//load topography objects from .scenario file
-		string data = System.IO.File.ReadAllText (file.FullName);
-		JSONNode topography = JSON.Parse (data) ["vadere"] ["topography"];
+		string filecontent = (Resources.Load ("vadere_output/" + filename + "_scenario") as TextAsset).text;
+
+		JSONNode topography = JSON.Parse (filecontent) ["vadere"] ["topography"];
 
 		List<Vector2> roofpoints = new List<Vector2>();
 
@@ -52,14 +53,11 @@ public class FileLoaderJSON {
 						roofpoints.Add(new Vector2(x, y));
 						break;		
 					default:
-
-					//Now only all not model objects gets created as cubic
-					ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
+						//now only all not-model-objects get created as cubic
+						ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 						break;
 				}
 			}
-
-
 		}
 
 		if (roofpoints.Count > 0) {
@@ -82,42 +80,40 @@ public class FileLoaderJSON {
 			AreaGeometry.create("target", parsePoints(shape));
 		}
 
-		loadTrajectoriesFile(new FileInfo(file.DirectoryName + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (file.FullName) + ".trajectories")); //we expect it to have to the exact same filename
+		loadTrajectoriesFile(filename);
+
 	}
 
 	/**
 	 * Loads the vadere output file .trajectories and create pedestrians with their respective trajectories.
 	 * @param FileInfo object wrapped around the .trajectories file
 	 */
-	private void loadTrajectoriesFile(FileInfo file){
+	private void loadTrajectoriesFile(string filename){
 
-		if (!file.Exists) {
-			Debug.LogError ("file " + file.Name + " was not found!"); //TODO open FileOpenDialog to search for it?
-		} else {
-			PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
+		string filecontent = (Resources.Load ("vadere_output/" + filename + "_trajectories") as TextAsset).text;
 
-			System.IO.StreamReader sr = new System.IO.StreamReader(file.FullName);
-			string line = sr.ReadLine(); // skip the first line containing column labels
+		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
-			while ((line = sr.ReadLine()) != null) {
-				string[] parts = line.Split (' ');
-				if (line.Length > 0) {
-					int id;
-					decimal time;
-					float x, y;
-					//int.TryParse (parts [0], out step);
-					decimal.TryParse (parts [1], out time);
-					int.TryParse (parts [2], out id);
-					float.TryParse (parts [3], out x);
-					float.TryParse (parts [4], out y);
-					//Debug.Log(time + " / " + id + " / " + x + " / " + y);
+		bool isFirstLine = true;
+		foreach (string line in filecontent.Split("\n"[0])) {
+			string[] parts = line.Split (' ');
+			if (!isFirstLine && line.Length > 0) {
+				int id;
+				decimal time;
+				float x, y;
+				//int.TryParse (parts [0], out step);
+				decimal.TryParse (parts [1], out time);
+				int.TryParse (parts [2], out id);
+				float.TryParse (parts [3], out x);
+				float.TryParse (parts [4], out y);
+				//Debug.Log(time + " / " + id + " / " + x + " / " + y);
 
-					pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
-				}
+				pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
 			}
-
-			pl.createPedestrians ();
+			isFirstLine = false;
 		}
+
+		pl.createPedestrians ();
 	}
 
 	/**
@@ -167,9 +163,10 @@ public class FileLoaderJSON {
 	 * @param filename of the config file
 	 * @return Dictionary<string, string> containing the mapping from 2D-ID to 3D-typename
 	 */
-	private Dictionary<string, string> getIDmappings(string filename){ //TODO use FileInfo here as well and check for exists
+	private Dictionary<string, string> getIDmappings(string filecontent){ //TODO use FileInfo here as well and check for exists
 		var IDmappings = new Dictionary<string, string>();
-		foreach (string line in System.IO.File.ReadAllLines(filename)) {
+
+		foreach (string line in filecontent.Split("\n"[0])) {
 			string content = line.Trim();
 			
 			if(content.Length == 0) // is empty line
