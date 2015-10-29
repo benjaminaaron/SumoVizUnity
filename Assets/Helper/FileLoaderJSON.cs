@@ -95,7 +95,7 @@ public class FileLoaderJSON {
 		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
 		bool isFirstLine = true;
-		foreach (string line in filecontent.Split("\n"[0])) {
+		foreach (string line in filecontent.Split("\n"[0])) { //TODO this is horrible, needs streamreading! but how with TextAssets?
 			string[] parts = line.Split (' ');
 			if (!isFirstLine && line.Length > 0) {
 				int id;

@@ -5,5 +5,5 @@
 5=wall
 6=roofpoints
 7=table
-#8=bench 
+8=bench 
 9=fences
