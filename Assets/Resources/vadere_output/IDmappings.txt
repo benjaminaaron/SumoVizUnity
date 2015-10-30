@@ -1,9 +1,10 @@
 #id=name // lines starting with "#" will be ignored (=comments)
+-1=objects
 0=benchsource
 #1=sittingsource
 2=target
 5=wall
-6=roofpoints
+6=roofpoint
 7=table
 #8=bench 
-9=fences
+9=fence

@@ -45,16 +45,20 @@ public class FileLoaderJSON {
 						height = 0.8f;
 						ModelCreator.create("Table", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
 						break;
-					case "roofpoints":
+					case "roofpoint":
 						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
 						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
 						roofpoints.Add(new Vector2(x, y));
 						break;		
+					case "objects":
+					case "fences":
 					default:
 						//now only all not-model-objects get created as cubic
 						ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
 						break;
 				}
+			} else {
+				ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height); //if not in IDmappings file, make it a wall
 			}
 		}
 
