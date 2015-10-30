@@ -37,16 +37,14 @@ public class FileLoaderJSON {
 
 			if(IDmappings.ContainsKey (obstacleID)){
 				switch (IDmappings[obstacleID]) {
-					case "bench":
+					/*case "bench": //is under sources now, not obstacles
 						height = 0.75f;
-					ModelCreator.create("Bench",parsePoints(shape),0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
-						
-						break;
+						ModelCreator.create("Bench", parsePoints(shape), 0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
+						break;*/
 					case "table":
 						height = 0.8f;
-					ModelCreator.create("Table", parsePoints(shape),0.78f); //Measurements Table: 220x70x77 (l,w,h)
+						ModelCreator.create("Table", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
 						break;
-						
 					case "roofpoints":
 						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
 						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
@@ -69,9 +67,20 @@ public class FileLoaderJSON {
 
 		JSONArray sources = topography["sources"].AsArray;
 		for (int i = 0; i < sources.Count; i++) {
-			//TODO identify different source-types
+			string sourceID = sources[i]["id"];
 			JSONNode shape = sources[i]["shape"];
-			AreaGeometry.create("source", parsePoints(shape));
+
+			if(IDmappings.ContainsKey (sourceID)){
+				switch (IDmappings[sourceID]) { // TODO if no more source types (?) a simple if is enough, instead of a switch case
+					case "benchsource":
+						ModelCreator.create("Bench", parsePoints(shape), 0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
+						break;	
+					default:
+						break;
+				}
+			} else { // could also create it in addition (instead of either or) to benchsource, but since it's hardly visible this saves us resources
+				AreaGeometry.create("source", parsePoints(shape));
+			}
 		}
 
 		JSONArray targets = topography["targets"].AsArray;
