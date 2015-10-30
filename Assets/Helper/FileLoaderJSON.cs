@@ -15,7 +15,7 @@ public class FileLoaderJSON {
 
 		// set scence
 		GeometryLoader gl = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
-		gl.setTheme (new NatureThemingMode ());
+		gl.setTheme (new BeerTentThemingMode ());
 
 		//load config file for IDmappings 2D -> 3D
 		var IDmappings = getIDmappings ((Resources.Load ("vadere_output/IDmappings") as TextAsset).text);

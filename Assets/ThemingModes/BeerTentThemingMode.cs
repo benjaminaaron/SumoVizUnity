@@ -8,17 +8,17 @@
 
 	public override string getTerrainName()
 		{
-			return "TentFloor";
+		return "TerrainBeerTent";
 		}
 	
 	public override Material getWallsMaterial ()
 		{
-		return (Material) Resources.Load("Wooden floor/Wooden floor 01/Wooden floor 01", typeof(Material));
+		return (Material) Resources.Load("Wooden floor/Wooden floor 02/Wooden floor 02", typeof(Material));
 		}
 
 	public override Material getBoxMaterial ()
 		{
-			return (Material) Resources.Load("Woodbox", typeof(Material));
+		return (Material) Resources.Load("Wooden floor/Wooden floor 02/Wooden floor 02", typeof(Material));
 		}
 	public override Material getHouseMaterial ()
 		{
