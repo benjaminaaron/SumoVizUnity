@@ -24,22 +24,34 @@ public class ModelCreator : Geometry {
 		}
 		Vector2 xy = edges [0];
 
+		//TODO IF the sim gets more Models than Bench and Table
+		//-> this Transform setting to static methods
+
 		//for getting transformed from the middle
 
-		Vector2 widthHeight = (xy - edges[2]) / 2;
-		widthHeight = new Vector2(Mathf.Abs (widthHeight.x),Mathf.Abs(widthHeight.y));
+		Vector2 widthHeight = (xy - edges [2]) / 2;
+		widthHeight = new Vector2 (Mathf.Abs (widthHeight.x), Mathf.Abs (widthHeight.y));
 		xy = xy + widthHeight;
 
 
-		p.transform.position =new  Vector3(xy.x,height,xy.y);
+		p.transform.position = new  Vector3 (xy.x, height, xy.y);
 
 
-		//TODO rotating the bench or table 
+		//for objects needs to be rotated check the height and width to 
+		//know how to rotate the object the value dependants on output file from vadere
 
-		//Vector2 widthHeight = xy- edges [2];
+
+		if (widthHeight.x > widthHeight.y) {
+
+			p.transform.Rotate(0,90,0);
+			
+		}
+	
+
+
 
 
 	}
-	
+
 	
 }
