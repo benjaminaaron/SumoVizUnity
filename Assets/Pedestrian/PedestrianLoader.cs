@@ -9,10 +9,17 @@ public class PedestrianLoader : MonoBehaviour {
 	private List<PedestrianPosition> positions = new List<PedestrianPosition>();
 	public List<GameObject> pedestrians = new List<GameObject>();
 	public int[] population;
+	private Object ped;
+
+
+
+	void Awake(){
+		ped = Resources.Load ("Pedestrian");
+	}
 
 	// Use this for initialization
 	void Start () {
-
+	
 	}
 
 	public void addPedestrianPosition(PedestrianPosition p) {
@@ -36,7 +43,7 @@ public class PedestrianLoader : MonoBehaviour {
 			population[(int) positions[i].getTime ()]++;
 			if ((i == (positions.Count-1) || positions[i].getID()!=positions[i+1].getID()) && currentList.Count>0) {
 
-				GameObject p = (GameObject) Instantiate(Resources.Load("Pedestrian"));
+				GameObject p = (GameObject) Instantiate(ped);
 				p.transform.parent = null;
 				p.GetComponent<Pedestrian>().setPositions(currentList);
 				p.GetComponent<Pedestrian>().setID(positions[i].getID());
