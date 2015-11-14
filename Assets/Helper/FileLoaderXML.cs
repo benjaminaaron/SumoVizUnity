@@ -6,7 +6,17 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-public class FileLoaderXML {
+public class FileLoaderXML : FileLoader {
+
+
+	public void loadFileByPath (string path){
+	}
+
+	public void buildGeometry(){
+	}
+
+	public void loadTrajectories(){
+	}
 
 	// Load an XML file containing both, geometry and pedestrian positions
 	// 'filename' must contain the absolute path (I think.)
