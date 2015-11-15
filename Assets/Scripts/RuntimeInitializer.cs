@@ -11,10 +11,10 @@ public class RuntimeInitializer : MonoBehaviour {
 
 		FileLoader fileLoader = null;
 		switch (fileLoaderIdentifier) {
-			case "json":
+			case "vadere":
 				fileLoader = new FileLoaderJSON();
 				break;	
-			case "xml":
+			case "accurate":
 				fileLoader = new FileLoaderXML();
 				break;
 		}

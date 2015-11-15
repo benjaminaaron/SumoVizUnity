@@ -5,5 +5,6 @@ public interface FileLoader {
 	void buildGeometry();
 	void loadTrajectories (string filename);
 	string getIdentifier();
+	string getInputfileExtension();
 
 }

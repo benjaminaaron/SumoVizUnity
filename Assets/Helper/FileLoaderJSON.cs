@@ -12,7 +12,11 @@ public class FileLoaderJSON : FileLoader {
 	Dictionary<string, string> IDmappings;
 
 	public string getIdentifier(){
-		return "json";
+		return "vadere";
+	}
+
+	public string getInputfileExtension(){
+		return "scenario";
 	}
 
 	public void loadFileByPath (string path){

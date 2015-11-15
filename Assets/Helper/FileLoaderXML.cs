@@ -10,6 +10,10 @@ public class FileLoaderXML : FileLoader {
 
 	
 	public string getIdentifier(){
+		return "accurate";
+	}
+
+	public string getInputfileExtension(){
 		return "xml";
 	}
 
