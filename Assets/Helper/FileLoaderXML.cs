@@ -9,17 +9,34 @@ using System.Xml;
 public class FileLoaderXML : FileLoader {
 
 	
-	public string getIdentifier(){
+	public override string getIdentifier(){
 		return "accurate";
 	}
 
-	public string getInputfileExtension(){
+	public override string getInputfileExtension(){
 		return "xml";
 	}
 
-	public void loadFileByPath (string path){}
-	public void buildGeometry(){}
-	public void loadTrajectories (string filename){}
+
+
+	public override void loadFileByPath (string path){
+		//TODO Lesya
+	}
+
+	public override void buildGeometry(){
+		//TODO Lesya
+	}
+
+	public override void loadTrajectories (string filename){
+		//TODO Lesya
+	}
+
+
+
+	// The code below is from @hacklschorsch, most can be reused but must be made to fit into the three methods above
+
+
+
 
 	// Load an XML file containing both, geometry and pedestrian positions
 	// 'filename' must contain the absolute path (I think.)
@@ -104,7 +121,7 @@ public class FileLoaderXML : FileLoader {
 
 
 	// Parse an XmlElement full of <point> XmlElements into a coordinate list 
-	static List<Vector2> parsePoints(XmlElement polyPoints) {
+	private static List<Vector2> parsePoints(XmlElement polyPoints) {
 		List<Vector2> list = new List<Vector2>();
 
 		foreach(XmlElement point in polyPoints.SelectNodes("point")) {

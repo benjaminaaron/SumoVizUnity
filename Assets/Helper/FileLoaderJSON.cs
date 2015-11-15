@@ -11,15 +11,15 @@ public class FileLoaderJSON : FileLoader {
 	JSONArray targets;
 	Dictionary<string, string> IDmappings;
 
-	public string getIdentifier(){
+	public override string getIdentifier(){
 		return "vadere";
 	}
 
-	public string getInputfileExtension(){
+	public override string getInputfileExtension(){
 		return "scenario";
 	}
 
-	public void loadFileByPath (string path){
+	public override void loadFileByPath (string path){
 		string filecontent = System.IO.File.ReadAllText (path);
 		JSONNode topography = JSON.Parse (filecontent) ["vadere"] ["topography"];
 		obstacles = topography["obstacles"].AsArray;
@@ -31,7 +31,7 @@ public class FileLoaderJSON : FileLoader {
 	/**
 	 * Loads the vadere output file .scenario and creates 3D objects from the 2D objects based on the IDmappings.config file.
 	 */
-	public void buildGeometry(){
+	public override void buildGeometry(){
 		buildObstacles ();
 		buildSources ();
 		buildTargets ();
@@ -43,12 +43,10 @@ public class FileLoaderJSON : FileLoader {
 			string obstacleID = obstacles[i]["id"];
 			JSONNode shape = obstacles[i]["shape"];
 			//List<Vector2> roofpoints = new List<Vector2>();
-			float height = 2;
 			if(IDmappings.ContainsKey (obstacleID)){
 				switch (IDmappings[obstacleID]) {
 				case "table":
-					height = 0.78f;
-					ModelCreator.create("Table", parsePoints(shape), height); //Measurements Table: 220x70x77 (l,w,h)
+					createTable("Table", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
 					break;
 					/*case "roofpoint":
 						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
@@ -58,11 +56,11 @@ public class FileLoaderJSON : FileLoader {
 				case "objects":
 				case "fences":
 				default:
-					ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
+					createWall("wall", parsePoints(shape), 2f);
 					break;
 				}
 			} else {
-				ObstacleExtrudeGeometry.create("wall", parsePoints(shape), height);
+				createWall("wall", parsePoints(shape), 2f);
 			}
 		}
 	}
@@ -74,13 +72,13 @@ public class FileLoaderJSON : FileLoader {
 			if(IDmappings.ContainsKey (sourceID)){
 				switch (IDmappings[sourceID]) {
 				case "benchsource":
-					ModelCreator.create("Bench", parsePoints(shape), 0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
+					createBench("Bench", parsePoints(shape), 0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
 					break;	
 				default:
 					break;
 				}
 			} else {
-				AreaGeometry.create("source", parsePoints(shape));
+				createAreaGeometry("source", parsePoints(shape));
 			}
 		}
 	}
@@ -88,7 +86,7 @@ public class FileLoaderJSON : FileLoader {
 	private void buildTargets(){
 		for (int i = 0; i < targets.Count; i++) {
 			JSONNode shape = targets[i]["shape"];
-			AreaGeometry.create("target", parsePoints(shape));
+			createAreaGeometry("target", parsePoints(shape));
 		}
 	}
 
@@ -106,7 +104,7 @@ public class FileLoaderJSON : FileLoader {
 	 * Loads the (renamed) vadere output file .trajectories and creates pedestrians with their respective trajectories.
 	 * @param filename the filename of the trajectories file without _trajectories.txt
 	 */
-	public void loadTrajectories(string filename){
+	public override void loadTrajectories(string filename){
 		string filecontent = (Resources.Load ("vadere_output/" + filename + "_trajectories") as TextAsset).text;
 		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
@@ -173,7 +171,7 @@ public class FileLoaderJSON : FileLoader {
 	 * @param filename of the config file
 	 * @return Dictionary<string, string> containing the mapping from 2D-ID to 3D-typename
 	 */
-	private Dictionary<string, string> getIDmappings(string filecontent){ //TODO use FileInfo here as well and check for exists
+	private static Dictionary<string, string> getIDmappings(string filecontent){ //TODO use FileInfo here as well and check for exists
 		var IDmappings = new Dictionary<string, string>();
 
 		foreach (string line in filecontent.Split("\n"[0])) {

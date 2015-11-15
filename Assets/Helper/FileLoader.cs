@@ -1,10 +1,28 @@
-﻿
-public interface FileLoader {
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-	void loadFileByPath (string path);
-	void buildGeometry();
-	void loadTrajectories (string filename);
-	string getIdentifier();
-	string getInputfileExtension();
+public abstract class FileLoader : FileLoaderInterface {
+
+	public abstract void loadFileByPath (string path);
+	public abstract void buildGeometry();
+	public abstract void loadTrajectories (string filename);
+	public abstract string getIdentifier();
+	public abstract string getInputfileExtension();
+
+	protected void createWall(string name, List<Vector2> verticesList, float height){
+		ObstacleExtrudeGeometry.create(name, verticesList, height);
+	}
+
+	protected void createTable(string name, List<Vector2> verticesList, float height){
+		ModelCreator.create(name, verticesList, height); 
+	}
+
+	protected void createBench(string name, List<Vector2> verticesList, float height){
+		ModelCreator.create (name, verticesList, height); 
+	}
+
+	protected void createAreaGeometry(string name, List<Vector2> verticesList){
+		AreaGeometry.create(name, verticesList);
+	}
 
 }
