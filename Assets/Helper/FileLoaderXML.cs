@@ -8,15 +8,14 @@ using System.Xml;
 
 public class FileLoaderXML : FileLoader {
 
-
-	public void loadFileByPath (string path){
+	
+	public string getIdentifier(){
+		return "xml";
 	}
 
-	public void buildGeometry(){
-	}
-
-	public void loadTrajectories(){
-	}
+	public void loadFileByPath (string path){}
+	public void buildGeometry(){}
+	public void loadTrajectories (string filename){}
 
 	// Load an XML file containing both, geometry and pedestrian positions
 	// 'filename' must contain the absolute path (I think.)

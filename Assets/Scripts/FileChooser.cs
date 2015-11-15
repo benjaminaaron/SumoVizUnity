@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 using System.IO;
 
@@ -11,12 +11,9 @@ public class FileChooser : MonoBehaviour {
 	void Start () {
 		//fb.searchPattern = "*.xml"; //TODO how to have both *.xml and *.scenario? couldn't figure it out
 
-
-
-		flj.loadScenarioFile("tent_presentation"); //add _scenario or _trajectories, but no extension!
 	}
 
-	/*
+
 	void OnGUI(){ // TODO check if is properly checked for correctness of file (exists and has allowed extension)
 
 		if (fb.draw()) {
@@ -48,6 +45,7 @@ public class FileChooser : MonoBehaviour {
 			}
 		}
 	}
-	*/
+
 	void Update () {}
 }
+*/
