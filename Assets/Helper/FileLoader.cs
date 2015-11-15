@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class FileLoader : FileLoaderInterface {
+public abstract class FileLoader {
 
 	public abstract void loadFileByPath (string path);
 	public abstract void buildGeometry();
