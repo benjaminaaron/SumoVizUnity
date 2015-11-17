@@ -10,7 +10,7 @@ public class GeometryLoader : MonoBehaviour {
 
 	public void setTheme(ThemingMode mode) {
 		theme = mode;
-		theme.getTerrain();
+		theme.getTerrain();//Getter is also the init
 	}
 
 	public void addObject(Geometry obj) {

@@ -592,7 +592,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   geometry: []
   theme: {fileID: 0}
-  groundplane: {fileID: 0}
 --- !u!4 &1054666163
 Transform:
   m_ObjectHideFlags: 0
