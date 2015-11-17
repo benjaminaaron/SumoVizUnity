@@ -10,11 +10,13 @@ public class PedestrianLoader : MonoBehaviour {
 	public List<GameObject> pedestrians = new List<GameObject>();
 	public int[] population;
 	private Object ped;
+	private PlaybackControlNonGUI pc;
 
 
 
 	void Awake(){
 		ped = Resources.Load ("Pedestrian");
+		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 	}
 
 	// Use this for initialization
@@ -24,12 +26,12 @@ public class PedestrianLoader : MonoBehaviour {
 
 	public void addPedestrianPosition(PedestrianPosition p) {
 		positions.Add (p);
-		PlaybackControl pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControl>();
+
 		if (p.getTime ()>pc.total_time) pc.total_time = p.getTime ();
 	}
 
 	public void createPedestrians() {
-		PlaybackControl pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControl> ();
+
 		positions = positions.OrderBy(x => x.getID()).ThenBy(y => y.getTime()).ToList<PedestrianPosition>();
 		SortedList currentList = new SortedList ();
 		population = new int[(int)pc.total_time+1];

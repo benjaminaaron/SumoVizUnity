@@ -23,7 +23,7 @@ public class Groundplane : MonoBehaviour {
 
 	}
 
-	void OnMouseDown(){
+	/*void OnMouseDown(){
 	
 		PlaybackControl pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControl> ();
 
@@ -76,10 +76,11 @@ public class Groundplane : MonoBehaviour {
 		if (it.diagram) it.removeDiagram();
 
 	}
-	
+
+*/
 	// Update is called once per frame
 	void Update () {
-
+		/*
 		if (point1active && !point2active) {
 			RaycastHit hit;
 			Ray ray = GameObject.Find("Flycam").GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
@@ -100,6 +101,8 @@ public class Groundplane : MonoBehaviour {
 					if (crossings[i]<pc.current_time-1) crossings.RemoveAt(i);
 				}
 			}
+
 		}
+		*/
 	}
 }

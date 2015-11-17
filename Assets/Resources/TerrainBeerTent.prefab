@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 415330}
   - 218: {fileID: 21831954}
   - 154: {fileID: 15432604}
-  - 114: {fileID: 11497136}
   m_Layer: 0
   m_Name: TerrainBeerTent
   m_TagString: Untagged
@@ -30,24 +29,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11497136
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 478f7927ac0564d7b92f2fec9d8d8f89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  point1: {x: 0, y: 0, z: 0}
-  point1active: 0
-  point2: {x: 0, y: 0, z: 0}
-  point2active: 0
-  lineCrossed: 0
-  crossingSpeed: 0
-  avgFlow: 0
 --- !u!154 &15432604
 TerrainCollider:
   m_ObjectHideFlags: 1

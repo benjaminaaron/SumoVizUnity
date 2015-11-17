@@ -6,11 +6,11 @@ public class GeometryLoader : MonoBehaviour {
 
 	public List<Geometry> geometry;
 	public ThemingMode theme;
-	public Groundplane groundplane;
+
 
 	public void setTheme(ThemingMode mode) {
 		theme = mode;
-		groundplane = theme.getTerrain().GetComponent<Groundplane> ();
+		theme.getTerrain();
 	}
 
 	public void addObject(Geometry obj) {
