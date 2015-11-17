@@ -20,13 +20,9 @@ public class Pedestrian : MonoBehaviour {
 	VectorLine trajectory;
 
 	//private InfoText it;
-	private PedestrianLoader pl;
+
 	private PlaybackControlNonGUI pc;
 	private Renderer r;
-	private GeometryLoader gl;
-
-
-	GameObject tile;
 
 	// Use this for initialization
 	void Start () {
@@ -36,10 +32,9 @@ public class Pedestrian : MonoBehaviour {
 		/*myColor = Color.red;
 		GetComponentInChildren<Renderer>().materials[1].color = myColor;*/
 
-		pl = GameObject.Find ("PedestrianLoader").GetComponent<PedestrianLoader> ();
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
 		r = GetComponentInChildren<Renderer>() as Renderer;
-		gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
+	
 	
 	}
 
@@ -76,7 +71,6 @@ public class Pedestrian : MonoBehaviour {
 
 		} else {
 			r.enabled = false;
-			tile.GetComponent<Renderer>().enabled = false;
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
 		}
 	}
