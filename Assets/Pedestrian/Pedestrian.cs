@@ -10,8 +10,6 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_total;
 	float movement_time_elapsed;
 	private float speed;
-	int densityReload;
-	int densityReloadInterval = 10;
 
 	int id;
 	SortedList positions = new SortedList ();
@@ -92,7 +90,6 @@ public class Pedestrian : MonoBehaviour {
 	
 	public void setID(int id) {
 		this.id = id;
-		densityReload = id % densityReloadInterval;
 		this.name = "Pedestrian "+id;
 	}
 

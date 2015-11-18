@@ -32,6 +32,8 @@ public class FileLoaderJSON : FileLoader {
 	 * Loads the vadere output file .scenario and creates 3D objects from the 2D objects based on the IDmappings.config file.
 	 */
 	public override void buildGeometry(){
+	
+
 		buildObstacles ();
 		buildSources ();
 		buildTargets ();

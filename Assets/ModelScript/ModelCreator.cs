@@ -4,19 +4,12 @@ using System.Collections.Generic;
 
 public class ModelCreator : Geometry {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	
 
 	public static  void create (string prefabName, List<Vector2> edges, float height) {
 		GameObject p = (GameObject)Instantiate (Resources.Load (prefabName));
+		p.isStatic =true;
+	
+
 
 
 		if (p == null) {
