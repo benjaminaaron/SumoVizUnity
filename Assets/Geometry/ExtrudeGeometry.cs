@@ -63,6 +63,7 @@ public class ExtrudeGeometry : Geometry  {
 		walls.GetComponent<Renderer>().sharedMaterial = sideMaterial;
 		//Set static from begin
 		walls.isStatic =true;
+		walls.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 
 		List<Vector2> uvs_walls = new List<Vector2>();
 		List<Vector3> vertices_walls = new List<Vector3>();
@@ -125,12 +126,8 @@ public class ExtrudeGeometry : Geometry  {
 			mesh.RecalculateNormals();
 		}
 		mesh = TangentHelper.TangentSolver (mesh);
-
 		mesh_filter.mesh = mesh;
 
-		//add to buildingShell
-
-		//obstacle.transform.SetParent(buildingShell.transform);
 
 
 	}
