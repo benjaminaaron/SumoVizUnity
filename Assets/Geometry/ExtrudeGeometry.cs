@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class ExtrudeGeometry : Geometry  {
 
+
+
 	public static void create (string name, List<Vector2> verticesList, float height, Material topMaterial, Material sideMaterial) {
 
 		/*
@@ -14,6 +16,8 @@ public class ExtrudeGeometry : Geometry  {
 		*/
 		
 		GameObject obstacle = new GameObject (name);
+		//setting the obstacle static
+		obstacle.isStatic = true;
 
 
 		GameObject top = new GameObject("Top",typeof(MeshFilter),typeof(MeshRenderer));
@@ -26,6 +30,8 @@ public class ExtrudeGeometry : Geometry  {
 
 		//Optimierung für weniger setPass
 		top.GetComponent<Renderer>().sharedMaterial = topMaterial;
+		//Set static from the begin
+		top.isStatic =true;
 
 		Vector2[] vertices2D = verticesList.ToArray();
 		
@@ -55,6 +61,8 @@ public class ExtrudeGeometry : Geometry  {
 
 		//Optimisation for setPass
 		walls.GetComponent<Renderer>().sharedMaterial = sideMaterial;
+		//Set static from begin
+		walls.isStatic =true;
 
 		List<Vector2> uvs_walls = new List<Vector2>();
 		List<Vector3> vertices_walls = new List<Vector3>();
@@ -119,6 +127,12 @@ public class ExtrudeGeometry : Geometry  {
 		mesh = TangentHelper.TangentSolver (mesh);
 
 		mesh_filter.mesh = mesh;
+
+		//add to buildingShell
+
+		//obstacle.transform.SetParent(buildingShell.transform);
+
+
 	}
 }
 
