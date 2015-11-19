@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class ExtrudeGeometry : Geometry  {
 
+
+
 	public static void create (string name, List<Vector2> verticesList, float height, Material topMaterial, Material sideMaterial) {
 
 		/*
@@ -13,13 +15,23 @@ public class ExtrudeGeometry : Geometry  {
 		}
 		*/
 		
-		GameObject obstacle = new GameObject (name, typeof(MeshFilter), typeof(MeshRenderer));
-		MeshFilter mesh_filter = obstacle.GetComponent<MeshFilter> ();
-		
-		obstacle.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-		obstacle.transform.position = new Vector3 (0, height, 0);
+		GameObject obstacle = new GameObject (name);
+		//setting the obstacle static
+		obstacle.isStatic = true;
 
-		obstacle.GetComponent<Renderer>().material = topMaterial;
+
+		GameObject top = new GameObject("Top",typeof(MeshFilter),typeof(MeshRenderer));
+
+		top.transform.SetParent(obstacle.transform);
+		MeshFilter mesh_filter = top.GetComponent<MeshFilter> ();
+		
+		top.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+		top.transform.position = new Vector3 (0, height, 0);
+
+		//Optimierung für weniger setPass
+		top.GetComponent<Renderer>().sharedMaterial = topMaterial;
+		//Set static from the begin
+		top.isStatic =true;
 
 		Vector2[] vertices2D = verticesList.ToArray();
 		
@@ -41,9 +53,17 @@ public class ExtrudeGeometry : Geometry  {
 		// Create the mesh
 		Mesh mesh = new Mesh();
 
-		GameObject walls = new GameObject (name+"_walls", typeof(MeshFilter), typeof(MeshRenderer));
+		GameObject walls = new GameObject ("Walls", typeof(MeshFilter), typeof(MeshRenderer));
+		walls.transform.SetParent(obstacle.transform);
+
+
 		MeshFilter mesh_filter_walls = walls.GetComponent<MeshFilter> ();
-		walls.GetComponent<Renderer>().material = sideMaterial;
+
+		//Optimisation for setPass
+		walls.GetComponent<Renderer>().sharedMaterial = sideMaterial;
+		//Set static from begin
+		walls.isStatic =true;
+		walls.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 
 		List<Vector2> uvs_walls = new List<Vector2>();
 		List<Vector3> vertices_walls = new List<Vector3>();
@@ -106,8 +126,10 @@ public class ExtrudeGeometry : Geometry  {
 			mesh.RecalculateNormals();
 		}
 		mesh = TangentHelper.TangentSolver (mesh);
-
 		mesh_filter.mesh = mesh;
+
+
+
 	}
 }
 
