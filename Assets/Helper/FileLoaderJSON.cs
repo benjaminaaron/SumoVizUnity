@@ -48,7 +48,7 @@ public class FileLoaderJSON : FileLoader {
 			if(IDmappings.ContainsKey (obstacleID)){
 				switch (IDmappings[obstacleID]) {
 				case "table":
-					createTable("Table", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
+					createTable("Table_FBX", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
 					break;
 					/*case "roofpoint":
 						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
@@ -74,7 +74,7 @@ public class FileLoaderJSON : FileLoader {
 			if(IDmappings.ContainsKey (sourceID)){
 				switch (IDmappings[sourceID]) {
 				case "benchsource":
-					createBench("Bench", parsePoints(shape), 0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
+					createBench("Bench_FBX", parsePoints(shape), 0.48f); //Measurements Bench: 220x50x47.5 (l,w,h)
 					break;	
 				default:
 					break;
