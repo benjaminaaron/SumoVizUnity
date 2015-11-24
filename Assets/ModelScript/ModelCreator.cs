@@ -39,6 +39,9 @@ public class ModelCreator : Geometry {
 			p.transform.Rotate(0,90,0);
 			
 		}
+
+		GeometryLoader gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
+		gl.setWorldAsParent (p);
 	
 
 

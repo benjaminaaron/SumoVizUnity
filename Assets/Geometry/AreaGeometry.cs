@@ -50,6 +50,8 @@ public class AreaGeometry : Geometry  {
 		}
 
 		mesh_filter.mesh = mesh;
+		GeometryLoader gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
+		gl.setWorldAsParent (obstacle);
 	}
 }
 

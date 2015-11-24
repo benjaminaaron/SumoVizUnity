@@ -128,8 +128,8 @@ public class ExtrudeGeometry : Geometry  {
 		mesh = TangentHelper.TangentSolver (mesh);
 		mesh_filter.mesh = mesh;
 
-
-
+		GeometryLoader gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
+		gl.setWorldAsParent (obstacle);
 	}
 }
 

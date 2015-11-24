@@ -11,12 +11,14 @@ public class PedestrianLoader : MonoBehaviour {
 	public int[] population;
 	private Object ped;
 	private PlaybackControlNonGUI pc;
+	GameObject Pedestrians;
 
 
 
 	void Awake(){
 		ped = Resources.Load ("Pedestrian");
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
+		Pedestrians = new GameObject("Pedestrians");
 	}
 
 	// Use this for initialization
@@ -51,6 +53,7 @@ public class PedestrianLoader : MonoBehaviour {
 				p.GetComponent<Pedestrian>().setID(positions[i].getID());
 				pedestrians.Add(p);
 				currentList.Clear();
+				p.transform.SetParent(Pedestrians.transform);
 			}
 		}
 	}
