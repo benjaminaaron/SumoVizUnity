@@ -16,7 +16,7 @@ public class PedestrianLoader : MonoBehaviour {
 
 
 	void Awake(){
-		ped = Resources.Load ("Pedestrian");
+		ped = Resources.Load ("Hans");
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 		Pedestrians = new GameObject("Pedestrians");
 	}

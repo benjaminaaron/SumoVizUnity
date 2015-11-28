@@ -61,7 +61,7 @@ public class Pedestrian : MonoBehaviour {
 			Vector3 relativePos = target - start;
 			speed = relativePos.magnitude;
 
-			GetComponent<Animation>()["walking"].speed = getSpeed () / timeStepLength;
+			GetComponent<Animation>()["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
 			if (start!=target) transform.rotation = Quaternion.LookRotation(relativePos);
 
 			transform.position = newPosition;
