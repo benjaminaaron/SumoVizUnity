@@ -60,7 +60,7 @@ public class FileLoaderJSON : FileLoader {
 					break;
 					
 				case "fence":
-					createWall("fence",parsePoints(shape),0.86f);//only an assumption
+					createWall("fence",parsePoints(shape),1.0f);//only an assumption
 					break;
 				default:
 					createWall("wall", parsePoints(shape), 2f);
