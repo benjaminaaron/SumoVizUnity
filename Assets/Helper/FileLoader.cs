@@ -14,11 +14,11 @@ public abstract class FileLoader {
 	}
 
 	protected void createTable(string name, List<Vector2> verticesList, float height){
-		ModelCreator.create(name, verticesList, height); 
+		ModelGeometry.create(name, verticesList, height); 
 	}
 
 	protected void createBench(string name, List<Vector2> verticesList, float height){
-		ModelCreator.create (name, verticesList, height); 
+		ModelGeometry.create (name, verticesList, height); 
 	}
 
 	protected void createAreaGeometry(string name, List<Vector2> verticesList){

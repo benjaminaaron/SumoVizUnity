@@ -56,10 +56,15 @@ public class FileLoaderJSON : FileLoader {
 						roofpoints.Add(new Vector2(x, y));
 						break;*/
 				case "objects":
-				case "fences":
+					createWall("object",parsePoints(shape),1.5f);//only an assumption
+					break;
+					
+				case "fence":
+					createWall("fence",parsePoints(shape),0.86f);//only an assumption
+					break;
 				default:
 					createWall("wall", parsePoints(shape), 2f);
-					break;
+					break;			
 				}
 			} else {
 				createWall("wall", parsePoints(shape), 2f);
