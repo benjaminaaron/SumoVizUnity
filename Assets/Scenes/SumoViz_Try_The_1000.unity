@@ -22952,6 +22952,14 @@ Prefab:
       propertyPath: m_HDR
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: b8b03d395f5734e98af91ccf44f9bf47, type: 2}
+      propertyPath: keepStereoUpdated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: b8b03d395f5734e98af91ccf44f9bf47, type: 2}
+      propertyPath: stereoScreenScale
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8b03d395f5734e98af91ccf44f9bf47, type: 2}
   m_IsPrefabParent: 0
