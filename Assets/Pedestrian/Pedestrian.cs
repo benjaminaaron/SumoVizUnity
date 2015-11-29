@@ -10,6 +10,8 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_total;
 	float movement_time_elapsed;
 	private float speed;
+	//to optimize the getTrait loop
+	private int currentTrait;
 
 	int id;
 	SortedList positions = new SortedList ();
@@ -81,10 +83,19 @@ public class Pedestrian : MonoBehaviour {
 
 	private int _getTrait(SortedList thisList, decimal thisValue) {
 
-		for (int i = 0; i < thisList.Count; i++) {
-			if ((decimal)thisList.GetKey(i)>thisValue) return i-1;
+
+		while(currentTrait < thisList.Count){
+			if ((decimal)thisList.GetKey(currentTrait)>thisValue) return (currentTrait-1);
+			++currentTrait;
 		}
 		return -1;
+
+		/*
+		for (int i = 0; i < thisList.Count; i++) {
+		if ((decimal)thisList.GetKey(i)>thisValue) return (i-1);
+		}
+		return -1;
+		*/
 	}
 
 	
