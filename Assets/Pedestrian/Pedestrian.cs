@@ -70,6 +70,7 @@ public class Pedestrian : MonoBehaviour {
 			gameObject.hideFlags = HideFlags.None;
 
 		} else {
+			currentTrait = 0;
 			r.enabled = false;
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
 		}
@@ -84,18 +85,22 @@ public class Pedestrian : MonoBehaviour {
 	private int _getTrait(SortedList thisList, decimal thisValue) {
 
 
-		while(currentTrait < thisList.Count){
-			if ((decimal)thisList.GetKey(currentTrait)>thisValue) return (currentTrait-1);
+		/*while(currentTrait < thisList.Count){
+			if ((decimal)thisList.GetKey(currentTrait)>=thisValue) return (currentTrait-1);
 			++currentTrait;
+
 		}
 		return -1;
+		*/
 
-		/*
+
+	
 		for (int i = 0; i < thisList.Count; i++) {
 		if ((decimal)thisList.GetKey(i)>thisValue) return (i-1);
 		}
 		return -1;
-		*/
+	
+
 	}
 
 	
