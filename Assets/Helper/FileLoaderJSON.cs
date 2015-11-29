@@ -16,7 +16,7 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 	public override string getInputfileExtension(){
-		return "scenario";
+		return "json";
 	}
 
 	public override void loadFileByPath (string path){
@@ -32,8 +32,6 @@ public class FileLoaderJSON : FileLoader {
 	 * Loads the vadere output file .scenario and creates 3D objects from the 2D objects based on the IDmappings.config file.
 	 */
 	public override void buildGeometry(){
-	
-
 		buildObstacles ();
 		buildSources ();
 		buildTargets ();
@@ -178,7 +176,7 @@ public class FileLoaderJSON : FileLoader {
 	 * @param filename of the config file
 	 * @return Dictionary<string, string> containing the mapping from 2D-ID to 3D-typename
 	 */
-	private static Dictionary<string, string> getIDmappings(string filecontent){ //TODO use FileInfo here as well and check for exists
+	private static Dictionary<string, string> getIDmappings(string filecontent){ //TODO check if exists
 		var IDmappings = new Dictionary<string, string>();
 
 		foreach (string line in filecontent.Split("\n"[0])) {
