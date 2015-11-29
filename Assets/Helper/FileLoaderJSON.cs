@@ -71,7 +71,7 @@ public class FileLoaderJSON : FileLoader {
 		}
 
 		if(roofpoints.Count > 0)
-			createRoof("Roof_FBX", roofpoints, 6f);
+			createRoof("Roof_FBX", roofpoints, 12f);
 	}
 
 	private void buildSources(){

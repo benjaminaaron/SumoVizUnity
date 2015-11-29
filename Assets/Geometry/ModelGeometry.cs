@@ -49,7 +49,7 @@ public class ModelGeometry : Geometry {
 				
 				float newXscale = (xDim / currentXdim) * currentXscale;
 				float newYscale = (yDim / currentYdim) * currentYscale;
-				obj.transform.localScale = new Vector3(newXscale, 100, newYscale);
+				obj.transform.localScale = new Vector3(newXscale, newXscale / 4, newYscale); //TODO a smarter value for the height of the triangular prism?
 
 				break;
 			case "Table_FBX":
