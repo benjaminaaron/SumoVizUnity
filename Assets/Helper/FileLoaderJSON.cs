@@ -35,30 +35,30 @@ public class FileLoaderJSON : FileLoader {
 		buildObstacles ();
 		buildSources ();
 		buildTargets ();
-		//buildFloatingObjects ();
 	}
 
 	private void buildObstacles(){
+		List<Vector2> roofpoints = new List<Vector2>();
+
 		for (int i = 0; i < obstacles.Count; i++) {
 			string obstacleID = obstacles[i]["id"];
 			JSONNode shape = obstacles[i]["shape"];
-			//List<Vector2> roofpoints = new List<Vector2>();
 			if(IDmappings.ContainsKey (obstacleID)){
 				switch (IDmappings[obstacleID]) {
 				case "table":
 					createTable("Table_FBX", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
 					break;
-					/*case "roofpoint":
-						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
-						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
-						roofpoints.Add(new Vector2(x, y));
-						break;*/
-				case "objects":
-					createWall("object",parsePoints(shape),1.5f);//only an assumption
+				case "roofpoint":
+					float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
+					float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
+					createWall("roofpoint", parsePoints(shape), 6f);
+					roofpoints.Add(new Vector2(x, y));
 					break;
-					
+				case "objects":
+					createWall("object", parsePoints(shape), 1.5f);//only an assumption
+					break;
 				case "fence":
-					createWall("fence",parsePoints(shape),1.0f);//only an assumption
+					createWall("fence", parsePoints(shape), 1.0f);//only an assumption
 					break;
 				default:
 					createWall("wall", parsePoints(shape), 2f);
@@ -68,6 +68,9 @@ public class FileLoaderJSON : FileLoader {
 				createWall("wall", parsePoints(shape), 2f);
 			}
 		}
+
+		if(roofpoints.Count > 0)
+			createRoof("roof", roofpoints, 6f);
 	}
 
 	private void buildSources(){
