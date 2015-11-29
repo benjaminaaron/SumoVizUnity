@@ -16,7 +16,7 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 	public override string getInputfileExtension(){
-		return "scenario";
+		return "json";
 	}
 
 	public override void loadFileByPath (string path){
@@ -29,38 +29,37 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 	/**
-	 * Loads the vadere output file .scenario and creates 3D objects from the 2D objects based on the IDmappings.config file.
+	 * Loads the vadere output file name_scenario.json and creates 3D objects from the 2D objects based on the IDmappings.config file
 	 */
 	public override void buildGeometry(){
-	
-
 		buildObstacles ();
 		buildSources ();
 		buildTargets ();
-		//buildFloatingObjects ();
 	}
 
 	private void buildObstacles(){
+		List<Vector2> roofpoints = new List<Vector2>();
+
 		for (int i = 0; i < obstacles.Count; i++) {
 			string obstacleID = obstacles[i]["id"];
 			JSONNode shape = obstacles[i]["shape"];
-			//List<Vector2> roofpoints = new List<Vector2>();
+
 			if(IDmappings.ContainsKey (obstacleID)){
 				switch (IDmappings[obstacleID]) {
 				case "table":
 					createTable("Table_FBX", parsePoints(shape), 0.78f); //Measurements Table: 220x70x77 (l,w,h)
 					break;
-					/*case "roofpoint":
-						float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
-						float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
-						roofpoints.Add(new Vector2(x, y));
-						break;*/
-				case "objects":
-					createWall("object",parsePoints(shape),1.5f);//only an assumption
+				case "roofpoint":
+					float x = shape["x"].AsFloat + shape["width"].AsFloat / 2;
+					float y = shape["y"].AsFloat + shape["height"].AsFloat / 2;
+					//createWall("roofpoint", parsePoints(shape), 6f); //to check if it works
+					roofpoints.Add(new Vector2(x, y));
 					break;
-					
+				case "objects":
+					createWall("object", parsePoints(shape), 1.5f);//only an assumption
+					break;
 				case "fence":
-					createWall("fence",parsePoints(shape),1.0f);//only an assumption
+					createWall("fence", parsePoints(shape), 1.0f);//only an assumption
 					break;
 				default:
 					createWall("wall", parsePoints(shape), 2f);
@@ -70,12 +69,16 @@ public class FileLoaderJSON : FileLoader {
 				createWall("wall", parsePoints(shape), 2f);
 			}
 		}
+
+		if(roofpoints.Count > 0)
+			createRoof("Roof_FBX", roofpoints, 12f);
 	}
 
 	private void buildSources(){
 		for (int i = 0; i < sources.Count; i++) {
 			string sourceID = sources[i]["id"];
 			JSONNode shape = sources[i]["shape"];
+
 			if(IDmappings.ContainsKey (sourceID)){
 				switch (IDmappings[sourceID]) {
 				case "benchsource":
@@ -96,20 +99,10 @@ public class FileLoaderJSON : FileLoader {
 			createAreaGeometry("target", parsePoints(shape));
 		}
 	}
-
-	/*
-	private void buildFloatingObjects(){
-		if (roofpoints.Count > 0) {
-			float floatingHeight = 8;
-			float roofThickness = 1;
-			RoofFloatingGeometry.create("roof", roofpoints, floatingHeight, roofThickness);
-		}
-	}
-	*/
 	
 	/**
-	 * Loads the (renamed) vadere output file .trajectories and creates pedestrians with their respective trajectories.
-	 * @param filename the filename of the trajectories file without _trajectories.txt
+	 * Loads the vadere output file name_trajectories.txt and creates pedestrians with their respective trajectories
+	 * @param filename of the trajectories file without _trajectories.txt
 	 */
 	public override void loadTrajectories(string filename){
 		string filecontent = (Resources.Load ("vadere_output/" + filename + "_trajectories") as TextAsset).text;
@@ -137,7 +130,7 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 	/**
-	 * Parses points from obstacles in the .scenario file to a Vector2 list that can be passed to classes extending the Geometry class.
+	 * Parses points from obstacles in the scenario file to a Vector2 list that can be passed to classes extending the Geometry class
 	 * @param one 2D object encapsulated in a JSONNode
 	 * @return list of Vector2 objects
 	 */
@@ -174,11 +167,11 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 	/**
-	 * Parses an ID mapping config file to a dictionary that is used to decide what type of 3D object to create based on a 2D object.
+	 * Parses an ID mapping config file to a dictionary that is used to decide what type of 3D object to create based on a 2D object
 	 * @param filename of the config file
 	 * @return Dictionary<string, string> containing the mapping from 2D-ID to 3D-typename
 	 */
-	private static Dictionary<string, string> getIDmappings(string filecontent){ //TODO use FileInfo here as well and check for exists
+	private static Dictionary<string, string> getIDmappings(string filecontent){ //TODO check if exists
 		var IDmappings = new Dictionary<string, string>();
 
 		foreach (string line in filecontent.Split("\n"[0])) {

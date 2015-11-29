@@ -14,7 +14,8 @@ public class GeometryLoader : MonoBehaviour {
 		theme.getTerrain();//Getter is also the init
 	}
 	public void setWorldAsParent (GameObject go){
-		if(world == null)world = new GameObject("World");
+		if(world == null)
+			world = new GameObject("World");
 		go.transform.SetParent (world.transform);
 	}
 

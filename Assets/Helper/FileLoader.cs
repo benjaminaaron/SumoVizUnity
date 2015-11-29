@@ -25,4 +25,8 @@ public abstract class FileLoader {
 		AreaGeometry.create(name, verticesList);
 	}
 
+	protected void createRoof(string name, List<Vector2> roofpoints, float heightAboveGround){
+		ModelGeometry.create (name, roofpoints, heightAboveGround); 
+	}
+
 }
