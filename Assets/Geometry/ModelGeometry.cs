@@ -6,11 +6,13 @@ public class ModelGeometry : Geometry {
 
 
 	public static  void create (string prefabName, List<Vector2> edges, float height) {
+
 		GameObject obj = (GameObject) Instantiate (Resources.Load (prefabName));
 		obj.isStatic = true;
-		if (obj == null) {
-			throw new UnityException ();
-		}
+		if (obj == null)
+			throw new UnityException (prefabName + " not found");
+		GeometryLoader gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
+		gl.setWorldAsParent (obj);
 
 		switch (prefabName) {
 			case "Roof_FBX":
@@ -35,9 +37,11 @@ public class ModelGeometry : Geometry {
 				float xCenter = minX + xDim / 2;
 				float yCenter = minY + yDim / 2;
 				
-				obj.transform.position = new Vector3(xCenter, heightAboveGround, yCenter);
+				obj.transform.position = new Vector3(xCenter, height, yCenter);
 				
 				var renderer = obj.GetComponent<Renderer>();
+				//renderer.sharedMaterial = gl.theme.getRoofMaterial(); //TODO
+
 				float currentXdim = renderer.bounds.extents.x * 2;
 				float currentYdim = renderer.bounds.extents.z * 2;
 				float currentXscale = obj.transform.localScale.x;
@@ -73,8 +77,6 @@ public class ModelGeometry : Geometry {
 				break;			
 		}
 
-		GeometryLoader gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
-		gl.setWorldAsParent (p);
 	}
 	
 }
