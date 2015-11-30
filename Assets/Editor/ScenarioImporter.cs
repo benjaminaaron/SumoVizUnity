@@ -19,7 +19,6 @@ public class ScenarioImporter : MonoBehaviour {
 	static void importAccurateOutput() {
 		importOutput (new FileLoaderXML());
 	}
-	
 
 	private static void importOutput(FileLoader fileLoader){
 		EditorApplication.SaveCurrentSceneIfUserWantsTo();
@@ -35,9 +34,10 @@ public class ScenarioImporter : MonoBehaviour {
 			var fileName = Path.GetFileNameWithoutExtension (path); //var dir = Path.GetDirectoryName (path);
 			
 			RuntimeInitializer runtimeInitializer = GameObject.Find("RuntimeInitializer").GetComponent<RuntimeInitializer>();
-			runtimeInitializer.trajectoriesFilename = fileName;
+			runtimeInitializer.trajectoriesFilename = fileName.Substring(0, fileName.Length - "_scenario".Length); //TODO make this more stable?
+
 			runtimeInitializer.geometryLoader = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
-			runtimeInitializer.geometryLoader.setTheme (new BeerTentThemingMode ());
+			runtimeInitializer.geometryLoader.setTheme (new BeerTentThemingMode ()); //TODO read specifics from a config file instead?
 			
 			fileLoader.loadFileByPath(path);
 			fileLoader.buildGeometry();
@@ -45,6 +45,12 @@ public class ScenarioImporter : MonoBehaviour {
 			
 			//EditorApplication.SaveScene("Assets/Scenes/" + sceneName);
 		}
+	}
+
+	[MenuItem("Assets/delete imported objects")]
+	
+	static void deleteImportedObjects() {
+		DestroyImmediate (GameObject.Find ("World"));
 	}
 	
 }
