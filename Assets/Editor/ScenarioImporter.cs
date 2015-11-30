@@ -19,7 +19,6 @@ public class ScenarioImporter : MonoBehaviour {
 	static void importAccurateOutput() {
 		importOutput (new FileLoaderXML());
 	}
-	
 
 	private static void importOutput(FileLoader fileLoader){
 		EditorApplication.SaveCurrentSceneIfUserWantsTo();
@@ -46,6 +45,12 @@ public class ScenarioImporter : MonoBehaviour {
 			
 			//EditorApplication.SaveScene("Assets/Scenes/" + sceneName);
 		}
+	}
+
+	[MenuItem("Assets/delete imported objects")]
+	
+	static void deleteImportedObjects() {
+		DestroyImmediate (GameObject.Find ("World"));
 	}
 	
 }
