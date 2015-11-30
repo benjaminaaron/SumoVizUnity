@@ -11,7 +11,7 @@ public class GeometryLoader : MonoBehaviour {
 
 	public void setTheme(ThemingMode mode) {
 		theme = mode;
-		theme.getTerrain();//Getter is also the init
+		setWorldAsParent (theme.getTerrain()); //Getter is also the init
 	}
 	public void setWorldAsParent (GameObject go){
 		if(world == null)
