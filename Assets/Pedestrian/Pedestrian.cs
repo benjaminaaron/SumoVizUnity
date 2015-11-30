@@ -24,6 +24,7 @@ public class Pedestrian : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		gameObject.AddComponent<BoxCollider>();
 		transform.Rotate (0,90,0);
 		//sets the color for the pedestrians
@@ -33,7 +34,8 @@ public class Pedestrian : MonoBehaviour {
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
 		r = GetComponentInChildren<Renderer>() as Renderer;
 	
-	
+		//set Tag of the game object in order to find gameobjects with the same tag
+		gameObject.tag = "pedestrian";	
 	}
 
 	// Update is called once per frame
