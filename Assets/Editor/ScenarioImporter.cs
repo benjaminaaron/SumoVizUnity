@@ -35,9 +35,8 @@ public class ScenarioImporter : MonoBehaviour {
 			var fileName = Path.GetFileNameWithoutExtension (path); //var dir = Path.GetDirectoryName (path);
 			
 			RuntimeInitializer runtimeInitializer = GameObject.Find("RuntimeInitializer").GetComponent<RuntimeInitializer>();
-			string[] fileNameParts = fileName.Split ('_');
-			string fileNamePure = fileName.Substring(0, fileName.Length - fileNameParts[fileNameParts.Length - 1].Length - 1); //TODO make this more stable!
-			runtimeInitializer.trajectoriesFilename = fileNamePure;
+			//string fileNamePure = fileName.Substring(0, fileName.Length - fileNameParts[fileNameParts.Length - 1].Length - 1); //TODO make this more stable!
+			runtimeInitializer.trajectoriesFilename = fileName.Substring(0, fileName.Length - "_scenario".Length);
 
 			runtimeInitializer.geometryLoader = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
 			runtimeInitializer.geometryLoader.setTheme (new BeerTentThemingMode ());
