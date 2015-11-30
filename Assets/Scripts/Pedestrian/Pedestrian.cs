@@ -105,6 +105,10 @@ public class Pedestrian : MonoBehaviour {
 		this.name = "Pedestrian " + id;
 	}
 
+	public int getID(){
+		return id;
+	}
+
 	public void setPositions(SortedList p) {
 		positions.Clear();
 		foreach (PedestrianPosition ped in p.Values) {

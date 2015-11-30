@@ -52,5 +52,17 @@ public class ScenarioImporter : MonoBehaviour {
 	static void deleteImportedObjects() {
 		DestroyImmediate (GameObject.Find ("World"));
 	}
+
+	[MenuItem("Assets/test")]
 	
+	static void test() {
+		var pedContainer = GameObject.Find ("Pedestrians");
+		var peds = pedContainer.GetComponentsInChildren<Pedestrian>();
+		//Debug.Log (pedestrians.Length);
+
+		foreach (Pedestrian ped in peds) {		
+			Debug.Log (ped.getID() + ": " + ped.isActive());
+		}
+	}
+
 }
