@@ -4,48 +4,37 @@ using System.Collections;
 public class AgentView : MonoBehaviour
 {
 
-	private CardboardHead head = null;
-
 	//pedestrian that is currently followed
 	private GameObject currentPedestrian = null;
+
+
 	// Use this for initialization
 	void Start ()
 	{
-	
-		head = Camera.main.GetComponent<StereoController> ().Head;
-
-		//		foreach(GameObject ped in GameObject.FindGameObjectsWithTag("pedestrian"))
-		//		{
-		//			Debug.Log("found");  ""
-		//		}
-		
-		// Debug.Log(GameObject.FindGameObjectsWithTag("pedestrian").size();
-
-
-
-
 	}
 	
 	// LateUpdate is called after all Update functions have been called. 
 	void LateUpdate ()
 	{
 
-		if (currentPedestrian != null && currentPedestrian.activeInHierarchy && currentPedestrian.activeSelf) {
+		if (currentPedestrian != null) {
 
 			followPedestrian (currentPedestrian);
 		} else {
 
-			Debug.Log("No valid pedestrian found");
+			Debug.Log ("No valid pedestrian found");
 			findRandomPedestrian ();
 		}
 
-		if(Cardboard.SDK.Triggered){
-			findRandomPedestrian();
+		if (Cardboard.SDK.Triggered) {
+			findRandomPedestrian ();
 
 		}
 		
 	}
 
+	/** Move the camera relative to the position of the pedestrian that is followed.
+	 */
 	private void followPedestrian (GameObject pedestrian)
 	{
 
@@ -55,10 +44,13 @@ public class AgentView : MonoBehaviour
 
 	}
 
+	/** Find a random pedestrian from a list of GameObjected tagged with "pedestrian".
+	 * Set 'currentPedestrian' to that random pedestrian only if hes is still active (moving).
+	 */
 	private void findRandomPedestrian ()
 	{
 
-		GameObject[] pedestrians = GameObject.FindGameObjectsWithTag("pedestrian"); 
+		GameObject[] pedestrians = GameObject.FindGameObjectsWithTag ("pedestrian"); 
 
 		if (pedestrians.Length == 0) {
 			Debug.LogError ("No game objects are tagged with pedestrian");
@@ -66,48 +58,41 @@ public class AgentView : MonoBehaviour
 
 			System.Random random = new System.Random ();
 			int position = random.Next (1, pedestrians.Length);
-			bool isPedActive = pedestrians[position].GetComponentInChildren<Pedestrian>().isActive();
+			bool isPedActive = pedestrians [position].GetComponentInChildren<Pedestrian> ().isActive ();
 
-			while(!isPedActive){
+			while (!isPedActive) {
 				position = random.Next (1, pedestrians.Length);
-				isPedActive = pedestrians[position].GetComponentInChildren<Pedestrian>().isActive();
+				isPedActive = pedestrians [position].GetComponentInChildren<Pedestrian> ().isActive ();
 				Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
 			}
 
-				currentPedestrian = pedestrians [position];
-				Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
+			currentPedestrian = pedestrians [position];
+			Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
 
-			}
-
-			//if (((Pedestrian) pedestrians [position]).isActive){
-
-
-		//int position = random.Next (1, pedestrians.Length);
-		//Pedestrian tempPed = pedestrians [position].GetComponentInChildren<Pedestrian>();
-			
-
-	}
-
-	private void findActivePedestrian ()
-	{
-
-		GameObject[] pedestrians;
-		pedestrians = GameObject.FindGameObjectsWithTag ("pedestrian"); 
-		
-		
-		if (pedestrians.Length == 0) {
-			Debug.LogWarning ("No game objects are tagged with pedestrian");
-		} else {
-
-			foreach (GameObject pedestrian in pedestrians) {
-				if (pedestrian.activeSelf) {
-					currentPedestrian = pedestrian;
-					Debug.Log ("Set new pedestrian to follow : " + currentPedestrian
-					);
-					return;
-
-				}
-			}
 		}
+					
 	}
+
+//	private void findActivePedestrian ()
+//	{
+//
+//		GameObject[] pedestrians;
+//		pedestrians = GameObject.FindGameObjectsWithTag ("pedestrian"); 
+//		
+//		
+//		if (pedestrians.Length == 0) {
+//			Debug.LogWarning ("No game objects are tagged with pedestrian");
+//		} else {
+//
+//			foreach (GameObject pedestrian in pedestrians) {
+//				if (pedestrian.activeSelf) {
+//					currentPedestrian = pedestrian;
+//					Debug.Log ("Set new pedestrian to follow : " + currentPedestrian
+//					);
+//					return;
+//
+//				}
+//			}
+//		}
+//	}
 }
