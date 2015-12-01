@@ -16,6 +16,10 @@ public class ExtrudeGeometry : Geometry  {
 		*/
 		
 		GameObject obstacle = new GameObject (name);
+		obstacle.AddComponent<BoxCollider>();
+		BoxCollider cl = obstacle.GetComponent<BoxCollider>();
+
+
 		//setting the obstacle static
 		obstacle.isStatic = true;
 
@@ -129,7 +133,13 @@ public class ExtrudeGeometry : Geometry  {
 		mesh_filter.mesh = mesh;
 
 		GeometryLoader gl = GameObject.Find ("GeometryLoader").GetComponent<GeometryLoader> ();
+
+		cl.size = walls.GetComponent<Renderer>().bounds.size;
+		cl.center = walls.GetComponent<Renderer>().bounds.center;
+
 		gl.setWorldAsParent (obstacle);
+
+
 	}
 }
 

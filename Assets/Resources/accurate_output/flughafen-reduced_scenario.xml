@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><scenario name="flughafen-modell-v2">
+	<!-- all spatial information -->
+	<spatial>
+		<!-- one or more floors , discretization types:
+		0= CA Quadratic CellsNeumann Neighborhood
+		1=OSM Discretization -->
+		<floor cellDist="0.1" discretizationType="1" elevation="0" height="2" id="0" maxX="20" maxY="15" minX="-20" minY="-15">
+			<!-- possible types: obstacle, origin, destination, wall, openWall -->
+
+<object name="start" type="origin">
+	<point x="-19.27" y="3.15"/>
+	<point x="-15.15" y="3.15"/>
+	<point x="-15.15" y="-0.19"/>
+	<point x="-19.27" y="-0.19"/>
+</object>
+
+<object name="destination" type="destination">
+	<point x="17.00" y="1.40"/>
+	<point x="18.00" y="1.40"/>
+	<point x="18.00" y="0.00"/>
+	<point x="17.00" y="0.00"/>
+</object>
+
+<object name="lm1" type="destination">
+	<point x="-0.61" y="11.75"/>
+	<point x="0.79" y="11.75"/>
+	<point x="0.79" y="10.00"/>
+	<point x="-0.61" y="10.00"/>
+</object>
+
+<object name="lm2" type="destination">
+	<point x="1.39" y="11.75"/>
+	<point x="2.79" y="11.75"/>
+	<point x="2.79" y="10.00"/>
+	<point x="1.39" y="10.00"/>
+</object>
+
+<object name="lm3" type="destination">
+	<point x="3.39" y="11.75"/>
+	<point x="4.79" y="11.75"/>
+	<point x="4.79" y="10.00"/>
+	<point x="3.39" y="10.00"/>
+</object>
+
+<object name="lm4" type="destination">
+	<point x="5.39" y="11.75"/>
+	<point x="6.79" y="11.75"/>
+	<point x="6.79" y="10.00"/>
+	<point x="5.39" y="10.00"/>
+</object>
+
+<object capacity="1" name="wz1" timeToWait="10.0000" type="waitingZone">
+	<point x="-0.61" y="11.75"/>
+	<point x="0.79" y="11.75"/>
+	<point x="0.79" y="10.00"/>
+	<point x="-0.61" y="10.00"/>
+</object>
+
+<object capacity="1" name="wz2" timeToWait="10.0000" type="waitingZone">
+	<point x="1.39" y="11.75"/>
+	<point x="2.79" y="11.75"/>
+	<point x="2.79" y="10.00"/>
+	<point x="1.39" y="10.00"/>
+</object>
+
+<object capacity="1" name="wz3" timeToWait="10.0000" type="waitingZone">
+	<point x="3.39" y="11.75"/>
+	<point x="4.79" y="11.75"/>
+	<point x="4.79" y="10.00"/>
+	<point x="3.39" y="10.00"/>
+</object>
+
+<object capacity="1" name="wz4" timeToWait="10.0000" type="waitingZone">
+	<point x="5.39" y="11.75"/>
+	<point x="6.79" y="11.75"/>
+	<point x="6.79" y="10.00"/>
+	<point x="5.39" y="10.00"/>
+</object>
+
+<object for="wz1" name="pre-wz1" type="queuingArea">
+	<point x="-0.61" y="9.60"/>
+	<point x="0.79" y="9.60"/>
+	<point x="0.79" y="-1.40"/>
+	<point x="-0.61" y="-1.40"/>
+</object>
+
+<object for="wz2" name="pre-wz2-1" type="queuingArea">
+	<point x="1.39" y="9.60"/>
+	<point x="2.79" y="9.60"/>
+	<point x="2.79" y="-1.40"/>
+	<point x="1.39" y="-1.40"/>
+</object>
+
+<object for="wz3" name="pre-wz2-2" type="queuingArea">
+	<point x="3.39" y="9.60"/>
+	<point x="4.79" y="9.60"/>
+	<point x="4.79" y="-1.40"/>
+	<point x="3.39" y="-1.40"/>
+</object>
+
+<object for="wz4" name="pre-wz2-3" type="queuingArea">
+	<point x="5.39" y="9.60"/>
+	<point x="6.79" y="9.60"/>
+	<point x="6.79" y="-1.40"/>
+	<point x="5.39" y="-1.40"/>
+</object>
+
+<object name="ow1" type="openWall">
+	<point x="-1.60" y="14.20"/>
+	<point x="-1.60" y="-10.20"/>
+	<point x="1.20" y="-10.20"/>
+	<point x="1.20" y="-2.20"/>
+</object>
+
+<object name="ow2" type="openWall">
+	<point x="8.20" y="14.20"/>
+	<point x="8.20" y="-12.40"/>
+	<point x="4.00" y="-12.40"/>
+	<point x="4.00" y="-2.20"/>
+</object>
+
+<object name="ow3" type="openWall">
+	<point x="10.40" y="4.40"/>
+	<point x="10.40" y="-14.28"/>
+</object>
+
+<object name="ow4" type="openWall">
+	<point x="-10.00" y="-14.28"/>
+	<point x="-10.00" y="10.00"/>
+	<point x="-3.60" y="10.00"/>
+	<point x="-3.60" y="-4.40"/>
+</object>
+
+<object name="ow5" type="openWall">
+	<point x="-14.15" y="8.40"/>
+	<point x="-10.00" y="8.40"/>
+</object>
+
+<object name="ow6" type="openWall">
+	<point x="-11.80" y="10.00"/>
+	<point x="-20.00" y="10.00"/>
+</object>
+
+<object name="w1" type="wall">
+	<point x="12.20" y="12.40"/>
+	<point x="13.40" y="12.40"/>
+	<point x="13.40" y="9.40"/>
+	<point x="12.20" y="9.40"/>
+</object>
+
+<object name="w2" type="wall">
+	<point x="12.20" y="7.00"/>
+	<point x="13.40" y="7.00"/>
+	<point x="13.40" y="4.00"/>
+	<point x="12.20" y="4.00"/>
+</object>
+
+<object name="w3" type="wall">
+	<point x="12.20" y="1.40"/>
+	<point x="13.40" y="1.40"/>
+	<point x="13.40" y="-1.60"/>
+	<point x="12.20" y="-1.60"/>
+</object>
+
+<object name="w4" type="wall">
+	<point x="12.20" y="-4.00"/>
+	<point x="13.40" y="-4.00"/>
+	<point x="13.40" y="-7.00"/>
+	<point x="12.20" y="-7.00"/>
+</object>
+
+<object name="w5" type="wall">
+	<point x="12.20" y="-9.40"/>
+	<point x="13.40" y="-9.40"/>
+	<point x="13.40" y="-12.40"/>
+	<point x="12.20" y="-12.40"/>
+</object>
+
+<object name="ow7" type="openWall">
+	<point x="-20.00" y="5.00"/>
+	<point x="-14.00" y="5.00"/>
+	<point x="-14.00" y="-7.20"/>
+	<point x="-18.20" y="-7.20"/>
+</object>
+
+<object name="ow8" type="openWall">
+	<point x="19.88" y="-14.28"/>
+	<point x="-20.00" y="-14.28"/>
+	<point x="-20.00" y="14.20"/>
+	<point x="19.88" y="14.20"/>
+	<point x="19.88" y="-14.28"/>
+</object>
+
+
+		</floor>
+	</spatial>
+	<!-- all other information -->
+	<meta>
+		<groups>
+
+   		 <row>1,0.25</row>
+   		 <row>2,0.5</row>
+   		 <row>3,0.25</row>
+
+		</groups>
+		<!-- motion model: could be euklid, floorField -->
+		<motionModel floorID="0">floorField</motionModel>
+		
+		<!-- time intervals: <from[s]>,<to[s]>: <number of pedestrians> -->
+		<Interval name="i1" value="0,300:150"/>
+		<Interval name="i3" value="0,?:1000"/>
+ 
+		<!-- interval matrix: <type[source, dest]>, <interval1>, <interval2>,...' -->
+		<Interval-Matrix>
+			<row>start,i1</row>
+			<row>destination,i3</row>
+		</Interval-Matrix>
+
+		<!-- pedestrian characteristics: could be FPWalking, SPWalking, SALLWalking, ACOWalking -->
+		<PedCharacters>
+		<type name="FPLMWalking" ratio="1"/> 
+		</PedCharacters>
+
+		 <!-- landmarks are intermediate destinations which have to be passed -->
+	 <Landmarks>
+		<path id="p1">pre-wz1,wz1</path> 
+ 		<path id="p2">pre-wz2-1,wz2</path> 
+		<path id="p3">pre-wz2-2,wz3</path> 
+ 		<path id="p4">pre-wz2-3,wz4</path> 
+		</Landmarks>
+	
+		 <!-- landmark matrix defines which landmarks path with which probability for which origin-destination pair shall be set -->
+	 <LandmarkMatrix>
+			<row>start,destination,p1=0.25,p2=0.25,p3=0.25,p4=0.25</row>
+	</LandmarkMatrix>
+	
+	<!-- origin destination matrix: <origin>,<destination1>=<probability 
+			[0..1]>, <destination1>=<probability [0..1]> -->
+		<OD-Matrix>
+			<row>start,destination=1</row>
+		</OD-Matrix>
+	</meta>
+<output><kernelVersion branch="(no branch info)" buildhost="(no buildhost info)" gitDescribe="(no version number info)" isoDate="(no date info)"/><usedSettings EUKLID="0" FLOORFIELD="1" alphaDerivAngle="1.0" alphaForAStar="1.5" alphaPheromone="1.0" betaDistToDest="1.0" betaMaxDir="1.0" deviation="0.26" discretizationDistance="2.0" doublePrecision="1.0E-8" errorRatio="0.9" gamma="2.0729" geometricPrecision="1.0E-4" haloDistance="2.0" lastStep="1500" maxAlpha="60.0" maxTorsoSize="0.3" maxVeloc="1.61" meanVeloc="1.34" minDistanceBetweenVertices="1.0" minTorsoSize="0.3" minVeloc="0.46" navPointDistance="1.0" navPointName="nP_" navPointSize="0.5" newOutputWriteInterval="5.0" noOfNeighbors="50" perceptionRadius="2.0" queueSpotSize="0.7" randForAStar="true" rhoAngle="1.0" rhoRelEnh="1.0" statisticRuns="false" useDynamicFloorField="true" useVisibilityGraph="true"/><parameter><backgroundImg/></parameter><statistics><noOfPeds>150</noOfPeds><simTime>908.8744285714284</simTime></statistics><pedestrianLookup>0,0,-1;1,0,0;2,0,0;3,0,1;4,0,1;5,0,2;6,0,2;7,0,2;8,0,-1;9,0,3;10,0,3;11,0,4;12,0,4;13,0,5;14,0,5;15,0,5;17,0,6;16,0,-1;19,0,7;18,0,6;21,0,8;20,0,7;23,0,8;22,0,8;25,0,9;24,0,-1;27,0,10;26,0,9;29,0,11;28,0,10;31,0,11;30,0,11;34,0,12;35,0,13;32,0,-1;33,0,12;38,0,14;39,0,14;36,0,13;37,0,14;42,0,15;43,0,16;40,0,-1;41,0,15;46,0,17;47,0,17;44,0,16;45,0,17;51,0,19;50,0,18;49,0,18;48,0,-1;55,0,20;54,0,20;53,0,20;52,0,19;59,0,22;58,0,21;57,0,21;56,0,-1;63,0,23;62,0,23;61,0,23;60,0,22;68,0,25;69,0,26;70,0,26;71,0,26;64,0,-1;65,0,24;66,0,24;67,0,25;76,0,28;77,0,29;78,0,29;79,0,29;72,0,-1;73,0,27;74,0,27;75,0,28;85,0,32;84,0,31;87,0,32;86,0,32;81,0,30;80,0,-1;83,0,31;82,0,30;93,0,35;92,0,34;95,0,35;94,0,35;89,0,33;88,0,-1;91,0,34;90,0,33;102,0,38;103,0,38;100,0,37;101,0,38;98,0,36;99,0,37;96,0,-1;97,0,36;110,0,41;111,0,41;108,0,40;109,0,41;106,0,39;107,0,40;104,0,-1;105,0,39;119,0,44;118,0,44;117,0,44;116,0,43;115,0,43;114,0,42;113,0,42;112,0,-1;127,0,47;126,0,47;125,0,47;124,0,46;123,0,46;122,0,45;121,0,45;120,0,-1;137,0,51;136,0,-1;139,0,52;138,0,51;141,0,53;140,0,52;143,0,53;142,0,53;129,0,48;128,0,-1;131,0,49;130,0,48;133,0,50;132,0,49;135,0,50;134,0,50;144,0,-1;145,0,54;146,0,54;147,0,55;148,0,55;149,0,-1;</pedestrianLookup><objectLookup>destination,0,destination;
+destination,1,lm1;
+destination,2,lm2;
+destination,3,lm3;
+destination,4,lm4;
+destination,5,nP_14;
+destination,6,nP_15;
+destination,7,nP_16;
+destination,8,nP_17;
+destination,9,nP_18;
+destination,10,nP_19;
+destination,11,nP_20;
+destination,12,nP_21;
+destination,13,nP_22;
+destination,15,nP_24;
+destination,16,nP_25;
+destination,17,nP_26;
+destination,18,nP_27;
+destination,19,nP_28;
+destination,20,nP_29;
+destination,21,nP_30;
+destination,22,nP_31;
+destination,23,nP_32;
+destination,24,nP_33;
+destination,25,nP_34;
+destination,26,nP_35;
+destination,27,nP_36;
+destination,28,nP_37;
+destination,29,nP_38;
+destination,30,nP_39;
+destination,32,nP_41;
+destination,34,nP_43;
+destination,35,nP_44;
+destination,36,nP_45;
+destination,38,nP_47;
+destination,39,nP_48;
+destination,40,nP_49;
+destination,42,nP_51;
+destination,44,nP_53;
+destination,45,nP_54;
+destination,47,nP_56;
+destination,48,nP_57;
+destination,49,nP_58;
+destination,50,nP_59;
+origin,0,start;
+</objectLookup><graph floorID="0"><vertices>nP_27=[-2.8928932188134526, 10.707106781186548];Destination4=[4.09, 10.875];nP_18=[-14.857106781186548, 7.6928932188134524];nP_28=[-2.3071067811865476, -10.907106781186547];QueueingArea11=[2.09, 4.1];nP_31=[1.9071067811865476, -1.4928932188134527];nP_49=[14.107106781186548, -8.692893218813452];nP_34=[4.707106781186548, -1.4928932188134527];WaitingZone9=[6.09, 10.875];WaitingZone6=[0.08999999999999997, 10.875];nP_29=[0.4928932188134524, -1.4928932188134527];nP_47=[11.492893218813451, 13.107106781186548];nP_17=[-18.907106781186545, -6.492893218813452];QueueingArea10=[0.08999999999999997, 4.1];nP_30=[1.9071067811865474, -10.907106781186547];nP_45=[11.492893218813451, 7.707106781186548];nP_26=[-2.8928932188134526, -5.107106781186548];nP_53=[14.107106781186548, 2.1071067811865474];nP_43=[11.492893218813451, 2.1071067811865474];nP_39=[11.492893218813451, -8.692893218813452];nP_56=[14.107106781186548, 8.692893218813452];nP_21=[-13.292893218813452, 5.707106781186548];nP_41=[11.492893218813451, -3.2928932188134525];nP_44=[11.492893218813451, 3.2928932188134525];nP_16=[-18.907106781186545, -7.907106781186548];nP_22=[-11.092893218813453, 9.292893218813452];nP_37=[11.107106781186548, 5.107106781186548];nP_20=[-13.292893218813452, -7.907106781186547];nP_54=[14.107106781186548, 3.2928932188134525];Destination3=[2.09, 10.875];nP_25=[-4.3071067811865476, -5.107106781186548];nP_48=[14.107106781186548, -13.107106781186548];nP_33=[3.2928932188134525, -1.4928932188134527];nP_35=[8.907106781186547, -13.107106781186548];Destination1=[17.5, 0.7];nP_38=[11.492893218813451, -13.107106781186548];nP_57=[14.107106781186548, 13.107106781186548];nP_24=[-10.707106781186548, 10.707106781186548];Origin0=[-17.21, 1.48];nP_32=[3.2928932188134525, -13.107106781186548];nP_51=[14.107106781186548, -3.2928932188134525];nP_36=[9.692893218813452, 5.107106781186548];QueueingArea12=[4.09, 4.1];nP_19=[-14.857106781186548, 9.107106781186548];QueueingArea13=[6.09, 4.1];</vertices><edges>nP_44-nP_43,nP_31-nP_30,nP_31-nP_33,nP_43-Destination1,nP_33-QueueingArea12,nP_33-QueueingArea10,nP_44-Destination1,nP_48-nP_49,nP_57-nP_47,nP_21-nP_20,QueueingArea11-nP_31,nP_21-nP_18,nP_32-Destination3,nP_32-Destination4,nP_51-Destination1,nP_48-nP_38,nP_57-nP_56,nP_31-nP_29,nP_44-nP_37,Destination1-nP_53,QueueingArea10-nP_34,nP_41-nP_39,nP_47-nP_57,Destination1-nP_56,Destination4-WaitingZone9,Destination4-WaitingZone6,nP_49-nP_39,nP_33-Destination4,nP_33-Destination3,nP_31-Destination3,nP_34-Destination3,nP_45-nP_56,nP_34-Destination4,WaitingZone9-QueueingArea13,Destination1-nP_51,nP_31-Destination4,WaitingZone9-QueueingArea11,nP_41-Destination1,nP_44-nP_54,nP_49-nP_48,QueueingArea11-Destination3,QueueingArea11-Destination4,QueueingArea10-nP_29,nP_41-nP_43,nP_49-Destination1,nP_22-nP_24,QueueingArea13-QueueingArea12,nP_39-nP_41,nP_33-nP_31,nP_54-Destination1,nP_33-nP_30,nP_32-nP_30,nP_32-nP_35,nP_32-nP_33,nP_33-nP_34,Destination3-WaitingZone6,nP_39-nP_49,Destination3-WaitingZone9,QueueingArea13-WaitingZone6,QueueingArea13-WaitingZone9,nP_48-Destination1,nP_47-nP_45,nP_32-nP_28,nP_22-nP_19,nP_38-nP_39,QueueingArea12-nP_29,nP_31-QueueingArea11,nP_31-QueueingArea13,nP_34-nP_33,nP_38-nP_48,WaitingZone6-WaitingZone9,nP_29-nP_31,QueueingArea12-nP_34,nP_19-nP_18,nP_17-nP_16,nP_53-nP_51,nP_25-nP_28,nP_29-Destination3,nP_25-nP_26,nP_29-Destination4,WaitingZone6-Destination4,QueueingArea12-Destination3,WaitingZone6-Destination3,QueueingArea12-Destination4,nP_53-nP_54,nP_53-Destination1,QueueingArea13-nP_34,nP_20-nP_16,Destination4-Destination3,nP_43-nP_53,WaitingZone6-QueueingArea10,WaitingZone6-QueueingArea12,WaitingZone9-WaitingZone6,nP_20-nP_21,nP_53-nP_43,QueueingArea13-nP_29,QueueingArea12-QueueingArea11,QueueingArea12-QueueingArea13,nP_26-nP_28,nP_26-nP_27,nP_26-nP_25,nP_37-nP_36,nP_51-nP_41,nP_39-nP_38,nP_51-nP_49,nP_53-nP_36,QueueingArea12-WaitingZone6,QueueingArea12-WaitingZone9,QueueingArea10-Destination3,QueueingArea10-Destination4,nP_51-nP_53,nP_17-Origin0,nP_24-nP_22,QueueingArea11-WaitingZone6,QueueingArea11-WaitingZone9,nP_24-nP_27,nP_54-nP_44,nP_49-nP_51,nP_56-Destination1,nP_16-nP_20,nP_28-nP_26,nP_41-nP_51,nP_34-QueueingArea12,nP_34-QueueingArea10,nP_45-nP_47,nP_18-nP_21,nP_30-nP_28,nP_36-nP_37,nP_36-nP_35,nP_57-Destination1,nP_36-Destination1,nP_54-nP_56,QueueingArea10-QueueingArea11,nP_54-nP_53,Destination4-QueueingArea10,QueueingArea10-WaitingZone9,nP_27-nP_24,Destination4-QueueingArea12,nP_27-nP_26,QueueingArea13-Destination3,QueueingArea13-Destination4,nP_30-nP_31,nP_30-nP_32,WaitingZone9-Destination3,WaitingZone9-Destination4,nP_45-nP_37,nP_29-QueueingArea12,nP_30-Destination4,nP_29-QueueingArea10,nP_30-Destination3,QueueingArea10-WaitingZone6,nP_35-nP_32,Destination3-Destination4,Destination3-QueueingArea11,nP_36-nP_53,nP_43-nP_44,nP_56-nP_54,Destination3-QueueingArea13,nP_43-nP_41,Origin0-nP_17,nP_56-nP_57,nP_37-nP_44,nP_37-nP_45,nP_35-nP_36,nP_28-nP_30,nP_16-nP_17,nP_56-nP_45,QueueingArea11-QueueingArea12,QueueingArea11-QueueingArea10,nP_19-nP_22,nP_36-nP_45,nP_18-nP_19,</edges></graph><floor elevation="0.0" id="0" maxDensity="3.53677651315323" microTimeStepLength="0.5268837267080745">2.63,0,-15.98,0.13,1.55,0,0;
+3.16,0,-16.45,-0.56,0.79,1,0;
+3.69,0,-16.55,-1.38,1.02,1,0;
+4.22,0,-16.72,-2.19,1.15,1,0;
+4.74,0,-16.96,-2.98,1.57,1,0;
+5.27,0,-17.16,-3.78,1.57,1,0;
+5.8,0,-17.57,-4.5,1.56,1,0;
+6.32,1,-15.47,1.82,1.11,1,0;
+6.32,2,-16.05,0.63,1.55,1,0;
+6.32,0,-17.94,-5.24,1.56,1,0;
+6.85,1,-15.47,1.82,1.11,1,0;
+6.85,2,-16.05,0.63,1.55,1,0;
+6.85,0,-18.22,-6.02,1.56,1,0;
+7.38,1,-15.4,1.16,0.63,1,0;
+7.38,2,-16.12,-0.2,0.79,1,0;
+7.38,0,-18.19,-6.85,1.57,1,0;
+7.9,1,-15.55,0.5,0.84,1,0;
+7.9,2,-16.39,-0.98,1.04,1,0;
+7.9,0,-18.38,-7.65,1.56,1,0;
+8.43,1,-15.79,-0.12,0.93,1,0;
+8.43,2,-16.39,-0.98,1.04,1,0;
+8.43,0,-17.55,-7.6,1.08,1.11,0;
+8.96,1,-15.61,-0.77,1.22,1,0;
+8.96,2,-16.74,-1.73,0.93,1,0;
+8.96,0,-16.73,-7.52,1,1.23,0;
+9.48,1,-15.83,-1.4,1.23,1,0;
+9.48,2,-16.74,-1.73,0.93,1,0;
+9.48,0,-15.92,-7.67,1.15,1.03,0;
+10.01,1,-15.9,-2.06,1.23,1,0;
+10.01,2,-16.84,-2.55,0.93,1,0;
+10.01,3,-16.51,2.47,1.54,1,0;
+10.01,4,-18.58,1.37,1.11,1,0;
+10.01,0,-15.09,-7.67,1.56,1,0;
+10.54,1,-15.9,-2.06,1.23,1,0;
+10.54,2,-17.23,-3.28,1.03,1,0;
+10.54,3,-16.51,2.47,1.54,1,0;
+10.54,4,-18.58,1.37,1.11,1,0;
+10.54,0,-14.48,-7.55,1.18,1.17,0;
+11.06,1,-16.18,-2.67,0.98,1,0;
+11.06,2,-17.23,-3.28,1.03,1,0;
+11.06,3,-16.69,1.66,0.78,1,0;
+11.06,4,-18.76,0.73,0.63,1,0;
+11.06,0,-13.66,-7.52,1.37,1.03,0;
+11.59,1,-16.56,-3.22,0.93,1,0;
+11.59,2,-17.33,-4.1,0.93,1,0;
+11.59,3,-16.48,0.87,1.01,1,0;
+11.59,4,-18.76,0.73,0.63,1,0;
+11.59,0,-13.57,-6.69,1.15,1.07,0;
+12.12,1,-16.48,-3.88,0.91,1,0;
+12.12,2,-17.33,-4.1,0.93,1,0;
+12.12,3,-17.06,0.28,1.07,1,0;
+12.12,4,-18.77,0.06,0.63,1,0;
+12.12,0,-13.45,-5.87,1.15,1,0;
+12.65,1,-16.78,-4.48,1.21,1,0;
+12.65,2,-17.62,-4.87,0.93,1,0;
+12.65,3,-17.04,-0.54,1.41,1,0;
+12.65,4,-18.77,0.06,0.63,1,0;
+12.65,0,-13.23,-5.08,1.32,1,0;
+13.17,1,-16.9,-5.14,1.22,1,0;
+13.17,2,-17.62,-4.87,0.93,1,0;
+13.17,3,-17.04,-0.54,1.41,1,0;
+13.17,4,-19.16,-0.48,0.6,1,0;
+13.17,0,-13.24,-4.25,1.56,1,0;
+13.7,1,-17.4,-5.59,1.19,1,0;
+13.7,2,-18.11,-5.54,0.78,1,0;
+13.7,3,-17.1,-1.37,1.16,1,0;
+13.7,4,-19.16,-0.48,0.6,1,0;
+13.7,0,-13.05,-3.44,1.56,1,0;
+14.23,1,-17.8,-6.12,1.23,1,0;
+14.23,2,-18.54,-6.24,1.05,1,0;
+14.23,3,-17.1,-1.37,1.16,1,0;
+14.23,4,-19.1,-1.15,0.59,1,0;
+14.23,0,-13.14,-2.62,1.55,1,0;
+14.75,1,-17.8,-6.12,1.23,1,0;
+14.75,2,-18.52,-7.07,1.13,1,0;
+14.75,3,-17.09,-2.19,0.94,1,0;
+14.75,4,-19.14,-1.81,0.84,1,0;
+14.75,0,-13.05,-1.8,1.56,1,0;
+15.28,1,-18.46,-6.23,0.63,1,0;
+15.28,2,-17.94,-7.66,1.35,1,0;
+15.28,3,-17.39,-2.96,1.02,1,0;
+15.28,4,-19.22,-2.48,0.95,1,0;
+15.28,0,-12.97,-0.98,1.56,1,0;
+15.81,1,-18.48,-6.9,0.65,1,0;
+15.81,2,-17.11,-7.7,1.13,1,0;
+15.81,3,-17.39,-2.96,1.02,1,0;
+15.81,4,-19.47,-3.1,1.26,1,0;
+15.81,0,-13.03,-0.15,1.56,1,0;
+16.33,1,-18.39,-7.56,0.74,1,0;
+16.33,2,-17.11,-7.7,1.13,1,0;
+16.33,3,-17.66,-3.74,0.92,1,0;
+16.33,4,-19.47,-3.1,1.26,1,0;
+16.33,5,-18.35,0.66,1.6,1,0;
+16.33,0,-12.84,0.65,1.56,1,0;
+16.86,1,-17.84,-7.95,1.15,1,0;
+16.86,2,-16.29,-7.66,1.01,1.04,0;
+16.86,3,-17.66,-3.74,0.92,1,0;
+16.86,4,-19.47,-3.1,1.26,1,0;
+16.86,5,-18.35,0.66,1.6,1,0;
+16.86,0,-12.74,1.48,1.56,1,0;
+17.39,1,-17.24,-8.24,1.11,1,0;
+17.39,2,-16.29,-7.66,1.01,1.04,0;
+17.39,3,-17.95,-4.51,0.94,1,0;
+17.39,4,-19.38,-3.76,0.83,1,0;
+17.39,5,-18.23,-0.17,0.8,1,0;
+17.39,6,-16.33,0.49,1.54,1,0;
+17.39,7,-15.94,1.31,1.6,1,0;
+17.39,0,-12.7,2.3,1.56,1,0;
+17.91,1,-16.57,-8.23,1.1,1,0;
+17.91,2,-15.48,-7.85,0.94,1,0;
+17.91,3,-17.95,-4.51,0.94,1,0;
+17.91,4,-19.42,-4.43,0.63,1,0;
+17.91,5,-18.23,-0.17,0.8,1,0;
+17.91,6,-16.33,0.49,1.54,1,0;
+17.91,7,-15.94,1.31,1.6,1,0;
+17.91,0,-12.84,3.12,1.55,1,0;
+18.44,1,-15.97,-8.51,1.23,1,0;
+18.44,2,-15.48,-7.85,0.94,1,0;
+18.44,3,-18.24,-5.28,0.78,1,0;
+18.44,4,-19.43,-5.1,1.27,1,0;
+18.44,5,-18.06,-1,0.8,1,0;
+18.44,6,-16.71,-0.24,0.78,1,0;
+18.44,7,-15.84,0.48,0.8,1,0;
+18.44,0,-13.04,3.92,1.55,1,0;
+18.44,8,-16.73,2.83,0.9,0,0;
+18.97,1,-15.97,-8.51,1.23,1,0;
+</floor></output></scenario>

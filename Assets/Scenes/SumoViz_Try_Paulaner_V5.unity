@@ -36,7 +36,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 211885205}
+  m_Sun: {fileID: 0}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -12290,66 +12290,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .497782201, y: .789286494, z: 2.20327282}
   m_Center: {x: .000669002533, y: -.385206223, z: .000313043594}
---- !u!1 &211885204
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 211885206}
-  - 108: {fileID: 211885205}
-  m_Layer: 0
-  m_Name: SunLight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &211885205
-Light:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 211885204}
-  m_Enabled: 1
-  serializedVersion: 6
-  m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 1
-    m_Resolution: -1
-    m_Strength: .600000024
-    m_Bias: .0500000007
-    m_NormalBias: .400000006
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 12100000, guid: 09ebe82dbd1113c3d000dc0b8d76c639, type: 2}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 1
-  m_BounceIntensity: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
-  m_AreaSize: {x: 1, y: 1}
---- !u!4 &211885206
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 211885204}
-  m_LocalRotation: {x: .902036905, y: -3.36979262e-08, z: -5.83665063e-08, w: .431659043}
-  m_LocalPosition: {x: 49, y: 204, z: -189}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
 --- !u!1 &212649873
 GameObject:
   m_ObjectHideFlags: 0
@@ -72632,6 +72572,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1205406328}
   m_Mesh: {fileID: 4300000, guid: 7fc3171e69f5f774dbf75d3c44d77df9, type: 3}
+--- !u!1001 &1205664555
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 204
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -189
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: .902036905
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -3.36979262e-08
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -5.83665063e-08
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: .431659043
+      objectReference: {fileID: 0}
+    - target: {fileID: 485602, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fa1d221ac21ec6e40ac9421624d92a08, type: 2}
+  m_IsPrefabParent: 0
 --- !u!43 &1206865284
 Mesh:
   m_ObjectHideFlags: 0
@@ -79103,7 +79085,7 @@ GameObject:
   - 114: {fileID: 1305639443}
   - 114: {fileID: 1305639442}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

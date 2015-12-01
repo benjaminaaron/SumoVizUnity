@@ -62,7 +62,7 @@ public class FileLoaderJSON : FileLoader {
 					createWall("fence", parsePoints(shape), 1.0f);//only an assumption
 					break;
 				default:
-					createWall("wall", parsePoints(shape), 2f);
+					createWall("wall", parsePoints(shape), 6f);
 					break;			
 				}
 			} else {
@@ -71,7 +71,7 @@ public class FileLoaderJSON : FileLoader {
 		}
 
 		if(roofpoints.Count > 0)
-			createRoof("Roof_FBX", roofpoints, 12f);
+			createRoof("Roof_FBX", roofpoints, 10.32f);
 	}
 
 	private void buildSources(){

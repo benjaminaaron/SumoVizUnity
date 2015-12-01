@@ -25,7 +25,7 @@ public class ScenarioImporter : MonoBehaviour {
 		
 		string currentSceneName = Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
 		var continueOk = true;
-		if (currentSceneName == "SumoViz") {
+		if (currentSceneName == "BaseScene") {
 			continueOk = !EditorUtility.DisplayDialog("duplicate scene", "It is recommend that you first duplicate the SumoViz Scene (select it in the Scenes folder and use Edit > Duplicate), rename it optionally and doubleclick the duplicated scene.", "let me duplicate first", "continue");
 		}
 		
