@@ -8,3 +8,4 @@
 7=table
 #8=bench 
 9=fence
+10=door
