@@ -25,7 +25,6 @@ public class FileLoaderXML : FileLoader {
 
 	// Neues Format: Dateien liegen im Speicher!!!!! nicht im xml!
 
-
 	public override string getIdentifier(){
 		return "accurate";
 	}
@@ -35,8 +34,6 @@ public class FileLoaderXML : FileLoader {
 	}
 
 	public override void loadTrajectories (string filename){
-		//TODO Lesya
-
 		// In dieser Methode die Fallunterscheidung machen zwischen alten und neuen Dateien!
 		if (!System.IO.File.Exists (filename)) {
 			Debug.LogError ("Error: File " + filename + " not found.");
@@ -53,10 +50,7 @@ public class FileLoaderXML : FileLoader {
 		
 		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 		foreach (XmlElement floor in output.SelectNodes("floor")) {
-			if (floor.GetAttribute("csvAt") == null) { 
-
-
-
+			if (floor.GetAttribute("csvAt") == null) {
 				using (StreamReader reader = new StreamReader(new MemoryStream(
 					Encoding.UTF8.GetBytes(floor.InnerText)))) {
 					
@@ -93,10 +87,10 @@ public class FileLoaderXML : FileLoader {
 				// Kann man die strings einfach mit + aneinanderhängen
 				string pathToOutFile = pathToDir + pathToCsv;
 
-				var csvReader = new StreamReader(File.OpenRead(@ pathToOutFile));
+				var csvReader = new StreamReader(File.OpenRead(pathToOutFile));
 				string line = csvReader.ReadLine();
 				var values = line.Split(';');
-				if(values.Length >=3) {
+				if(values.Length >= 3) {
 					decimal time;
 					int id;
 					float x;
@@ -105,22 +99,12 @@ public class FileLoaderXML : FileLoader {
 					int.TryParse (values[1], out id);
 					float.TryParse (values[2], out x);
 					float.TryParse (values[3], out y);
-					pl.addPedestrianPosition(new PedestrianPosition(id,time,x,y));
-
+					pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
 				}
-
-
 			}
-
-
-
-
 		}
-		pl.createPedestrians ();
-		
+		pl.createPedestrians ();	
 	}
-	
-
 
 	public override void loadFileByPath(string path) {
 		if (!System.IO.File.Exists (path)) {
@@ -140,17 +124,17 @@ public class FileLoaderXML : FileLoader {
 
 			height = TryParseWithDefault.ToSingle(floor.GetAttribute("height"), 1.0f);
 
-			openWalls = List<XmlElement>();
-			walls = List<XmlElement>();
-			origins = List<XmlElement>();
-			destinations = List<XmlElement>();
-			scaledAreas = List<XmlElement>();
-			waitingZones = List<XmlElement>();
-			portals = List<XmlElement>();
-			beamExits = List<XmlElement>();
-			eofWalls = List<XmlElement>();
-			queuingAreas = List<XmlElement>();
-			obstacles = List<XmlElement>();
+			openWalls = new List<XmlElement>();
+			walls = new List<XmlElement>();
+			origins = new List<XmlElement>();
+			destinations = new List<XmlElement>();
+			scaledAreas = new List<XmlElement>();
+			waitingZones = new List<XmlElement>();
+			portals = new List<XmlElement>();
+			beamExits = new List<XmlElement>();
+			eofWalls = new List<XmlElement>();
+			queuingAreas = new List<XmlElement>();
+			obstacles = new List<XmlElement>();
 
 			foreach(XmlElement geomObj in floor.SelectNodes("object")) {
 				// Wann welchen Typ von extrudeGeometry verwenden?
@@ -195,16 +179,11 @@ public class FileLoaderXML : FileLoader {
 					eofWalls.Add (geomObj);
 					break;
 				default: 
-					Debug.Log ("Warning: XML Geometra parser: Don't know how" +
-					           "to parse Object of type '" + geomObj.GetAttribute("type") + "'.");
+					Debug.Log ("Warning: XML Geometr< parser: Don't know how to parse Object of type '" + geomObj.GetAttribute("type") + "'.");
 					break;
-					
-					
-					
 				}
 			}
 		}
-
 	}
 
 	public override void buildGeometry(){
@@ -212,11 +191,7 @@ public class FileLoaderXML : FileLoader {
 		buildTargets ();
 		buildObstacles ();
 		buildOtherObjects ();
-
-
 	}
-
-
 
 	private void buildTargets() {
 		if (destinations.Count != 0) {
@@ -250,7 +225,6 @@ public class FileLoaderXML : FileLoader {
 				ObstacleExtrudeGeometry.create (wall.GetAttribute ("name"), parsePoints (wall), height);
 			}
 		}
-
 	}
 
 	private void buildOtherObjects() {
