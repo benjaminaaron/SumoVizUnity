@@ -8,11 +8,11 @@
 		}
 		
 		public override Material getWallsMaterial () {
-			return (Material) Resources.Load("Wooden floor/Wooden floor 02/Wooden floor 02", typeof(Material));
+		return (Material) Resources.Load("TentWall", typeof(Material));
 		}
 
 		public override Material getBoxMaterial () {
-			return (Material) Resources.Load("Wooden floor/Wooden floor 02/Wooden floor 02", typeof(Material));
+		return (Material) Resources.Load("TentWall", typeof(Material));
 		}
 
 		public override Material getHouseMaterial () {
