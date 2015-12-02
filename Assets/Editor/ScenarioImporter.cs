@@ -53,6 +53,7 @@ public class ScenarioImporter : MonoBehaviour {
 		DestroyImmediate (GameObject.Find ("World"));
 	}
 
+/*
 	[MenuItem("Assets/test")]
 	
 	static void test() {
@@ -64,5 +65,6 @@ public class ScenarioImporter : MonoBehaviour {
 			Debug.Log (ped.getID() + ": " + ped.isActive());
 		}
 	}
+*/
 
 }
