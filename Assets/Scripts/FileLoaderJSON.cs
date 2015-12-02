@@ -70,8 +70,8 @@ public class FileLoaderJSON : FileLoader {
 			}
 		}
 
-		if(roofpoints.Count > 0)
-			createRoof("Roof_FBX", roofpoints, 10.32f);
+		if (roofpoints.Count > 0)
+			createRoof ("Roof_FBX", roofpoints, 6f);
 	}
 
 	private void buildSources(){
