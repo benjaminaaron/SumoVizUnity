@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RuntimeInitializer : MonoBehaviour {
 
 	public GeometryLoader geometryLoader;
 	public string fileLoaderIdentifier;
-	public string trajectoriesFilename = "";
+	public List<string> trajectoryLines; 
 
 	void Start () {
 
@@ -19,8 +20,7 @@ public class RuntimeInitializer : MonoBehaviour {
 				break;
 		}
 
-		fileLoader.loadTrajectories (trajectoriesFilename);
-
+		fileLoader.loadTrajectories (trajectoryLines);
 	}
 
 }

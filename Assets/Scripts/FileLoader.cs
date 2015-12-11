@@ -5,7 +5,8 @@ public abstract class FileLoader {
 
 	public abstract void loadFileByPath (string path);
 	public abstract void buildGeometry();
-	public abstract void loadTrajectories (string filename);
+	public abstract void loadTrajectories (List<string> trajectoryLines);
+	public abstract List<string> loadTrajectoryLines (string filename);
 	public abstract string getIdentifier();
 	public abstract string getInputfileExtension();
 

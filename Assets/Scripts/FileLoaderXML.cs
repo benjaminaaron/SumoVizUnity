@@ -33,17 +33,19 @@ public class FileLoaderXML : FileLoader {
 		return "xml";
 	}
 
-	public override void loadTrajectories (string filename){
+	public override List<string> loadTrajectoryLines (string filename){
+		return null;
+	}
 
-		string filecontent = (Resources.Load ("accurate_output/" + filename + "_scenario") as TextAsset).text;
-
+	public override void loadTrajectories (List<string> trajectoryLines){
 		/*
 		// In dieser Methode die Fallunterscheidung machen zwischen alten und neuen Dateien!
 		if (!System.IO.File.Exists (filename)) {
 			Debug.LogError ("Error: File " + filename + " not found.");
 			return;
 		}*/
-		
+
+		/*
 		XmlDocument xmlDoc = new XmlDocument();
 		xmlDoc.LoadXml(filecontent);
 		XmlNode output = xmlDoc.SelectSingleNode ("//output");
@@ -59,7 +61,7 @@ public class FileLoaderXML : FileLoader {
 
 				foreach (string line in floor.InnerText.ToString().Split("\n"[0])) { //TODO definitely streamreading again, but how...
 				Debug.Log (line);	
-				/*string[] v = line.Split (',');
+				string[] v = line.Split (',');
 					if(v.Length >= 3) {
 						decimal time;
 						int id;
@@ -70,12 +72,12 @@ public class FileLoaderXML : FileLoader {
 						float.TryParse(v[2], out x);
 						float.TryParse(v[3], out y);
 						pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
-					}*/
+					}
 				}
 
 
 			//}
-			/*else { //TODO use TextAsset instead of StreamReader
+			else { //TODO use TextAsset instead of StreamReader
 				// hier den Pfad zu den Dateien holen.... 
 				// Wie erfahre ich welche floor-ID ich brauch? Es soll ja nach floors unterschieden werden
 				// auslesen, wo die Datei liegt
@@ -104,9 +106,10 @@ public class FileLoaderXML : FileLoader {
 					float.TryParse (values[3], out y);
 					pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
 				}
-			}*/
+			}
 		}
 		pl.createPedestrians ();
+		*/
 	}
 
 	public override void loadFileByPath(string path) {

@@ -99,32 +99,45 @@ public class FileLoaderJSON : FileLoader {
 			createAreaGeometry("target", parsePoints(shape));
 		}
 	}
-	
+
+
+	public override List<string> loadTrajectoryLines (string filename){
+		List<string> trajectoryLines = new List<string> ();
+
+		string filecontent = (Resources.Load ("vadere_output/" + filename + "_trajectories") as TextAsset).text;
+
+		bool isFirstLine = true;
+		foreach (string line in filecontent.Split("\n"[0])) {
+			if (!isFirstLine && line.Length > 0) {
+				trajectoryLines.Add(line);
+			}
+			isFirstLine = false;
+		}
+
+		return trajectoryLines;
+	}
+
+
 	/**
 	 * Loads the vadere output file name_trajectories.txt and creates pedestrians with their respective trajectories
 	 * @param filename of the trajectories file without _trajectories.txt
 	 */
-	public override void loadTrajectories(string filename){
-		string filecontent = (Resources.Load ("vadere_output/" + filename + "_trajectories") as TextAsset).text;
+	public override void loadTrajectories(List<string> trajectoryLines){
 		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 
-		bool isFirstLine = true;
-		foreach (string line in filecontent.Split("\n"[0])) { //TODO this is horrible, needs streamreading! but how with TextAssets?
+		foreach (string line in trajectoryLines) {
 			string[] parts = line.Split (' ');
-			if (!isFirstLine && line.Length > 0) {
-				int id;
-				decimal time;
-				float x, y;
-				//int.TryParse (parts [0], out step);
-				decimal.TryParse (parts [1], out time);
-				int.TryParse (parts [2], out id);
-				float.TryParse (parts [3], out x);
-				float.TryParse (parts [4], out y);
-				//Debug.Log(time + " / " + id + " / " + x + " / " + y);
-
-				pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
-			}
-			isFirstLine = false;
+			int id;
+			decimal time;
+			float x, y;
+			//int.TryParse (parts [0], out step);
+			decimal.TryParse (parts [1], out time);
+			int.TryParse (parts [2], out id);
+			float.TryParse (parts [3], out x);
+			float.TryParse (parts [4], out y);
+			//Debug.Log(time + " / " + id + " / " + x + " / " + y);
+			
+			pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
 		}
 		pl.createPedestrians ();
 	}
