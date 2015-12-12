@@ -30,20 +30,17 @@ public class ScenarioImporter : MonoBehaviour {
 		}
 		
 		if (continueOk) {
-			var path = EditorUtility.OpenFilePanel ("", Application.dataPath + "/Resources/" + fileLoader.getIdentifier() + "_output", fileLoader.getInputfileExtension()); //(string title, string directory, string extension)
-			var fileName = Path.GetFileNameWithoutExtension (path); //var dir = Path.GetDirectoryName (path);
-			
+			var path = EditorUtility.OpenFilePanel ("", Application.dataPath + "/data/" + fileLoader.getIdentifier() + "_output", fileLoader.getInputfileExtension()); //(string title, string directory, string extension)
+
 			RuntimeInitializer runtimeInitializer = GameObject.Find("RuntimeInitializer").GetComponent<RuntimeInitializer>();
 
 			runtimeInitializer.geometryLoader = GameObject.Find("GeometryLoader").GetComponent<GeometryLoader>();
 			runtimeInitializer.geometryLoader.setTheme (new BeerTentThemingMode ()); //TODO read specifics from a config file instead?
-			
-			fileLoader.loadFileByPath(path);
+
+			fileLoader.loadFileByPath(Path.GetFileName(path));
 			fileLoader.buildGeometry();
 			runtimeInitializer.fileLoaderIdentifier = fileLoader.getIdentifier();
-			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(fileName.Substring(0, fileName.Length - "_scenario".Length)); //TODO make this more stable?
-
-			//EditorApplication.SaveScene("Assets/Scenes/" + sceneName);
+			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
 		}
 	}
 

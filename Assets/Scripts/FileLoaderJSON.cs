@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using SimpleJSON;
@@ -10,22 +11,23 @@ public class FileLoaderJSON : FileLoader {
 	JSONArray sources;
 	JSONArray targets;
 	Dictionary<string, string> IDmappings;
+	string outputDir = Application.dataPath + "/data/vadere_output/";
 
 	public override string getIdentifier(){
 		return "vadere";
 	}
 
 	public override string getInputfileExtension(){
-		return "json";
+		return "scenario";
 	}
 
-	public override void loadFileByPath (string path){
-		string filecontent = System.IO.File.ReadAllText (path);
+	public override void loadFileByPath (string filename){
+		string filecontent = System.IO.File.ReadAllText (outputDir + filename);
 		JSONNode topography = JSON.Parse (filecontent) ["vadere"] ["topography"];
 		obstacles = topography["obstacles"].AsArray;
 		sources = topography["sources"].AsArray;
 		targets = topography["targets"].AsArray;
-		IDmappings = getIDmappings ((Resources.Load ("vadere_output/IDmappings") as TextAsset).text);
+		IDmappings = getIDmappings (System.IO.File.ReadAllText (outputDir + "IDmappings.txt"));
 	}
 
 	/**
@@ -102,18 +104,17 @@ public class FileLoaderJSON : FileLoader {
 
 
 	public override List<string> loadTrajectoryLines (string filename){
+		if (!System.IO.File.Exists(outputDir + filename)) {
+			Debug.LogError("Error: File " + filename + " not found.");
+		}
 		List<string> trajectoryLines = new List<string> ();
 
-		string filecontent = (Resources.Load ("vadere_output/" + filename + "_trajectories") as TextAsset).text;
-
-		bool isFirstLine = true;
-		foreach (string line in filecontent.Split("\n"[0])) {
-			if (!isFirstLine && line.Length > 0) {
+		using (StreamReader sr = new StreamReader(outputDir + filename)) {
+			string line = sr.ReadLine(); // skip first line
+			while ((line = sr.ReadLine()) != null) {
 				trajectoryLines.Add(line);
 			}
-			isFirstLine = false;
 		}
-
 		return trajectoryLines;
 	}
 

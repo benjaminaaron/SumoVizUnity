@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public abstract class FileLoader {
 
-	public abstract void loadFileByPath (string path);
+	public abstract void loadFileByPath (string filename);
 	public abstract void buildGeometry();
 	public abstract void loadTrajectories (List<string> trajectoryLines);
 	public abstract List<string> loadTrajectoryLines (string filename);

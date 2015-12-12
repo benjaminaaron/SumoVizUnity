@@ -112,7 +112,9 @@ public class FileLoaderXML : FileLoader {
 		*/
 	}
 
-	public override void loadFileByPath(string path) {
+	public override void loadFileByPath(string filename) {
+
+		/*
 		if (!System.IO.File.Exists (path)) {
 			Debug.LogError("Error: file " + path + " not found.");
 			return;
@@ -189,7 +191,7 @@ public class FileLoaderXML : FileLoader {
 					break;
 				}
 			}
-		}
+		}*/
 	}
 
 	public override void buildGeometry(){
