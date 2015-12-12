@@ -13,10 +13,6 @@ public class FileLoaderJSON : FileLoader {
 	Dictionary<string, string> IDmappings;
 	string outputDir = Application.dataPath + "/data/vadere_output/";
 
-	public override string getIdentifier(){
-		return "vadere";
-	}
-
 	public override string getInputfileExtension(){
 		return "scenario";
 	}

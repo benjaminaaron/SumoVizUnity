@@ -25,10 +25,6 @@ public class FileLoaderXML : FileLoader {
 
 	// Neues Format: Dateien liegen im Speicher!!!!! nicht im xml!
 
-	public override string getIdentifier(){
-		return "accurate";
-	}
-	
 	public override string getInputfileExtension(){
 		return "xml";
 	}
@@ -77,7 +73,7 @@ public class FileLoaderXML : FileLoader {
 
 
 			//}
-			else { //TODO use TextAsset instead of StreamReader
+			else {
 				// hier den Pfad zu den Dateien holen.... 
 				// Wie erfahre ich welche floor-ID ich brauch? Es soll ja nach floors unterschieden werden
 				// auslesen, wo die Datei liegt

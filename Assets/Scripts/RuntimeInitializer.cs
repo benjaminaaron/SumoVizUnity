@@ -10,17 +10,17 @@ public class RuntimeInitializer : MonoBehaviour {
 
 	void Start () {
 
-		FileLoader fileLoader = null;
+		FileLoader runtimeFileLoader = null;
 		switch (fileLoaderIdentifier) {
 			case "vadere":
-				fileLoader = new FileLoaderJSON();
+				runtimeFileLoader = new FileLoaderJSON();
 				break;	
 			case "accurate":
-				fileLoader = new FileLoaderXML();
+				runtimeFileLoader = new FileLoaderXML();
 				break;
 		}
 
-		fileLoader.loadTrajectories (trajectoryLines);
+		runtimeFileLoader.loadTrajectories (trajectoryLines);
 	}
 
 }

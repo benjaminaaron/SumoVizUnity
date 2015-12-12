@@ -11,16 +11,16 @@ public class ScenarioImporter : MonoBehaviour {
 	[MenuItem("Assets/Import Vadere output")]
 
 	static void importVadereOutput() {	
-		importOutput (new FileLoaderJSON());
+		importOutput (new FileLoaderJSON(), "vadere");
 	}
 
 	[MenuItem("Assets/Import accu:rate output")]
 	
 	static void importAccurateOutput() {
-		importOutput (new FileLoaderXML());
+		importOutput (new FileLoaderXML(), "accurate");
 	}
 
-	private static void importOutput(FileLoader fileLoader){
+	private static void importOutput(FileLoader fileLoader, string identifier){
 		EditorApplication.SaveCurrentSceneIfUserWantsTo();
 		
 		string currentSceneName = Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
@@ -30,7 +30,7 @@ public class ScenarioImporter : MonoBehaviour {
 		}
 		
 		if (continueOk) {
-			var path = EditorUtility.OpenFilePanel ("", Application.dataPath + "/data/" + fileLoader.getIdentifier() + "_output", fileLoader.getInputfileExtension()); //(string title, string directory, string extension)
+			var path = EditorUtility.OpenFilePanel ("", Application.dataPath + "/data/" + identifier + "_output", fileLoader.getInputfileExtension()); //(string title, string directory, string extension)
 
 			RuntimeInitializer runtimeInitializer = GameObject.Find("RuntimeInitializer").GetComponent<RuntimeInitializer>();
 
@@ -39,7 +39,7 @@ public class ScenarioImporter : MonoBehaviour {
 
 			fileLoader.loadFileByPath(Path.GetFileName(path));
 			fileLoader.buildGeometry();
-			runtimeInitializer.fileLoaderIdentifier = fileLoader.getIdentifier();
+			runtimeInitializer.fileLoaderIdentifier = identifier;
 			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
 		}
 	}
