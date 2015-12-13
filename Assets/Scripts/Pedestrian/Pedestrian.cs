@@ -24,7 +24,7 @@ public class Pedestrian : MonoBehaviour {
 	private PlaybackControlNonGUI pc;
 	private Renderer r;
 
-	private bool active;
+	private bool active = true;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +39,7 @@ public class Pedestrian : MonoBehaviour {
 		r = GetComponentInChildren<Renderer>() as Renderer;
 	
 		//set Tag of the game object in order to find gameobjects with the same tag
-		gameObject.tag = "pedestrian";	
+		//gameObject.tag = "pedestrian";	
 	}
 
 	// Update is called once per frame
@@ -50,6 +50,7 @@ public class Pedestrian : MonoBehaviour {
 		/*} else {
 			GetComponent<Animation>().Stop ();
 		}*/
+
 
 		int index = _getTrait(positions, pc.current_time);
 		
@@ -80,6 +81,8 @@ public class Pedestrian : MonoBehaviour {
 			r.enabled = false;
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
 		}
+
+
 
 	}
 

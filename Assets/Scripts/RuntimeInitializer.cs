@@ -6,10 +6,11 @@ public class RuntimeInitializer : MonoBehaviour {
 
 	public GeometryLoader geometryLoader;
 	public string fileLoaderIdentifier;
-	public List<string> trajectoryLines; 
+	//public List<string> trajectoryLines; 
 
 	void Start () {
 
+		/*
 		FileLoader runtimeFileLoader = null;
 		switch (fileLoaderIdentifier) {
 			case "vadere":
@@ -19,8 +20,9 @@ public class RuntimeInitializer : MonoBehaviour {
 				runtimeFileLoader = new FileLoaderXML();
 				break;
 		}
-
 		runtimeFileLoader.loadTrajectories (trajectoryLines);
+		*/
+
 	}
 
 }

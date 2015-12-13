@@ -39,8 +39,12 @@ public class ScenarioImporter : MonoBehaviour {
 
 			fileLoader.loadFileByPath(Path.GetFileName(path));
 			fileLoader.buildGeometry();
-			runtimeInitializer.fileLoaderIdentifier = identifier;
-			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
+
+
+			//runtimeInitializer.fileLoaderIdentifier = identifier;
+			fileLoader.loadTrajectories(fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories"	));
+
+
 		}
 	}
 

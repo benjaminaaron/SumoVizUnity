@@ -13,13 +13,25 @@ public class PedestrianLoader : MonoBehaviour {
 	private PlaybackControlNonGUI pc;
 	GameObject Pedestrians;
 
-
-
-	void Awake(){
+	public void Init(){
 		ped = Resources.Load ("Hans");
-		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
+	
 		Pedestrians = new GameObject("Pedestrians");
+		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 	}
+
+	/*
+	void Awake(){
+	
+		ped = Resources.Load ("Hans");
+
+		Pedestrians = new GameObject("Pedestrians");
+
+		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
+
+
+	}
+	*/
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +40,7 @@ public class PedestrianLoader : MonoBehaviour {
 
 	public void addPedestrianPosition(PedestrianPosition p) {
 		positions.Add (p);
+
 
 		if (p.getTime ()>pc.total_time) pc.total_time = p.getTime ();
 	}

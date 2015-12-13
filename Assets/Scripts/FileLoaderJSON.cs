@@ -121,7 +121,7 @@ public class FileLoaderJSON : FileLoader {
 	 */
 	public override void loadTrajectories(List<string> trajectoryLines){
 		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
-
+		pl.Init();
 		foreach (string line in trajectoryLines) {
 			string[] parts = line.Split (' ');
 			int id;
