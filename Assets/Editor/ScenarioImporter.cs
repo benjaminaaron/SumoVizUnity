@@ -41,6 +41,12 @@ public class ScenarioImporter : MonoBehaviour {
 			fileLoader.buildGeometry();
 			runtimeInitializer.fileLoaderIdentifier = identifier;
 			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
+
+			List<Dings> dingsList = new List<Dings> ();
+			dingsList.Add(new Dings());
+			dingsList.Add(new Dings());
+
+			runtimeInitializer.dingsList = dingsList;
 		}
 	}
 

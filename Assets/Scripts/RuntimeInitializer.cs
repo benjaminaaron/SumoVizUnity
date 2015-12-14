@@ -8,7 +8,13 @@ public class RuntimeInitializer : MonoBehaviour {
 	public string fileLoaderIdentifier;
 	public List<string> trajectoryLines; 
 
+	public List<Dings> dingsList;
+
 	void Start () {
+
+		foreach (Dings d in dingsList) {
+			d.action();
+		}
 
 		FileLoader runtimeFileLoader = null;
 		switch (fileLoaderIdentifier) {
