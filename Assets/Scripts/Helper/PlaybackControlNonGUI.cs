@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlaybackControlNonGUI : MonoBehaviour {
+public class PlaybackControlNonGUI : MonoBehaviour{
 
 	public bool playing = true;
 	public decimal current_time;
-	public decimal total_time = 0;
+	public decimal total_time;
+	public string totalSave;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+	{
+
 	}
 	
 	// Update is called once per frame
@@ -18,7 +20,7 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 		
 		if (playing) {
 			try {
-				current_time = (current_time + (decimal) Time.deltaTime) % total_time;
+				current_time = (current_time + (decimal) Time.deltaTime);
 			} catch (System.DivideByZeroException) {
 				current_time = 0;
 			}

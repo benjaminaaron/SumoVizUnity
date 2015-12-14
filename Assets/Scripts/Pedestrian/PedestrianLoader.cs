@@ -42,7 +42,7 @@ public class PedestrianLoader : MonoBehaviour {
 		positions.Add (p);
 
 
-		if (p.getTime ()>pc.total_time) pc.total_time = p.getTime ();
+		if (p.getTime ()>pc.total_time)pc.total_time = p.getTime ();
 	}
 
 	public void createPedestrians() {
@@ -62,8 +62,9 @@ public class PedestrianLoader : MonoBehaviour {
 
 				GameObject p = (GameObject) Instantiate(ped);
 				p.transform.parent = null;
-				p.GetComponent<Pedestrian>().setPositions(currentList);
 				p.GetComponent<Pedestrian>().setID(positions[i].getID());
+				p.GetComponent<Pedestrian>().setPositions(currentList);
+
 				pedestrians.Add(p);
 				currentList.Clear();
 				p.transform.SetParent(Pedestrians.transform);

@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using Vectrosity;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class Pedestrian : MonoBehaviour {
 	
@@ -14,7 +17,7 @@ public class Pedestrian : MonoBehaviour {
 	//private int currentTrait;
 
 	int id;
-	SortedList positions = new SortedList ();
+	public SortedList positions = new SortedList();
 	Color myColor;
 	bool trajectoryVisible;
 	VectorLine trajectory;
@@ -26,8 +29,23 @@ public class Pedestrian : MonoBehaviour {
 
 	private bool active = true;
 
+	void Awake(){
+
+			BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Open(Application.dataPath+ "/Resources/savePositions/" +"Pedestrian_" +GetInstanceID(),FileMode.Open);
+			positions = (SortedList)bf.Deserialize(file);
+			file.Close();
+		}
+		
+
+
+	
+
 	// Use this for initialization
 	void Start () {
+
+
+
 
 		gameObject.AddComponent<BoxCollider>();
 		transform.Rotate (0,90,0);
@@ -113,7 +131,7 @@ public class Pedestrian : MonoBehaviour {
 	}
 
 	public int getID(){
-		return id;
+		return this.id;
 	}
 
 	public void setPositions(SortedList p) {
@@ -121,6 +139,12 @@ public class Pedestrian : MonoBehaviour {
 		foreach (PedestrianPosition ped in p.Values) {
 			positions.Add(ped.getTime(), ped);
 		}
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.dataPath+ "/Resources/savePositions/" +"Pedestrian_" +GetInstanceID());	
+		bf.Serialize(file,positions);
+		file.Close();
+		
+
 		PedestrianPosition pos = (PedestrianPosition)p.GetByIndex (0);
 		transform.position = new Vector3 (pos.getX(), 0, pos.getY());
 	}
