@@ -10,7 +10,7 @@
 using System;
 using UnityEngine;
 [Serializable]
-public class PedestrianPosition
+public struct PedestrianPosition
 {
 	private int id;
 	private decimal time;

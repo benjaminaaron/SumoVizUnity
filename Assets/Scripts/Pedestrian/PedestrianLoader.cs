@@ -14,6 +14,8 @@ public class PedestrianLoader : MonoBehaviour {
 	GameObject Pedestrians;
 
 	public void Init(){
+		positions.Clear();
+		pedestrians.Clear();
 		ped = Resources.Load ("Hans");
 	
 		Pedestrians = new GameObject("Pedestrians");

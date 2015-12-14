@@ -13,11 +13,15 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_total;
 	float movement_time_elapsed;
 	private float speed;
+	Vector2 lastPos;
 	//to optimize the getTrait loop
 	//private int currentTrait;
 
 	int id;
-	public SortedList positions = new SortedList();
+
+
+	List<Vector4> positions;
+
 	Color myColor;
 	bool trajectoryVisible;
 	VectorLine trajectory;
@@ -31,10 +35,18 @@ public class Pedestrian : MonoBehaviour {
 
 	void Awake(){
 
+
+
+		ScriptablePositions pos = AssetDatabase.LoadAssetAtPath<ScriptablePositions>(@"Assets/Resources/savePositions/" +name+".asset");
+
+	
+		positions = pos.positions;
+		/*
 			BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Open(Application.dataPath+ "/Resources/savePositions/" +"Pedestrian_" +GetInstanceID(),FileMode.Open);
 			positions = (SortedList)bf.Deserialize(file);
 			file.Close();
+			*/
 		}
 		
 
@@ -70,13 +82,35 @@ public class Pedestrian : MonoBehaviour {
 		}*/
 
 
+
 		int index = _getTrait(positions, pc.current_time);
 		
 		if (index < positions.Count - 1 && index > -1){
 			active = true;
 			r.enabled = true;
+			/*
 			PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
 			PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
+			*/
+			Vector4 pos = positions[index];
+			Vector4 pos2 = positions[index+1];
+
+			start = new Vector3 (pos.x, 0, pos.y);
+			target = new Vector3 (pos2.x, 0, pos2.y);
+			float time = (float) pc.current_time;
+			float timeStepLength = Mathf.Clamp((float)pos2.z - (float)pos.z, 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
+			float movement_percentage = ((float)time - (float)pos.z) / timeStepLength;
+			Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
+
+			Vector3 relativePos = target - start;
+			speed = relativePos.magnitude;
+
+			GetComponent<Animation>()["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
+			if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
+			
+			transform.position = newPosition;
+			gameObject.hideFlags = HideFlags.None;
+			/*
 			start = new Vector3 (pos.getX(), 0, pos.getY());
 			target = new Vector3 (pos2.getX(), 0, pos2.getY());
 			float time = (float) pc.current_time;
@@ -92,6 +126,7 @@ public class Pedestrian : MonoBehaviour {
 
 			transform.position = newPosition;
 			gameObject.hideFlags = HideFlags.None;
+			*/
 
 		} else {
 			//currentTrait = 0;
@@ -102,13 +137,18 @@ public class Pedestrian : MonoBehaviour {
 
 
 
+
 	}
 
 	public float getSpeed() {
 		return speed;
 	}
 
-	private int _getTrait(SortedList thisList, decimal thisValue) {
+
+	private int _getTrait(List<Vector4> thisList, decimal thisValue) {
+	//private int _getTrait(SortedList thisList, decimal thisValue) {
+
+
 		/*while(currentTrait < thisList.Count){
 			if ((decimal)thisList.GetKey(currentTrait)>=thisValue) return (currentTrait-1);
 			++currentTrait;
@@ -116,13 +156,20 @@ public class Pedestrian : MonoBehaviour {
 		}
 		return -1;
 		*/
+		for (int i = 0; i < thisList.Count; i ++) {
+			if ((decimal) thisList[i].z> thisValue) 
+				return (i - 1);
+		}
+		return -1;
 
 
+/*
 		for (int i = 0; i < thisList.Count; i ++) {
 			if ((decimal) thisList.GetKey(i) > thisValue) 
 				return (i - 1);
 		}
 		return -1;
+		*/
 	}
 	
 	public void setID(int id) {
@@ -135,18 +182,38 @@ public class Pedestrian : MonoBehaviour {
 	}
 
 	public void setPositions(SortedList p) {
-		positions.Clear();
+		if(positions == null) positions = new List<Vector4>();
+
 		foreach (PedestrianPosition ped in p.Values) {
-			positions.Add(ped.getTime(), ped);
+			Vector4 cur = new Vector4();
+			cur.x = ped.getX();
+			cur.y = ped.getY();
+			cur.z = (float)ped.getTime();
+			cur.w = ped.getID();
+			positions.Add(cur);
 		}
+		/*foreach (PedestrianPosition ped in p.Values) {
+			positions.Add(ped);
+		}
+		*/
+		//ScriptablePositions pos = GetComponent<ScriptablePositions>();
+
+		ScriptablePositions pos = ScriptableObject.CreateInstance<ScriptablePositions>();
+		pos.positions = positions;	
+		EditorUtility.SetDirty(pos);
+		AssetDatabase.DeleteAsset(@"Assets/Resources/savePositions/" +name+".asset");
+		AssetDatabase.CreateAsset(pos,@"Assets/Resources/savePositions/" +name +".asset");
+
+
+		/*
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.dataPath+ "/Resources/savePositions/" +"Pedestrian_" +GetInstanceID());	
 		bf.Serialize(file,positions);
-		file.Close();
+		file.Close();*/
 		
 
-		PedestrianPosition pos = (PedestrianPosition)p.GetByIndex (0);
-		transform.position = new Vector3 (pos.getX(), 0, pos.getY());
+		PedestrianPosition transformToPos = (PedestrianPosition)p.GetByIndex (0);
+		transform.position = new Vector3 (transformToPos.getX(), 0, transformToPos.getY());
 	}
 
 	public bool isActive(){

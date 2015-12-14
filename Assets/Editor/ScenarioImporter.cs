@@ -43,6 +43,7 @@ public class ScenarioImporter : MonoBehaviour {
 
 			//runtimeInitializer.fileLoaderIdentifier = identifier;
 			fileLoader.loadTrajectories(fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories"	));
+			AssetDatabase.SaveAssets();
 
 
 		}
@@ -52,6 +53,7 @@ public class ScenarioImporter : MonoBehaviour {
 	
 	static void deleteImportedObjects() {
 		DestroyImmediate (GameObject.Find ("World"));
+		DestroyImmediate (GameObject.Find ("Pedestrians"));
 	}
 
 /*
