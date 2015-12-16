@@ -43,7 +43,6 @@ public class ScenarioImporter : MonoBehaviour {
 
 			//runtimeInitializer.fileLoaderIdentifier = identifier;
 			fileLoader.loadTrajectories(fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories"	));
-			AssetDatabase.SaveAssets();
 
 
 		}

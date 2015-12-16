@@ -21,7 +21,6 @@ public class Pedestrian : MonoBehaviour {
 
 	public List<Vector4> positions;
 	private Vector4 lastPos;
-	private float lastSpeed;
 
 
 	Color myColor;
@@ -35,31 +34,28 @@ public class Pedestrian : MonoBehaviour {
 
 	private bool active = true;
 
+
+	/*
 	void Awake(){
 
-
-		/*
 		ScriptablePositions pos = AssetDatabase.LoadAssetAtPath<ScriptablePositions>(@"Assets/Resources/savePositions/" +name+".asset");
 
 	
 		positions = pos.positions;
-		*/
-		/*
+
+
+
 			BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Open(Application.dataPath+ "/Resources/savePositions/" +"Pedestrian_" +GetInstanceID(),FileMode.Open);
 			positions = (SortedList)bf.Deserialize(file);
 			file.Close();
-			*/
+
 		}
-		
+		*/
 
-
-	
 
 	// Use this for initialization
 	void Start () {
-
-
 
 
 		gameObject.AddComponent<BoxCollider>();
@@ -110,7 +106,7 @@ public class Pedestrian : MonoBehaviour {
 			//to awoid speed calculations more than nessesary
 			if(lastPos != pos){
 
-				lastPos = pos;
+				//lastPos = pos;
 				Vector3 relativePos = target - start;
 				speed = relativePos.magnitude;
 				if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
@@ -155,7 +151,7 @@ public class Pedestrian : MonoBehaviour {
 	}
 
 
-	private int _getTrait(List<Vector4> thisList, decimal thisValue) {
+	private int _getTrait(List<Vector4> thisList, float thisValue) {	
 	//private int _getTrait(SortedList thisList, decimal thisValue) {
 
 
@@ -166,8 +162,8 @@ public class Pedestrian : MonoBehaviour {
 		}
 		return -1;
 		*/
-		for (int i = 0; i < thisList.Count; i ++) {
-			if ((decimal) thisList[i].z> thisValue) 
+		for (int i =0; i < thisList.Count; i ++) {
+			if (thisList[i].z> thisValue) 
 				return (i - 1);
 		}
 		return -1;
@@ -198,7 +194,7 @@ public class Pedestrian : MonoBehaviour {
 			Vector4 cur = new Vector4();
 			cur.x = ped.getX();
 			cur.y = ped.getY();
-			cur.z = (float)ped.getTime();
+			cur.z = (float)ped.getTime();	//if solution work TODO change hole loading to Vector to avoid pedestrianposition changing to float 
 			cur.w = ped.getID();
 			positions.Add(cur);
 		}

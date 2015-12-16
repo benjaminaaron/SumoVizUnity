@@ -4,9 +4,9 @@ using System.Collections;
 public class PlaybackControlNonGUI : MonoBehaviour{
 
 	public bool playing = true;
-	public decimal current_time;
+	public float current_time; 
+	//public decimal current_time; 
 	public decimal total_time;
-	public string totalSave;
 
 	// Use this for initialization
 	void Start () 
@@ -20,7 +20,7 @@ public class PlaybackControlNonGUI : MonoBehaviour{
 		
 		if (playing) {
 			try {
-				current_time = (current_time + (decimal) Time.deltaTime);
+				current_time = (current_time +  Time.deltaTime);
 			} catch (System.DivideByZeroException) {
 				current_time = 0;
 			}
