@@ -16,9 +16,24 @@ public class RuntimeInitializer : MonoBehaviour {
 	public List<GameObject> pedestrians = new List<GameObject>();
 
 
+	private PlaybackControlNonGUI pc;
+
+	public void setPosPackages(List<PedPosGranularPackage> posPackages){
+		this.posPackages = posPackages;	
+		foreach (PedPosGranularPackage posPackage in this.posPackages) {
+			posPackage.action();
+		}
+	}
+
 	void Awake(){
 		ped = Resources.Load ("Hans");
 		Pedestrians = new GameObject("Pedestrians");
+
+		Debug.Log ("RI awake packages count: " + posPackages.Count);
+
+		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
+
+		pc.total_time = 8;
 	}
 
 
@@ -29,7 +44,7 @@ public class RuntimeInitializer : MonoBehaviour {
 		/*foreach (Dings d in dingsList) {
 			d.action();
 		}*/
-
+		/*
 		FileLoader runtimeFileLoader = null;
 		switch (fileLoaderIdentifier) {
 			case "vadere":
@@ -38,7 +53,7 @@ public class RuntimeInitializer : MonoBehaviour {
 			case "accurate":
 				runtimeFileLoader = new FileLoaderXML();
 				break;
-		}
+		}*/
 
 		//runtimeFileLoader.loadTrajectories (trajectoryLines);
 		buildPedestrians ();
@@ -54,7 +69,7 @@ public class RuntimeInitializer : MonoBehaviour {
 			p.transform.parent = null;
 
 
-			p.GetComponent<Pedestrian>().setPositionsNew(posPackage.getPositions());
+			p.GetComponent<Pedestrian>().setPositions(posPackage.getPositions());
 			p.GetComponent<Pedestrian>().setID(posPackage.pedId);
 			pedestrians.Add(p);
 			p.transform.SetParent(Pedestrians.transform);

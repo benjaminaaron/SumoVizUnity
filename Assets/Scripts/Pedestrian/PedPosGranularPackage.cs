@@ -3,27 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class PedPosGranularPackage {
+public class PedPosGranularPackage : ScriptableObject {
 
 	public int pedId;
 	public List<PedestrianPosition> positions = new List<PedestrianPosition>();
 	//public List<PedPosGranular> positionsGranular = new List<PedPosGranular>();
 
-	public PedPosGranularPackage (int pedId, List<PedestrianPosition> positions) {
+	public PedPosGranularPackage (int pedId, SortedList p) {
 		this.pedId = pedId;
-		this.positions = positions;
+		foreach (PedestrianPosition ped in p.Values) {
+			positions.Add(ped);
+		}
 
 		Debug.LogError ("PedPosGranularPackage positions count at creation: " + positions.Count);
 	}
 
-	public List<PedestrianPosition> getPositions(){
+	public SortedList getPositions(){
 		Debug.LogError ("at getter: " + positions.Count);
 
-		return positions;
+		SortedList spos = new SortedList ();
+
+		foreach (PedestrianPosition ped in positions) {
+			spos.Add (ped.getTime (), ped);
+		}
+			
+		return spos;
 	}
 
 	public void action(){
-		Debug.Log ("ACtION");
+		Debug.Log ("ACtION, i have positions: " + positions.Count);
+
+		Debug.Log (pedId);
+
 	}
 
 		

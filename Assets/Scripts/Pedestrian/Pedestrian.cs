@@ -122,15 +122,19 @@ public class Pedestrian : MonoBehaviour {
 		transform.position = new Vector3 (pos.getX(), 0, pos.getY());
 	}
 
+
 	public void setPositionsNew(List<PedestrianPosition> p) {
 		positions.Clear();
 
 		Debug.LogError ("> " + p.Count);
 
+
+		PedestrianPosition pos = null;
 		foreach (PedestrianPosition ped in p) {
 			positions.Add(ped.getTime(), ped);
+			if(pos == null) pos = ped;
 		}
-		PedestrianPosition pos = p [0];
+
 		transform.position = new Vector3 (pos.getX(), 0, pos.getY());
 	}
 

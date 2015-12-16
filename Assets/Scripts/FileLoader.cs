@@ -6,11 +6,11 @@ public abstract class FileLoader {
 	public abstract void loadFileByPath (string filename);
 	public abstract void buildGeometry();
 	public abstract void loadTrajectories (List<string> trajectoryLines);
-	public abstract List<string> loadTrajectoryLines (string filename);
+	public abstract void loadTrajectoryLines (string filename);
 	public abstract string getInputfileExtension();
 
-	PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
-	TrajectoryBakingCentre tbc = new TrajectoryBakingCentre();
+	PedestrianLoader pl = new PedestrianLoader ();//GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
+	//TrajectoryBakingCentre tbc = GameObject.Find("TrajectoryBakingCentre").GetComponent<TrajectoryBakingCentre>();
 
 
 	protected void createWall(string name, List<Vector2> verticesList, float height){
@@ -36,22 +36,25 @@ public abstract class FileLoader {
 
 
 	protected void addPedestrianPosition(int id, decimal time, float x, float y){
+
+		Debug.Log ("- - - " + id + ": " + time + ", " + x + "/" + y);
+
 		PedestrianPosition pos = new PedestrianPosition (id, time, x, y);
-		//pl.addPedestrianPosition (pos);
-		tbc.addPedestrianPosition (pos);
+		pl.addPedestrianPosition (pos);
+		//tbc.addPedestrianPosition (pos);
 	}
 
 	protected void createPedestrians(){
-		//pl.createPedestrians ();
-		tbc.createPedestrians ();
+		pl.createPedestrians ();
+		//tbc.createPedestrians ();
 	}
 
 	public void bakeTrajectories(){
-		tbc.bakeTrajectories ();
+		//tbc.bakeTrajectories ();
 	}
 
 	public List<PedPosGranularPackage> getPosPackages(){
-		return tbc.getPosPackages ();
+		return pl.getPosPackages ();
 	}
 
 }

@@ -99,7 +99,7 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 
-	public override List<string> loadTrajectoryLines (string filename){
+	public override void loadTrajectoryLines (string filename){
 		if (!System.IO.File.Exists(outputDir + filename)) {
 			Debug.LogError("Error: File " + filename + " not found.");
 		}
@@ -112,7 +112,7 @@ public class FileLoaderJSON : FileLoader {
 			}
 		}
 
-		return trajectoryLines;
+		loadTrajectories (trajectoryLines);
 	}
 
 

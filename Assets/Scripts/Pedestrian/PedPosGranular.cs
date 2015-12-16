@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public class PedPosGranular {
+public class PedPosGranular : ScriptableObject {
 	
 	private decimal time;
 	private float x;

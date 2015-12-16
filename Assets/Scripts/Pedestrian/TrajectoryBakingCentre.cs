@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq; //for OrderBy ThenBy ToList etc.
 
 [System.Serializable]
-public class TrajectoryBakingCentre {
+public class TrajectoryBakingCentre : MonoBehaviour {
 
 	private List<PedestrianPosition> positions = new List<PedestrianPosition>();
 	public List<PedPosGranularPackage> posPackages = new List<PedPosGranularPackage>();
@@ -12,13 +12,13 @@ public class TrajectoryBakingCentre {
 	private PlaybackControlNonGUI pc;
 	
 	public TrajectoryBakingCentre () {
-		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
+		//pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 	}
 
 
 	public void addPedestrianPosition(PedestrianPosition p) {
 		positions.Add (p);
-		if (p.getTime () > pc.total_time) pc.total_time = p.getTime ();
+		//if (p.getTime () > pc.total_time) pc.total_time = p.getTime ();
 	}
 
 	public void createPedestrians(){
@@ -48,4 +48,4 @@ public class TrajectoryBakingCentre {
 	}
 
 
-}
+}*/

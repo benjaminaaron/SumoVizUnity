@@ -29,8 +29,7 @@ public class FileLoaderXML : FileLoader {
 		return "xml";
 	}
 
-	public override List<string> loadTrajectoryLines (string filename){
-		return null;
+	public override void loadTrajectoryLines (string filename){
 	}
 
 	public override void loadTrajectories (List<string> trajectoryLines){
