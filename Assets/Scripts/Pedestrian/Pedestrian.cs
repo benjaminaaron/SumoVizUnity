@@ -13,14 +13,16 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_total;
 	float movement_time_elapsed;
 	private float speed;
-	Vector2 lastPos;
 	//to optimize the getTrait loop
 	//private int currentTrait;
 
 	int id;
 
 
-	List<Vector4> positions;
+	public List<Vector4> positions;
+	private Vector4 lastPos;
+	private float lastSpeed;
+
 
 	Color myColor;
 	bool trajectoryVisible;
@@ -36,11 +38,12 @@ public class Pedestrian : MonoBehaviour {
 	void Awake(){
 
 
-
+		/*
 		ScriptablePositions pos = AssetDatabase.LoadAssetAtPath<ScriptablePositions>(@"Assets/Resources/savePositions/" +name+".asset");
 
 	
 		positions = pos.positions;
+		*/
 		/*
 			BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Open(Application.dataPath+ "/Resources/savePositions/" +"Pedestrian_" +GetInstanceID(),FileMode.Open);
@@ -102,12 +105,19 @@ public class Pedestrian : MonoBehaviour {
 			float movement_percentage = ((float)time - (float)pos.z) / timeStepLength;
 			Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
 
-			Vector3 relativePos = target - start;
-			speed = relativePos.magnitude;
 
+
+			//to awoid speed calculations more than nessesary
+			if(lastPos != pos){
+
+				lastPos = pos;
+				Vector3 relativePos = target - start;
+				speed = relativePos.magnitude;
+				if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
+			}
 			GetComponent<Animation>()["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
-			if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
-			
+
+
 			transform.position = newPosition;
 			gameObject.hideFlags = HideFlags.None;
 			/*
@@ -197,12 +207,13 @@ public class Pedestrian : MonoBehaviour {
 		}
 		*/
 		//ScriptablePositions pos = GetComponent<ScriptablePositions>();
-
+		/*
 		ScriptablePositions pos = ScriptableObject.CreateInstance<ScriptablePositions>();
 		pos.positions = positions;	
 		EditorUtility.SetDirty(pos);
 		AssetDatabase.DeleteAsset(@"Assets/Resources/savePositions/" +name+".asset");
 		AssetDatabase.CreateAsset(pos,@"Assets/Resources/savePositions/" +name +".asset");
+		*/
 
 
 		/*
