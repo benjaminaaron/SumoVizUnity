@@ -43,6 +43,7 @@ public class ScenarioImporter : MonoBehaviour {
 			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
 
 
+
 			/*
 			List<Dings> dingsList = new List<Dings> ();
 			dingsList.Add(new Dings());

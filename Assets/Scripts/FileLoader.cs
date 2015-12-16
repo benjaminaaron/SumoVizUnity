@@ -10,6 +10,7 @@ public abstract class FileLoader {
 	public abstract string getInputfileExtension();
 
 	PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
+	TrajectoryBakingCentre tbc = new TrajectoryBakingCentre();
 
 
 	protected void createWall(string name, List<Vector2> verticesList, float height){
@@ -35,15 +36,18 @@ public abstract class FileLoader {
 
 
 	protected void addPedestrianPosition(int id, decimal time, float x, float y){
-		pl.addPedestrianPosition (new PedestrianPosition (id, time, x, y));
+		PedestrianPosition pos = new PedestrianPosition (id, time, x, y);
+		pl.addPedestrianPosition (pos);
+		tbc.addPedestrianPosition (pos);
 	}
 
 	protected void createPedestrians(){
 		pl.createPedestrians ();
+		tbc.createPedestrians ();
 	}
 
-	protected void bakeTrajectories(){
-	
+	public void bakeTrajectories(){
+		tbc.bakeTrajectories ();
 	}
 
 }

@@ -7,14 +7,15 @@ public class RuntimeInitializer : MonoBehaviour {
 	public GeometryLoader geometryLoader;
 	public string fileLoaderIdentifier;
 	public List<string> trajectoryLines; 
+	public TrajectoryBakingCentre tbc;
 
-	public List<Dings> dingsList;
+	//public List<Dings> dingsList;
 
 	void Start () {
 
-		foreach (Dings d in dingsList) {
+		/*foreach (Dings d in dingsList) {
 			d.action();
-		}
+		}*/
 
 		FileLoader runtimeFileLoader = null;
 		switch (fileLoaderIdentifier) {

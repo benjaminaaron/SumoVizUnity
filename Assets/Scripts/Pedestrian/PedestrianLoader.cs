@@ -29,7 +29,7 @@ public class PedestrianLoader : MonoBehaviour {
 	public void addPedestrianPosition(PedestrianPosition p) {
 		positions.Add (p);
 
-		if (p.getTime ()>pc.total_time) pc.total_time = p.getTime ();
+		//if (p.getTime ()>pc.total_time) pc.total_time = p.getTime ();
 	}
 
 	public void createPedestrians() {
