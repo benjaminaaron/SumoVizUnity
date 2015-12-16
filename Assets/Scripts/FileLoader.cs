@@ -9,6 +9,9 @@ public abstract class FileLoader {
 	public abstract List<string> loadTrajectoryLines (string filename);
 	public abstract string getInputfileExtension();
 
+	PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
+
+
 	protected void createWall(string name, List<Vector2> verticesList, float height){
 		ObstacleExtrudeGeometry.create(name, verticesList, height);
 	}
@@ -27,6 +30,20 @@ public abstract class FileLoader {
 
 	protected void createRoof(string name, List<Vector2> roofpoints, float heightAboveGround){
 		ModelGeometry.create (name, roofpoints, heightAboveGround); 
+	}
+
+
+
+	protected void addPedestrianPosition(int id, decimal time, float x, float y){
+		pl.addPedestrianPosition (new PedestrianPosition (id, time, x, y));
+	}
+
+	protected void createPedestrians(){
+		pl.createPedestrians ();
+	}
+
+	protected void bakeTrajectories(){
+	
 	}
 
 }

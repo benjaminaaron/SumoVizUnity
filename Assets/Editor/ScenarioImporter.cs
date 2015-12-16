@@ -42,11 +42,12 @@ public class ScenarioImporter : MonoBehaviour {
 			runtimeInitializer.fileLoaderIdentifier = identifier;
 			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
 
+
+			/*
 			List<Dings> dingsList = new List<Dings> ();
 			dingsList.Add(new Dings());
 			dingsList.Add(new Dings());
-
-			runtimeInitializer.dingsList = dingsList;
+			runtimeInitializer.dingsList = dingsList;*/
 		}
 	}
 
@@ -56,29 +57,27 @@ public class ScenarioImporter : MonoBehaviour {
 		DestroyImmediate (GameObject.Find ("World"));
 	}
 
-
+	/*
 	[MenuItem("Assets/test")]
 	
 	static void test() {
-
 		PlaybackControlNonGUI pc  = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
-
 		decimal sum = 0;
 		foreach (decimal delta in pc.deltas) {
 			sum += delta;
 		}
-
 		Debug.Log ("average: " + (sum / pc.deltas.Count));
 
-		/*
+		// - - -
+
 		var pedContainer = GameObject.Find ("Pedestrians");
 		var peds = pedContainer.GetComponentsInChildren<Pedestrian>();
 		//Debug.Log (pedestrians.Length);
 
 		foreach (Pedestrian ped in peds) {		
 			Debug.Log (ped.getID() + ": " + ped.isActive());
-		}*/
+		}
 	}
-
+	*/
 
 }

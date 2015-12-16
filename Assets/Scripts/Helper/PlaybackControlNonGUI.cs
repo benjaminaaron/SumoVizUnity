@@ -8,7 +8,7 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 	public decimal current_time;
 	public decimal total_time = 0;
 
-	public List<decimal> deltas = new List<decimal> ();
+	//public List<decimal> deltas = new List<decimal> ();
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +22,7 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 		if (playing) {
 			try {
 				decimal delta = (decimal) Time.deltaTime;
-				deltas.Add(delta);
+				//deltas.Add(delta);
 				current_time = (current_time + delta) % total_time;
 
 				/*Debug.Log(current_time);
