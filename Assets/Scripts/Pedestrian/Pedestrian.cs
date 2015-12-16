@@ -13,6 +13,12 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_total;
 	float movement_time_elapsed;
 	private float speed;
+
+	public const float trajectoryInterpolationTimeStep = 0.05f;
+
+	private float lastStepTime = 0;
+
+
 	//to optimize the getTrait loop
 	//private int currentTrait;
 
@@ -23,9 +29,11 @@ public class Pedestrian : MonoBehaviour {
 	private Vector4 lastPos;
 
 
-	Color myColor;
-	bool trajectoryVisible;
-	VectorLine trajectory;
+	//Color myColor;
+
+	//bool trajectoryVisible;
+	//VectorLine trajectory;
+
 
 	//private InfoText it;
 
@@ -74,48 +82,78 @@ public class Pedestrian : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//if (pc.playing) {
-			GetComponent<Animation>().Play ();
-		/*} else {
-			GetComponent<Animation>().Stop ();
-		}*/
 
 
 
+
+	//	nessaryToCalculate = true;
 		int index = _getTrait(positions, pc.current_time);
+
+		//To reduce to often calculated frames
+
+	
+
 		
-		if (index < positions.Count - 1 && index > -1){
+		if (index < positions.Count - 1 && index > -1 ){
 			active = true;
 			r.enabled = true;
 			/*
 			PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
 			PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
 			*/
-			Vector4 pos = positions[index];
-			Vector4 pos2 = positions[index+1];
 
-			start = new Vector3 (pos.x, 0, pos.y);
-			target = new Vector3 (pos2.x, 0, pos2.y);
-			float time = (float) pc.current_time;
-			float timeStepLength = Mathf.Clamp((float)pos2.z - (float)pos.z, 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
-			float movement_percentage = ((float)time - (float)pos.z) / timeStepLength;
-			Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
+		
 
 
+				Vector4 pos = positions[index];
+				Vector4 pos2 = positions[index+1];
 
-			//to awoid speed calculations more than nessesary
-			if(lastPos != pos){
+				start = new Vector3 (pos.x, 0, pos.y);
+				target = new Vector3 (pos2.x, 0, pos2.y);
 
-				//lastPos = pos;
-				Vector3 relativePos = target - start;
-				speed = relativePos.magnitude;
-				if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
+
+				bool nessaryToCalculate = (pc.current_time - lastStepTime) > trajectoryInterpolationTimeStep;
+				//nessaryToCalculate = true;
+
+				float time = (float) pc.current_time;
+				float timeStepLength = Mathf.Clamp((float)pos2.z - (float)pos.z, 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
+			
+				if(nessaryToCalculate){
+				lastStepTime = pc.current_time;
+
+
+				float movement_percentage = ((float)time - (float)pos.z) / timeStepLength;
+				Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
+
+
+				transform.position = newPosition;
+				gameObject.hideFlags = HideFlags.None;
+						
+				}
+
+
+				//to awoid speed calculations more than nessesary
+				if(lastPos != pos){
+
+					//lastPos = pos;
+					Vector3 relativePos = target - start;
+					speed = relativePos.magnitude;
+					if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
+				}
+
+			if (r.isVisible) {
+				GetComponent<Animation>().Play ();
+				GetComponent<Animation>()["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
+			} else {
+				//Debug.Log("Anim : Its stop");
+				GetComponent<Animation>().Stop ();
 			}
-			GetComponent<Animation>()["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
+				
 
 
-			transform.position = newPosition;
-			gameObject.hideFlags = HideFlags.None;
+			
+
+	
 			/*
 			start = new Vector3 (pos.getX(), 0, pos.getY());
 			target = new Vector3 (pos2.getX(), 0, pos2.getY());
