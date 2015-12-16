@@ -9,6 +9,7 @@
 // ------------------------------------------------------------------------------
 using System;
 
+[System.Serializable]
 public class PedestrianPosition
 {
 	private int id;

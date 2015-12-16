@@ -23,7 +23,6 @@ public class TrajectoryBakingCentre {
 
 	public void createPedestrians(){
 
-
 		positions = positions.OrderBy(x => x.getID()).ThenBy(y => y.getTime()).ToList<PedestrianPosition>();
 		List<PedestrianPosition> currentList = new List<PedestrianPosition> ();
 
@@ -39,8 +38,10 @@ public class TrajectoryBakingCentre {
 				currentList.Clear();
 			}
 		}
-
+	}
 	
+	public List<PedPosGranularPackage> getPosPackages(){
+		return posPackages;
 	}
 
 	public void bakeTrajectories(){

@@ -42,7 +42,13 @@ public class ScenarioImporter : MonoBehaviour {
 			runtimeInitializer.fileLoaderIdentifier = identifier;
 			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
 
+			fileLoader.loadTrajectories(runtimeInitializer.trajectoryLines);
 
+			List<PedPosGranularPackage> pack = fileLoader.getPosPackages();
+
+			Debug.LogError(pack.Count);
+
+			runtimeInitializer.posPackages = pack;
 
 			/*
 			List<Dings> dingsList = new List<Dings> ();

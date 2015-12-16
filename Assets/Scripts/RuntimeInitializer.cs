@@ -7,7 +7,20 @@ public class RuntimeInitializer : MonoBehaviour {
 	public GeometryLoader geometryLoader;
 	public string fileLoaderIdentifier;
 	public List<string> trajectoryLines; 
-	public TrajectoryBakingCentre tbc;
+	//public TrajectoryBakingCentre tbc;
+
+	public List<PedPosGranularPackage> posPackages;
+
+	private Object ped;
+	GameObject Pedestrians;
+	public List<GameObject> pedestrians = new List<GameObject>();
+
+
+	void Awake(){
+		ped = Resources.Load ("Hans");
+		Pedestrians = new GameObject("Pedestrians");
+	}
+
 
 	//public List<Dings> dingsList;
 
@@ -27,7 +40,25 @@ public class RuntimeInitializer : MonoBehaviour {
 				break;
 		}
 
-		runtimeFileLoader.loadTrajectories (trajectoryLines);
+		//runtimeFileLoader.loadTrajectories (trajectoryLines);
+		buildPedestrians ();
+	}
+
+	private void buildPedestrians(){
+		Debug.Log (">> " + posPackages.Count);
+
+		foreach (PedPosGranularPackage posPackage in posPackages) {
+			posPackage.action();
+
+			GameObject p = (GameObject) Instantiate(ped);
+			p.transform.parent = null;
+
+
+			p.GetComponent<Pedestrian>().setPositionsNew(posPackage.getPositions());
+			p.GetComponent<Pedestrian>().setID(posPackage.pedId);
+			pedestrians.Add(p);
+			p.transform.SetParent(Pedestrians.transform);
+		}
 	}
 
 }

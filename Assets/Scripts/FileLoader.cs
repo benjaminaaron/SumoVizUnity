@@ -37,17 +37,21 @@ public abstract class FileLoader {
 
 	protected void addPedestrianPosition(int id, decimal time, float x, float y){
 		PedestrianPosition pos = new PedestrianPosition (id, time, x, y);
-		pl.addPedestrianPosition (pos);
+		//pl.addPedestrianPosition (pos);
 		tbc.addPedestrianPosition (pos);
 	}
 
 	protected void createPedestrians(){
-		pl.createPedestrians ();
+		//pl.createPedestrians ();
 		tbc.createPedestrians ();
 	}
 
 	public void bakeTrajectories(){
 		tbc.bakeTrajectories ();
+	}
+
+	public List<PedPosGranularPackage> getPosPackages(){
+		return tbc.getPosPackages ();
 	}
 
 }
