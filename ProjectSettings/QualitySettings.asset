@@ -9,14 +9,14 @@ QualitySettings:
   - serializedVersion: 2
     name: Fastest
     pixelLightCount: 0
-    shadows: 0
+    shadows: 1
     shadowResolution: 0
     shadowProjection: 1
-    shadowCascades: 2
+    shadowCascades: 1
     shadowDistance: 15
     shadowNearPlaneOffset: 2
     shadowCascade2Split: .333333343
-    shadowCascade4Split: {x: .0666666701, y: .200000003, z: .466666669}
+    shadowCascade4Split: {x: .0666666701, y: .199999988, z: .466666639}
     blendWeights: 1
     textureQuality: 0
     anisotropicTextures: 0

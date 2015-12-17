@@ -70,6 +70,7 @@ GameObject:
   - 4: {fileID: 428284}
   - 111: {fileID: 11166276}
   - 114: {fileID: 11469894}
+  - 65: {fileID: 6502466}
   m_Layer: 0
   m_Name: Hans
   m_TagString: pedestrian
@@ -614,7 +615,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.40442967, y: 1.18334174, z: .0676953197}
+  m_LocalPosition: {x: 9.82675934, y: 5.83050776, z: 11.5876265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 493512}
@@ -982,6 +983,18 @@ Transform:
   - {fileID: 482606}
   m_Father: {fileID: 439502}
   m_RootOrder: 1
+--- !u!65 &6502466
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112668}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .437440813, y: 1.79894066, z: .502048492}
+  m_Center: {x: .018573761, y: .930221081, z: -.0470018387}
 --- !u!111 &11166276
 Animation:
   m_ObjectHideFlags: 1

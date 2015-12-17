@@ -14,19 +14,19 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_elapsed;
 	private float speed;
 
-	public const float trajectoryInterpolationTimeStep = 0.05f;
+	public const float trajectoryInterpolationTimeStep = 0.1f;
 
 	private float lastStepTime = 0;
 
 
 	//to optimize the getTrait loop
-	//private int currentTrait;
+	private int currentTrait;
 
 	int id;
 
 
-	public List<Vector4> positions;
-	private Vector4 lastPos;
+	public List<Vector3> positions;
+	private Vector3 lastPos;
 
 
 	//Color myColor;
@@ -62,9 +62,16 @@ public class Pedestrian : MonoBehaviour {
 		*/
 
 
+	private Camera cam;
+	private Plane [] planes;
+	private Collider anyCollider;
+
 	// Use this for initialization
 	void Start () {
 
+		cam = Camera.main;
+		planes = GeometryUtility.CalculateFrustumPlanes(cam);
+		anyCollider = gameObject.GetComponent<Collider>();
 
 		gameObject.AddComponent<BoxCollider>();
 		transform.Rotate (0,90,0);
@@ -88,6 +95,7 @@ public class Pedestrian : MonoBehaviour {
 
 	//	nessaryToCalculate = true;
 		int index = _getTrait(positions, pc.current_time);
+		currentTrait = index;
 
 		//To reduce to often calculated frames
 
@@ -105,8 +113,8 @@ public class Pedestrian : MonoBehaviour {
 		
 
 
-				Vector4 pos = positions[index];
-				Vector4 pos2 = positions[index+1];
+				Vector3 pos = positions[index];
+				Vector3 pos2 = positions[index+1];
 
 				start = new Vector3 (pos.x, 0, pos.y);
 				target = new Vector3 (pos2.x, 0, pos2.y);
@@ -115,14 +123,14 @@ public class Pedestrian : MonoBehaviour {
 				bool nessaryToCalculate = (pc.current_time - lastStepTime) > trajectoryInterpolationTimeStep;
 				//nessaryToCalculate = true;
 
-				float time = (float) pc.current_time;
-				float timeStepLength = Mathf.Clamp((float)pos2.z - (float)pos.z, 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
+				float time =  pc.current_time;
+				float timeStepLength = Mathf.Clamp(pos2.z - pos.z, 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
 			
 				if(nessaryToCalculate){
 				lastStepTime = pc.current_time;
 
 
-				float movement_percentage = ((float)time - (float)pos.z) / timeStepLength;
+				float movement_percentage = (time - pos.z) / timeStepLength;
 				Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
 
 
@@ -141,7 +149,10 @@ public class Pedestrian : MonoBehaviour {
 					if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
 				}
 
-			if (r.isVisible) {
+
+			//r.isVisible is used for all cameras GeometryUtility.TestPlanesAABB(planes,anyCollider.bounds)
+			if (r.isVisible){
+				//The Pedestrains behind wall should not get Involved
 				GetComponent<Animation>().Play ();
 				GetComponent<Animation>()["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
 			} else {
@@ -173,7 +184,7 @@ public class Pedestrian : MonoBehaviour {
 			*/
 
 		} else {
-			//currentTrait = 0;
+			currentTrait = 0;
 			active = false;
 			r.enabled = false;
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
@@ -189,7 +200,7 @@ public class Pedestrian : MonoBehaviour {
 	}
 
 
-	private int _getTrait(List<Vector4> thisList, float thisValue) {	
+	private int _getTrait(List<Vector3> thisList, float thisValue) {	
 	//private int _getTrait(SortedList thisList, decimal thisValue) {
 
 
@@ -200,7 +211,7 @@ public class Pedestrian : MonoBehaviour {
 		}
 		return -1;
 		*/
-		for (int i =0; i < thisList.Count; i ++) {
+		for (int i =currentTrait; i < thisList.Count; i ++) {
 			if (thisList[i].z> thisValue) 
 				return (i - 1);
 		}
@@ -226,14 +237,14 @@ public class Pedestrian : MonoBehaviour {
 	}
 
 	public void setPositions(SortedList p) {
-		if(positions == null) positions = new List<Vector4>();
+		if(positions == null) positions = new List<Vector3>();
 
 		foreach (PedestrianPosition ped in p.Values) {
-			Vector4 cur = new Vector4();
+			Vector3 cur = new Vector3();
 			cur.x = ped.getX();
 			cur.y = ped.getY();
 			cur.z = (float)ped.getTime();	//if solution work TODO change hole loading to Vector to avoid pedestrianposition changing to float 
-			cur.w = ped.getID();
+			//cur.w = ped.getID();
 			positions.Add(cur);
 		}
 		/*foreach (PedestrianPosition ped in p.Values) {
