@@ -14,7 +14,7 @@ public class Pedestrian : MonoBehaviour {
 	float movement_time_elapsed;
 	private float speed;
 
-	public const float trajectoryInterpolationTimeStep = 0.1f;
+	//public const float trajectoryInterpolationTimeStep = 0.1f;
 
 	private float lastStepTime = 0;
 
@@ -25,7 +25,11 @@ public class Pedestrian : MonoBehaviour {
 	int id;
 
 
-	public List<Vector3> positions;
+
+
+
+	//public List<Vector3> positions;
+	private List<Vector3> positions;
 	private Vector3 lastPos;
 
 
@@ -120,30 +124,34 @@ public class Pedestrian : MonoBehaviour {
 				target = new Vector3 (pos2.x, 0, pos2.y);
 
 
-				bool nessaryToCalculate = (pc.current_time - lastStepTime) > trajectoryInterpolationTimeStep;
-				//nessaryToCalculate = true;
+				//bool nessaryToCalculate = (pc.current_time - lastStepTime) > trajectoryInterpolationTimeStep;
+				//bool nessaryToCalculate = true;
 
-				float time =  pc.current_time;
+				//float time =  pc.current_time;
+
+
+
 				float timeStepLength = Mathf.Clamp(pos2.z - pos.z, 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
 			
-				if(nessaryToCalculate){
-				lastStepTime = pc.current_time;
+				//if(nessaryToCalculate){
+				//lastStepTime = pc.current_time;
 
 
-				float movement_percentage = (time - pos.z) / timeStepLength;
-				Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
+				//float movement_percentage = (time - pos.z) / timeStepLength;
+				//Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
+				
 
-
+				Vector3 newPosition = start;
 				transform.position = newPosition;
 				gameObject.hideFlags = HideFlags.None;
 						
-				}
+				//}
 
 
 				//to awoid speed calculations more than nessesary
 				if(lastPos != pos){
 
-					//lastPos = pos;
+					lastPos = pos;
 					Vector3 relativePos = target - start;
 					speed = relativePos.magnitude;
 					if (start != target) transform.rotation = Quaternion.LookRotation(relativePos);
@@ -243,7 +251,7 @@ public class Pedestrian : MonoBehaviour {
 			Vector3 cur = new Vector3();
 			cur.x = ped.getX();
 			cur.y = ped.getY();
-			cur.z = (float)ped.getTime();	//if solution work TODO change hole loading to Vector to avoid pedestrianposition changing to float 
+			cur.z = (float) ped.getTime();	//if solution work TODO change hole loading to Vector to avoid pedestrianposition changing to float 
 			//cur.w = ped.getID();
 			positions.Add(cur);
 		}
