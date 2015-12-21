@@ -98,7 +98,7 @@ public class FileLoaderJSON : FileLoader {
 		}
 	}
 
-
+	/*
 	public override List<string> loadTrajectoryLines (string filename){
 		if (!System.IO.File.Exists(outputDir + filename)) {
 			Debug.LogError("Error: File " + filename + " not found.");
@@ -112,29 +112,33 @@ public class FileLoaderJSON : FileLoader {
 			}
 		}
 		return trajectoryLines;
-	}
+	}*/
 
 
 	/**
 	 * Loads the vadere output file name_trajectories.txt and creates pedestrians with their respective trajectories
 	 * @param filename of the trajectories file without _trajectories.txt
 	 */
-	public override void loadTrajectories(List<string> trajectoryLines){
+	public override void loadTrajectories(string trajectoryFilePath){
 		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
 		pl.Init();
-		foreach (string line in trajectoryLines) {
-			string[] parts = line.Split (' ');
-			int id;
-			decimal time;
-			float x, y;
-			//int.TryParse (parts [0], out step);
-			decimal.TryParse (parts [1], out time);
-			int.TryParse (parts [2], out id);
-			float.TryParse (parts [3], out x);
-			float.TryParse (parts [4], out y);
-			//Debug.Log(time + " / " + id + " / " + x + " / " + y);
-			
-			pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
+
+		using (StreamReader sr = new StreamReader (trajectoryFilePath)) {
+			string line = sr.ReadLine (); // skip first line
+			while ((line = sr.ReadLine ()) != null) {
+				string[] parts = line.Split (' ');
+				int id;
+				decimal time;
+				float x, y;
+				//int.TryParse (parts [0], out step);
+				decimal.TryParse (parts [1], out time);
+				int.TryParse (parts [2], out id);
+				float.TryParse (parts [3], out x);
+				float.TryParse (parts [4], out y);
+				//Debug.Log(time + " / " + id + " / " + x + " / " + y);
+				
+				pl.addPedestrianPosition (new PedestrianPosition (id, time, x, y));
+			}
 		}
 		pl.createPedestrians ();
 	}

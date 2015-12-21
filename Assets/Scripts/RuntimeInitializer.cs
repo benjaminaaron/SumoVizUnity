@@ -11,7 +11,6 @@ public class RuntimeInitializer : MonoBehaviour {
 
 	void Start () {
 
-		/*
 		FileLoader runtimeFileLoader = null;
 		switch (fileLoaderIdentifier) {
 			case "vadere":
@@ -21,8 +20,7 @@ public class RuntimeInitializer : MonoBehaviour {
 				runtimeFileLoader = new FileLoaderXML();
 				break;
 		}
-		runtimeFileLoader.loadTrajectories (trajectoryLines);
-		*/
+		runtimeFileLoader.loadTrajectories (trajectoryFilePath);
 
 	}
 

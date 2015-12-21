@@ -40,12 +40,10 @@ public class ScenarioImporter : MonoBehaviour {
 			fileLoader.loadFileByPath(Path.GetFileName(path));
 			fileLoader.buildGeometry();
 
-
-			//runtimeInitializer.fileLoaderIdentifier = identifier;
-			fileLoader.loadTrajectories(fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories"	));
+			runtimeInitializer.fileLoaderIdentifier = identifier;
+			//fileLoader.loadTrajectories(fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories"	));
 
 			runtimeInitializer.trajectoryFilePath = Path.GetDirectoryName(path) + "/" + Path.GetFileNameWithoutExtension (path) + ".trajectories";
-
 		}
 	}
 
@@ -69,6 +67,8 @@ public class ScenarioImporter : MonoBehaviour {
 
 		string newFilePath = Application.dataPath + "/data/vadere_output/" + Path.GetFileNameWithoutExtension (runtimeInitializer.trajectoryFilePath)+ "_expanded.trajectories";
 		expander.writeExpandedTrajectoryFile (newFilePath);
+
+		runtimeInitializer.trajectoryFilePath = newFilePath;
 	}
 
 	static void loadTrajectoryFile(string path, TrajectoryFileExpander expander) {

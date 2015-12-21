@@ -5,8 +5,8 @@ public abstract class FileLoader {
 
 	public abstract void loadFileByPath (string filename);
 	public abstract void buildGeometry();
-	public abstract void loadTrajectories (List<string> trajectoryLines);
-	public abstract List<string> loadTrajectoryLines (string filename);
+	public abstract void loadTrajectories (string trajectoryFilePath);
+	//public abstract List<string> loadTrajectoryLines (string filename);
 	public abstract string getInputfileExtension();
 
 	protected void createWall(string name, List<Vector2> verticesList, float height){

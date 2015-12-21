@@ -29,11 +29,11 @@ public class FileLoaderXML : FileLoader {
 		return "xml";
 	}
 
-	public override List<string> loadTrajectoryLines (string filename){
+	/*public override List<string> loadTrajectoryLines (string filename){
 		return null;
-	}
+	}*/
 
-	public override void loadTrajectories (List<string> trajectoryLines){
+	public override void loadTrajectories (string trajectoryFilePath){
 		/*
 		// In dieser Methode die Fallunterscheidung machen zwischen alten und neuen Dateien!
 		if (!System.IO.File.Exists (filename)) {
