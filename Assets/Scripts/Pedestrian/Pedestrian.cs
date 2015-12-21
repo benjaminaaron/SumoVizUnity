@@ -13,11 +13,15 @@ public class Pedestrian : MonoBehaviour {
 	//to optimize the getTrait loop
 	//private int currentTrait;
 
+	private LinkedListNode<PedestrianPosition> iterator;
+	private LinkedListNode<PedestrianPosition> last;
+
 	int id;
-	SortedList positions = new SortedList ();
+	//SortedList positions = new SortedList ();
+	private LinkedList<PedestrianPosition> positions = new LinkedList<PedestrianPosition>();
 	Color myColor;
-	bool trajectoryVisible;
-	VectorLine trajectory;
+	//bool trajectoryVisible;
+	//VectorLine trajectory;
 
 	//private InfoText it;
 
@@ -29,6 +33,8 @@ public class Pedestrian : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		last = positions.Last;
+		iterator = positions.First;
 		gameObject.AddComponent<BoxCollider>();
 		transform.Rotate (0,90,0);
 		//sets the color for the pedestrians
@@ -46,24 +52,32 @@ public class Pedestrian : MonoBehaviour {
 	void Update () {
 
 		//if (pc.playing) {
-			GetComponent<Animation>().Play ();
+			//GetComponent<Animation>().Play ();
 		/*} else {
 			GetComponent<Animation>().Stop ();
 		}*/
 
-		int index = _getTrait(positions, pc.current_time);
-		
-		if (index < positions.Count - 1 && index > -1){
+		//int index = _getTrait(positions, pc.current_time);
+		LinkedListNode<PedestrianPosition> cur = _getTrait2(pc.current_time);
+
+
+		if(cur != null && cur != last){
+			iterator = cur;
+		//if (index < positions.Count - 1 && index > -1){
 			active = true;
 			r.enabled = true;
-			PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
-			PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
+			//PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
+			//PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
+
+			PedestrianPosition pos = (PedestrianPosition)cur.Value;
+			PedestrianPosition pos2 = (PedestrianPosition)cur.Next.Value;
 			start = new Vector3 (pos.getX(), 0, pos.getY());
 			target = new Vector3 (pos2.getX(), 0, pos2.getY());
-			float time = (float) pc.current_time;
-			float timeStepLength = Mathf.Clamp((float)pos2.getTime() - (float)pos.getTime(), 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
-			float movement_percentage = ((float)time - (float)pos.getTime()) / timeStepLength;
+			float time = pc.current_time;
+			float timeStepLength = Mathf.Clamp(pos2.getTime() - pos.getTime(), 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
+			float movement_percentage = (time - pos.getTime()) / timeStepLength;
 			Vector3 newPosition = Vector3.Lerp(start, target, movement_percentage);
+			Debug.Log("Pos:/tx:" + newPosition.x +"y:/t" +newPosition.z + "id:/t" + id);
 
 			Vector3 relativePos = target - start;
 			speed = relativePos.magnitude;
@@ -76,6 +90,7 @@ public class Pedestrian : MonoBehaviour {
 
 		} else {
 			//currentTrait = 0;
+			iterator = positions.First;
 			active = false;
 			r.enabled = false;
 			gameObject.hideFlags = HideFlags.HideInHierarchy;
@@ -86,7 +101,7 @@ public class Pedestrian : MonoBehaviour {
 	public float getSpeed() {
 		return speed;
 	}
-
+/*
 	private int _getTrait(SortedList thisList, decimal thisValue) {
 		/*while(currentTrait < thisList.Count){
 			if ((decimal)thisList.GetKey(currentTrait)>=thisValue) return (currentTrait-1);
@@ -94,7 +109,7 @@ public class Pedestrian : MonoBehaviour {
 
 		}
 		return -1;
-		*/
+
 
 
 		for (int i = 0; i < thisList.Count; i ++) {
@@ -103,6 +118,20 @@ public class Pedestrian : MonoBehaviour {
 		}
 		return -1;
 	}
+	*/
+	public LinkedListNode<PedestrianPosition> _getTrait2(float thisValue){
+		LinkedListNode<PedestrianPosition> next = iterator;
+		while ( next.Next != null ){
+			if(next.Next.Value.getTime() > thisValue){ return next.Previous;}
+			next = next.Next;
+
+
+		}
+		//Debug.Log ("next:/t" + next.Value.getTime());
+		return null;
+
+
+}
 	
 	public void setID(int id) {
 		this.id = id;
@@ -116,7 +145,7 @@ public class Pedestrian : MonoBehaviour {
 	public void setPositions(SortedList p) {
 		positions.Clear();
 		foreach (PedestrianPosition ped in p.Values) {
-			positions.Add(ped.getTime(), ped);
+			positions.AddLast(ped);
 		}
 		PedestrianPosition pos = (PedestrianPosition)p.GetByIndex (0);
 		transform.position = new Vector3 (pos.getX(), 0, pos.getY());

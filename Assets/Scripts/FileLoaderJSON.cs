@@ -125,10 +125,10 @@ public class FileLoaderJSON : FileLoader {
 		foreach (string line in trajectoryLines) {
 			string[] parts = line.Split (' ');
 			int id;
-			decimal time;
+			float time;
 			float x, y;
 			//int.TryParse (parts [0], out step);
-			decimal.TryParse (parts [1], out time);
+			float.TryParse (parts [1], out time);
 			int.TryParse (parts [2], out id);
 			float.TryParse (parts [3], out x);
 			float.TryParse (parts [4], out y);
