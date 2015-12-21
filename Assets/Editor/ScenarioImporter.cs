@@ -65,6 +65,12 @@ public class ScenarioImporter : MonoBehaviour {
 
 		Debug.Log (runtimeInitializer.trajectoryFilePath);
 
+		TrajectoryFileExpander expander = new TrajectoryFileExpander ();
+
+		loadTrajectoryFile (runtimeInitializer.trajectoryFilePath, expander);
+
+		expander.createPedestrians ();
+
 
 		/*
 		var pedContainer = GameObject.Find ("Pedestrians");
@@ -76,5 +82,21 @@ public class ScenarioImporter : MonoBehaviour {
 		}*/
 	}
 
+	static void loadTrajectoryFile(string path, TrajectoryFileExpander expander) {
+		using (StreamReader sr = new StreamReader(path)) {
+			string line = sr.ReadLine();
+			while ((line = sr.ReadLine()) != null) {
+				string[] parts = line.Split (' ');
+				int id;
+				decimal time;
+				float x, y;
+				decimal.TryParse (parts [1], out time);
+				int.TryParse (parts [2], out id);
+				float.TryParse (parts [3], out x);
+				float.TryParse (parts [4], out y);
+				expander.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
+			}
+		}
+	}
 
 }
