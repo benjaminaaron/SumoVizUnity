@@ -2,38 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.IO;
 
 public class TrajectoryFileExpander {
 
 	private List<PedestrianPosition> positions = new List<PedestrianPosition>();
 
-	public void addPedestrianPosition(PedestrianPosition p) {
+	public void addPedPos(PedestrianPosition p) {
 		positions.Add (p);
 	}
 
-	public void createPedestrians() {
+	public void sortPositions() {
 		positions = positions.OrderBy(x => x.getID()).ThenBy(y => y.getTime()).ToList<PedestrianPosition>();
-		SortedList currentList = new SortedList ();
+	}
 
-		for (int i = 0; i< positions.Count;i++) {
-			if (positions.Count() > (i+1) && positions[i].getX() == positions[i+1].getX() && positions[i].getY() == positions[i+1].getY()) {
-				continue;
-			}
-			currentList.Add(positions[i].getTime(), positions[i]);
-			if ((i == (positions.Count-1) || positions[i].getID()!=positions[i+1].getID()) && currentList.Count>0) {
+	public void writeExpandedTrajectoryFile(string path) {
+		StreamWriter sw = new StreamWriter(path, false);
 
-				int id = positions[i].getID();
-				//currentList
+		sw.Write ("id time id x y\n"); //leave out targetId and sourceId, keep step (as id again) to keep the file format consistent to vadere output
 
-				foreach (PedestrianPosition pedpos in currentList.Values) {
-					Debug.Log (pedpos.toString ());
-				}
-				Debug.Log ("----------------------------------------------------------------------");
-
-				currentList.Clear();
-			}
+		foreach (PedestrianPosition pedPos in positions) {
+			sw.Write (pedPos.toString () + "\n"); //TODO use System.Environment.NewLine, but doesn't seem to work
 		}
+
+		sw.Close ();
+		//System.IO.File.WriteAllText(path, "This is text that goes into the text file");
 	}
 
 }

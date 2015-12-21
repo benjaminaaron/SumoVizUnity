@@ -17,21 +17,15 @@ public class PedestrianLoader : MonoBehaviour {
 		positions.Clear();
 		pedestrians.Clear();
 		ped = Resources.Load ("Hans");
-	
 		Pedestrians = new GameObject("Pedestrians");
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 	}
 
 	/*
 	void Awake(){
-	
 		ped = Resources.Load ("Hans");
-
 		Pedestrians = new GameObject("Pedestrians");
-
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
-
-
 	}
 	*/
 
@@ -43,14 +37,10 @@ public class PedestrianLoader : MonoBehaviour {
 	public void addPedestrianPosition(PedestrianPosition p) {
 		positions.Add (p);
 
-
 		if (p.getTime ()>pc.total_time)pc.total_time = p.getTime ();
 	}
 
 	public void createPedestrians() {
-
-		Debug.Log ("in createPedestrians");
-
 		positions = positions.OrderBy(x => x.getID()).ThenBy(y => y.getTime()).ToList<PedestrianPosition>();
 		SortedList currentList = new SortedList ();
 		population = new int[(int)pc.total_time+1];
@@ -68,21 +58,11 @@ public class PedestrianLoader : MonoBehaviour {
 				p.transform.parent = null;
 				p.GetComponent<Pedestrian>().setID(positions[i].getID());
 				p.GetComponent<Pedestrian>().setPositions(currentList);
-
-				foreach (PedestrianPosition pedpos in currentList.Values) {
-					//Debug.Log (pedpos.toString ());
-				}
-				//Debug.Log ("----------------------------------------------------------------------");
-
 				pedestrians.Add(p);
 				currentList.Clear();
 				p.transform.SetParent(Pedestrians.transform);
 			}
 		}
-
-
-
-
 	}
 
 

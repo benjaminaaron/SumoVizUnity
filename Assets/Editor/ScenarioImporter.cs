@@ -60,26 +60,15 @@ public class ScenarioImporter : MonoBehaviour {
 	[MenuItem("Assets/expand trajectory file")]
 	
 	static void expandTrajectoryFile() {
-
 		RuntimeInitializer runtimeInitializer = GameObject.Find("RuntimeInitializer").GetComponent<RuntimeInitializer>();
-
-		Debug.Log (runtimeInitializer.trajectoryFilePath);
+		//Debug.Log (runtimeInitializer.trajectoryFilePath);
 
 		TrajectoryFileExpander expander = new TrajectoryFileExpander ();
-
 		loadTrajectoryFile (runtimeInitializer.trajectoryFilePath, expander);
+		expander.sortPositions ();
 
-		expander.createPedestrians ();
-
-
-		/*
-		var pedContainer = GameObject.Find ("Pedestrians");
-		var peds = pedContainer.GetComponentsInChildren<Pedestrian>();
-		//Debug.Log (pedestrians.Length);
-
-		foreach (Pedestrian ped in peds) {		
-			Debug.Log (ped.getID() + ": " + ped.isActive());
-		}*/
+		string newFilePath = Application.dataPath + "/data/vadere_output/" + Path.GetFileNameWithoutExtension (runtimeInitializer.trajectoryFilePath)+ "_expanded.trajectories";
+		expander.writeExpandedTrajectoryFile (newFilePath);
 	}
 
 	static void loadTrajectoryFile(string path, TrajectoryFileExpander expander) {
@@ -94,7 +83,7 @@ public class ScenarioImporter : MonoBehaviour {
 				int.TryParse (parts [2], out id);
 				float.TryParse (parts [3], out x);
 				float.TryParse (parts [4], out y);
-				expander.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
+				expander.addPedPos(new PedestrianPosition(id, time, x, y));
 			}
 		}
 	}

@@ -29,7 +29,7 @@ public struct PedestrianPosition
 	public float getY() {return this.y;}
 
 	public String toString(){
-		return id + ": " + time + " > " + x + " / " + y;
+		return id + " " + time + " " + id + " " + x + " " + y;
 	}
 
 }
