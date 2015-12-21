@@ -27,5 +27,10 @@ public struct PedestrianPosition
 	public decimal getTime() {return this.time;}
 	public float getX() {return this.x;}
 	public float getY() {return this.y;}
+
+	public String toString(){
+		return id + ": " + time + " > " + x + " / " + y;
+	}
+
 }
 

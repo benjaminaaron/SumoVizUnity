@@ -44,6 +44,7 @@ public class ScenarioImporter : MonoBehaviour {
 			//runtimeInitializer.fileLoaderIdentifier = identifier;
 			fileLoader.loadTrajectories(fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories"	));
 
+			runtimeInitializer.trajectoryFilePath = Path.GetDirectoryName(path) + "/" + Path.GetFileNameWithoutExtension (path) + ".trajectories";
 
 		}
 	}
@@ -55,18 +56,25 @@ public class ScenarioImporter : MonoBehaviour {
 		DestroyImmediate (GameObject.Find ("Pedestrians"));
 	}
 
-/*
-	[MenuItem("Assets/test")]
+
+	[MenuItem("Assets/expand trajectory file")]
 	
-	static void test() {
+	static void expandTrajectoryFile() {
+
+		RuntimeInitializer runtimeInitializer = GameObject.Find("RuntimeInitializer").GetComponent<RuntimeInitializer>();
+
+		Debug.Log (runtimeInitializer.trajectoryFilePath);
+
+
+		/*
 		var pedContainer = GameObject.Find ("Pedestrians");
 		var peds = pedContainer.GetComponentsInChildren<Pedestrian>();
 		//Debug.Log (pedestrians.Length);
 
 		foreach (Pedestrian ped in peds) {		
 			Debug.Log (ped.getID() + ": " + ped.isActive());
-		}
+		}*/
 	}
-*/
+
 
 }

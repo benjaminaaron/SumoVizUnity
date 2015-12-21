@@ -7,6 +7,7 @@ public class RuntimeInitializer : MonoBehaviour {
 	public GeometryLoader geometryLoader;
 	public string fileLoaderIdentifier;
 	//public List<string> trajectoryLines; 
+	public string trajectoryFilePath;
 
 	void Start () {
 
