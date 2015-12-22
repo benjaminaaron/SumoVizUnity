@@ -30,7 +30,7 @@ public class Pedestrian : MonoBehaviour {
 	private PlaybackControlNonGUI pc;
 	private Renderer r;
 
-	private bool active;
+	private bool active =true;
 
 	// Use this for initialization
 	void Start () {
@@ -91,7 +91,7 @@ public class Pedestrian : MonoBehaviour {
 
 
 					if (pos != lastPos) {
-						//lastPos = pos;
+						lastPos = pos;
 
 
 						Vector3 relativePos = target - start;
