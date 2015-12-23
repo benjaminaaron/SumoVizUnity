@@ -40,7 +40,28 @@ public class ScenarioImporter : MonoBehaviour {
 			fileLoader.loadFileByPath(Path.GetFileName(path));
 			fileLoader.buildGeometry();
 			runtimeInitializer.fileLoaderIdentifier = identifier;
-			runtimeInitializer.trajectoryLines = fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
+
+
+			fileLoader.loadTrajectoryLines(Path.GetFileNameWithoutExtension(path) + ".trajectories");
+
+
+			List<PedPosGranularPackage> pack = fileLoader.getPosPackages();
+
+			Debug.LogError(pack.Count);
+
+			foreach (PedPosGranularPackage posPackage in pack) {
+				posPackage.action();
+			}
+
+			runtimeInitializer.setPosPackages(pack);
+
+			//EditorUtility.SetDirty(runtimeInitializer);
+
+			/*
+			List<Dings> dingsList = new List<Dings> ();
+			dingsList.Add(new Dings());
+			dingsList.Add(new Dings());
+			runtimeInitializer.dingsList = dingsList;*/
 		}
 	}
 
@@ -50,10 +71,19 @@ public class ScenarioImporter : MonoBehaviour {
 		DestroyImmediate (GameObject.Find ("World"));
 	}
 
-/*
+	/*
 	[MenuItem("Assets/test")]
 	
 	static void test() {
+		PlaybackControlNonGUI pc  = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
+		decimal sum = 0;
+		foreach (decimal delta in pc.deltas) {
+			sum += delta;
+		}
+		Debug.Log ("average: " + (sum / pc.deltas.Count));
+
+		// - - -
+
 		var pedContainer = GameObject.Find ("Pedestrians");
 		var peds = pedContainer.GetComponentsInChildren<Pedestrian>();
 		//Debug.Log (pedestrians.Length);
@@ -62,6 +92,6 @@ public class ScenarioImporter : MonoBehaviour {
 			Debug.Log (ped.getID() + ": " + ped.isActive());
 		}
 	}
-*/
+	*/
 
 }

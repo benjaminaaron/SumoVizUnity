@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlaybackControlNonGUI : MonoBehaviour {
 
 	public bool playing = true;
 	public decimal current_time;
 	public decimal total_time = 0;
+
+	//public List<decimal> deltas = new List<decimal> ();
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +21,15 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 		
 		if (playing) {
 			try {
-				current_time = (current_time + (decimal) Time.deltaTime) % total_time;
+				decimal delta = (decimal) Time.deltaTime;
+				//deltas.Add(delta);
+				current_time = (current_time + delta) % total_time;
+
+				/*Debug.Log(current_time);
+				Debug.Log (total_time);
+				Debug.Log (delta);
+				Debug.Log ("");*/
+
 			} catch (System.DivideByZeroException) {
 				current_time = 0;
 			}

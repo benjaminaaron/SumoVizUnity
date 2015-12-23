@@ -99,7 +99,7 @@ public class FileLoaderJSON : FileLoader {
 	}
 
 
-	public override List<string> loadTrajectoryLines (string filename){
+	public override void loadTrajectoryLines (string filename){
 		if (!System.IO.File.Exists(outputDir + filename)) {
 			Debug.LogError("Error: File " + filename + " not found.");
 		}
@@ -111,7 +111,8 @@ public class FileLoaderJSON : FileLoader {
 				trajectoryLines.Add(line);
 			}
 		}
-		return trajectoryLines;
+
+		loadTrajectories (trajectoryLines);
 	}
 
 
@@ -120,8 +121,6 @@ public class FileLoaderJSON : FileLoader {
 	 * @param filename of the trajectories file without _trajectories.txt
 	 */
 	public override void loadTrajectories(List<string> trajectoryLines){
-		PedestrianLoader pl = GameObject.Find("PedestrianLoader").GetComponent<PedestrianLoader>();
-
 		foreach (string line in trajectoryLines) {
 			string[] parts = line.Split (' ');
 			int id;
@@ -134,9 +133,9 @@ public class FileLoaderJSON : FileLoader {
 			float.TryParse (parts [4], out y);
 			//Debug.Log(time + " / " + id + " / " + x + " / " + y);
 			
-			pl.addPedestrianPosition(new PedestrianPosition(id, time, x, y));
+			addPedestrianPosition(id, time, x, y);
 		}
-		pl.createPedestrians ();
+		createPedestrians ();
 	}
 
 	/**

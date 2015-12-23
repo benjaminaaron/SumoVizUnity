@@ -488,7 +488,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &1003934478
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pedestrians: []
   population: 
+  posPackages: []
 --- !u!4 &1003934481
 Transform:
   m_ObjectHideFlags: 0
@@ -618,7 +619,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   geometryLoader: {fileID: 0}
   fileLoaderIdentifier: 
-  trajectoriesFilename: 
+  trajectoryLines: []
+  posPackages: []
+  pedestrians: []
 --- !u!4 &1951625494
 Transform:
   m_ObjectHideFlags: 0
