@@ -19,6 +19,7 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 		if (playing) {
 			try {
 				current_time = (current_time + Time.deltaTime) % total_time;
+				//Debug.Log(current_time);
 			} catch (System.DivideByZeroException) {
 				current_time = 0;
 			}

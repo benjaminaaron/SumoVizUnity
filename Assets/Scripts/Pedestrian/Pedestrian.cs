@@ -72,20 +72,23 @@ public class Pedestrian : MonoBehaviour {
 
 
 			//Debug.Log("x:\t" +cur.Value.getX() +"y:\t"+ cur.Value.getY() + "time:\t"+cur.Value.getTime() + "id:\t" + id);
-			if (cur != null && cur != last.Previous) {
+			if (cur != null && cur != last) {
+
 			iterator = cur;
+
+
+			active = true;
+			//r.enabled = true;
 
 				if (r.isVisible) {
 
 				//if(animOn){
 				//bool necessaryToTransform = (pc.current_time - lastTime) > reducedStepTime;
 
-
-					GetComponent<Animation>().Play ();
+							//GetComponent<Animation>().Play ();
 							//lastTime = pc.current_time;
 							//if (index < positions.Count - 1 && index > -1){
-							active = true;
-							r.enabled = true;
+							
 							//PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
 							//PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
 							
@@ -99,24 +102,33 @@ public class Pedestrian : MonoBehaviour {
 							Vector3 newPosition = Vector3.Lerp (start, target, movement_percentage);
 							//Debug.Log("Pos:/tx:" + newPosition.x +"y:/t" +newPosition.z + "id:/t" + id);
 							
-							transform.position = newPosition;
 							gameObject.hideFlags = HideFlags.None;
+							transform.position = newPosition;
+				
+							
 
+
+							if (pos != lastPos) {
+								lastPos = pos;
+
+								Vector3 relativePos = target - start;
+					
+									
+					
+								speed = relativePos.magnitude;
+								transform.rotation = Quaternion.LookRotation (relativePos);
+							}
+							
 
 				if(animOn){
 
-					if (pos != lastPos) {
-						lastPos = pos;
 
-
-						Vector3 relativePos = target - start;
-						speed = relativePos.magnitude;
 
 						GetComponent<Animation> () ["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
 						//if (start != target)
-							transform.rotation = Quaternion.LookRotation (relativePos);
+							
 
-					}
+				
 
 					
 				}
@@ -146,10 +158,13 @@ public class Pedestrian : MonoBehaviour {
 			*/
 
 
-				else {
+				/*else {
 					if(GetComponent<Animation>().isPlaying)
 					GetComponent<Animation> ().Stop ();
-			}
+
+			}*/
+
+
 			}
 
 
@@ -158,10 +173,12 @@ public class Pedestrian : MonoBehaviour {
 			
 
 			} else {
+			//Debug.Log("hide");
 				//currentTrait = 0;
 				iterator = positions.First;
+			//Debug.Log(iterator.Value.getTime());
 				active = false;
-				r.enabled = false;
+				//r.enabled = false;
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
 
@@ -195,18 +212,18 @@ public class Pedestrian : MonoBehaviour {
 	}
 	*/
 	public LinkedListNode<PedestrianPosition> _getTrait2(float thisValue){
-		LinkedListNode<PedestrianPosition> next = iterator;
-		while ( next.Next != null ){
-			if(next.Value.getTime() > thisValue){ 
-				//if(next.Previous == null) Debug.Log("prev = null");
-
-				return next.Previous;}
+		LinkedListNode<PedestrianPosition> cur = iterator;
+		while ( cur.Next != null ){
+			if(cur.Value.getTime() > thisValue){ 
+				//if(cur.Previous == null) Debug.Log("prev = null");
+				//Debug.Log ("next:/t" + cur.Value.getTime() + "thisvalue:\t" + thisValue);
+				return cur.Previous;}
 			
-			next = next.Next;
+			cur = cur.Next;
 
 
 		}
-		//Debug.Log ("next:/t" + next.Value.getTime());
+		//Debug.Log ("next:/t" + cur.Value.getTime() + "thisvalue:\t" + thisValue);
 		return null;
 
 
