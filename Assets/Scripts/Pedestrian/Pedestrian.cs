@@ -9,7 +9,7 @@ public class Pedestrian : MonoBehaviour {
 	Vector3 target;
 	float movement_time_total;
 	float movement_time_elapsed;
-	bool animOn;
+	bool animOn = false;
 	private float speed;
 	//to optimize the getTrait loop
 	//private int currentTrait;
@@ -76,9 +76,21 @@ public class Pedestrian : MonoBehaviour {
 
 			iterator = cur;
 
+				if(!isActive()){
+					active = true;
+					r.enabled = true;
+				}
 
-			active = true;
 			//r.enabled = true;
+
+
+				if(animOn){
+				GetComponent<Animation>().Play();
+			}else{
+				GetComponent<Animation>().Stop();
+			}
+
+
 
 				if (r.isVisible) {
 
@@ -116,22 +128,24 @@ public class Pedestrian : MonoBehaviour {
 									
 					
 								speed = relativePos.magnitude;
+								//if (start != target)
 								transform.rotation = Quaternion.LookRotation (relativePos);
+								
+
+									
+								GetComponent<Animation> () ["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
+
 							}
+
 							
+					/*}else {
+						if(GetComponent<Animation>().isPlaying)
+						GetComponent<Animation> ().Stop ();
+			
+					}*/
+		
 
-				if(animOn){
 
-
-
-						GetComponent<Animation> () ["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
-						//if (start != target)
-							
-
-				
-
-					
-				}
 				
 				/*else if(necessaryToTransform){
 						lastTime = pc.current_time;
@@ -158,11 +172,7 @@ public class Pedestrian : MonoBehaviour {
 			*/
 
 
-				/*else {
-					if(GetComponent<Animation>().isPlaying)
-					GetComponent<Animation> ().Stop ();
-
-			}*/
+		
 
 
 			}
@@ -178,14 +188,9 @@ public class Pedestrian : MonoBehaviour {
 				iterator = positions.First;
 			//Debug.Log(iterator.Value.getTime());
 				active = false;
-				//r.enabled = false;
+				r.enabled = false;
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
-
-	}
-
-	private void move(){
-
 
 	}
 
@@ -211,6 +216,8 @@ public class Pedestrian : MonoBehaviour {
 		return -1;
 	}
 	*/
+
+
 	public LinkedListNode<PedestrianPosition> _getTrait2(float thisValue){
 		LinkedListNode<PedestrianPosition> cur = iterator;
 		while ( cur.Next != null ){
