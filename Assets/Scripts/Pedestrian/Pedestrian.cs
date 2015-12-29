@@ -86,8 +86,10 @@ public class Pedestrian : MonoBehaviour {
 
 				if(animOn){
 				GetComponent<Animation>().Play();
+				r.enabled = true;
 			}else{
 				GetComponent<Animation>().Stop();
+				r.enabled = false;
 			}
 
 
