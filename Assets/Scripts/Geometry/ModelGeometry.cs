@@ -5,7 +5,12 @@ using System.Collections.Generic;
 public class ModelGeometry : Geometry {
 
 	
-	
+	/**
+	 * This Geometrie is made for initializing the model prefabs.
+	 * It's get used in the Fileloading process.
+	 * 
+	 * 
+	 * */
 	public static  void create (string prefabName, List<Vector2> edges, float height) {
 
 		GameObject obj = (GameObject) Instantiate (Resources.Load (prefabName));
@@ -21,16 +26,18 @@ public class ModelGeometry : Geometry {
 
 		switch (prefabName) {
 			case "Roof_FBX":
-		
-				
-				
-
 				obj.transform.position = moveCenter(minmax[0],dim, height);
-
 				scaleObject(obj, dim);
-				
 				break;
+			/*
+			// Preparations for comming Tower and neu full walls
+			case "wall":
+				//TODO find way to findout how to rotate the walls with UV
+			break;
+			case "tower":
 
+			break;
+			*/
 			case "Table_FBX":
 			case "Bench_FBX":
 			default:
@@ -74,7 +81,14 @@ public class ModelGeometry : Geometry {
 
 		*/
 
-
+	/**
+	 * This method calculates the max and min from an quatratic plane
+	 * 
+	 * @param points the 4 edges of the groundplane
+	 * 
+	 * @return minMax is an array in with min is the first value and max the second
+	 * 
+	 * */
 	public static Vector2[] minMax(List<Vector2> edges){
 		Vector2 min = new Vector2();
 
@@ -108,11 +122,11 @@ public class ModelGeometry : Geometry {
 	/**
 	 * 
 	 * 
-	 * This method transforms an Quadratic Object 
-	 * It calculates the center of the Quadratgroundplane
-	 * gives back the position
+	 * This method calculates the dimension by giving it the max and min
 	 * 
-	 * @param points the 4 edges of the groundplane
+	 * 
+	 * param min is the edge with smalles coordinates
+	 * param max is the edge with biggest coordinates
 	 * 
 	 * @return dim of the object
 	 * 
@@ -140,7 +154,16 @@ public class ModelGeometry : Geometry {
 
 
 
-
+	/**
+	 * This method calculates the to Transform Center Position
+	 * 
+	 * @param min is the upperleft corner of the quatratic plain
+	 * @param dim is the dimention of the plain in a Vector in x width and in y height
+	 * @param height is the height on which level the object lies
+	 * 
+	 * @return the Transform Position as Center
+	 * 
+	 * */
 	public static Vector3 moveCenter(Vector2 min,Vector2 dim,float height){
 
 	
@@ -150,6 +173,16 @@ public class ModelGeometry : Geometry {
 
 	}
 
+	/**
+	 * This Method rescales an object by using the proposition of the dimentions 
+	 * dim and the dimentions of the model to the scale of the model to get
+	 * new scale
+	 * 
+	 *@param toScale with is the object gets scaled
+	 *@param dim the dimention of the quatratic plane
+	 * 
+	 * 
+	 * */
 	public static void scaleObject(GameObject toScale,Vector2 dim){
 
 		var renderer = toScale.GetComponent<Renderer>();

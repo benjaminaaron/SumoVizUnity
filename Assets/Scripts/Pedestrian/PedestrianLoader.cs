@@ -13,10 +13,19 @@ public class PedestrianLoader : MonoBehaviour {
 	private PlaybackControlNonGUI pc;
 	GameObject Pedestrians;
 
+	Random rnd = new Random();
+
+
 
 
 	void Awake(){
 		ped = Resources.Load ("Hans");
+
+		/*
+		Preperations for later comming diff pedestrian prefabs
+		ped1 = Ressources.Load("Hans");
+		ped2 = Ressources.Load("Gretel")
+		*/
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 		Pedestrians = new GameObject("Pedestrians");
 	}
@@ -48,6 +57,20 @@ public class PedestrianLoader : MonoBehaviour {
 			if ((i == (positions.Count-1) || positions[i].getID()!=positions[i+1].getID()) && currentList.Count>0) {
 
 				GameObject p = (GameObject) Instantiate(ped);
+
+				/*
+				Preperations for later comming diff pedestrian prefabs
+				int gender = Random.next(0,2);
+				if(gender == 0){
+					GameObject p = (GameObject) Instantiate(ped1);
+				}else{
+					GameObject p = (GameObject) Instantiate(ped2);
+				}
+
+				*/
+
+
+
 				p.transform.parent = null;
 				p.GetComponent<Pedestrian>().setPositions(currentList);
 				p.GetComponent<Pedestrian>().setID(positions[i].getID());
