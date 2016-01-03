@@ -65,11 +65,7 @@ public class Pedestrian : MonoBehaviour {
 		//int index = _getTrait(positions, pc.current_time);
 
 
-		if(animOn){
-			GetComponent<Animation>().Play();
-			r.enabled = true;
-			
-			
+
 			
 		LinkedListNode<PedestrianPosition> cur = _getTrait2 (pc.current_time);
 
@@ -88,12 +84,22 @@ public class Pedestrian : MonoBehaviour {
 			//r.enabled = true;
 
 
-				
-			
+
+
 
 
 				if (r.isVisible) {
 
+
+				if(animOn){
+					GetComponent<Animation>().Play();
+					//r.enabled = true;
+				}else{
+					GetComponent<Animation>().Stop();
+					//r.enabled = false;
+				}
+
+				//r.enabled = true;
 				//if(animOn){
 				//bool necessaryToTransform = (pc.current_time - lastTime) > reducedStepTime;
 
@@ -174,8 +180,7 @@ public class Pedestrian : MonoBehaviour {
 
 		
 
-
-				}
+			}
 
 
 
@@ -192,12 +197,6 @@ public class Pedestrian : MonoBehaviour {
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
 
-		}else{
-			GetComponent<Animation>().Stop();
-			r.enabled = false;
-		}
-
-		
 	}
 
 
