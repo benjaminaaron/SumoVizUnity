@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class ModelGeometry : Geometry {
 
 	
@@ -39,6 +40,58 @@ public class ModelGeometry : Geometry {
 			break;
 			*/
 			case "Table_FBX":
+
+				obj.transform.position = moveCenter(minmax[0],dim, height);
+			
+			//for benches and table needs to be rotated check the height and width to 
+			//know how to rotate the object the value dependants on output file from vadere
+
+
+
+				
+			//calculate if an beer should be created on the table with randoms
+			/*
+				System.Random rnd = new System.Random();
+				int countBeerOnTable  = rnd.Next(0,2);
+
+
+
+			Vector2 tableWidthHeight = new Vector2();
+			tableWidthHeight.x  = obj.transform.GetComponent<Renderer>().bounds.extents.x;
+			tableWidthHeight.y = obj.transform.GetComponent<Renderer>().bounds.extents.z;
+
+			GameObject beerglas = Resources.Load("beerglas");
+
+			Vector2 glasWidthHeight = new Vector2();
+			glasWidthHeight.x  = beerglas.transform.GetComponent<Renderer>().bounds.extents.x;
+			glasWidthHeight.y = beerglas.transform.GetComponent<Renderer>().bounds.extents.z;
+
+			float offset = glasWidthHeight;
+
+			obj.transform.position
+			for(int i = 1;i <= 10;i++ ){
+
+
+				if(i % 2 == 0){
+
+				}
+
+				if(rnd.Next(0,2)){
+				GameObject beer = GameObject.Instantiate(beerglas);
+				beer.transform.position = new Vector3(rnd.NextDouble);
+
+				}
+			}
+			*/
+			if (Mathf.Abs(dim.x) > Mathf.Abs(dim.y)){
+				obj.transform.Rotate(0, 90, 0);
+				
+			}
+
+
+
+				break;
+
 			case "Bench_FBX":
 			default:
 

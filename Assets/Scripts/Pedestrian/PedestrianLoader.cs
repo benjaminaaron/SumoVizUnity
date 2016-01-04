@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
+
 public class PedestrianLoader : MonoBehaviour {
 
 	private List<PedestrianPosition> positions = new List<PedestrianPosition>();
@@ -13,7 +14,7 @@ public class PedestrianLoader : MonoBehaviour {
 	private PlaybackControlNonGUI pc;
 	GameObject Pedestrians;
 
-	Random rnd = new Random();
+	System.Random rnd = new System.Random();
 
 
 
@@ -58,9 +59,12 @@ public class PedestrianLoader : MonoBehaviour {
 
 				GameObject p = (GameObject) Instantiate(ped);
 
+
+
 				/*
 				Preperations for later comming diff pedestrian prefabs
-				int gender = Random.next(0,2);
+				int gender = rnd.Next(0,2);
+				Debug.Log(gender);
 				if(gender == 0){
 					GameObject p = (GameObject) Instantiate(ped1);
 				}else{

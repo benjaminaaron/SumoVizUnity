@@ -66,6 +66,15 @@ public class Pedestrian : MonoBehaviour {
 
 
 
+		
+
+		if (r.isVisible) {
+
+			if(!isActive()){
+				active = true;
+				r.enabled = true;
+			}
+
 			
 		LinkedListNode<PedestrianPosition> cur = _getTrait2 (pc.current_time);
 
@@ -74,12 +83,7 @@ public class Pedestrian : MonoBehaviour {
 			//Debug.Log("x:\t" +cur.Value.getX() +"y:\t"+ cur.Value.getY() + "time:\t"+cur.Value.getTime() + "id:\t" + id);
 			if (cur != null && cur != last) {
 
-			iterator = cur;
-
-				if(!isActive()){
-					active = true;
-					r.enabled = true;
-				}
+				iterator = cur;
 
 			//r.enabled = true;
 
@@ -88,7 +92,7 @@ public class Pedestrian : MonoBehaviour {
 
 
 
-				if (r.isVisible) {
+				
 
 
 				if(animOn){
@@ -180,7 +184,7 @@ public class Pedestrian : MonoBehaviour {
 
 		
 
-			}
+			
 
 
 
@@ -196,6 +200,8 @@ public class Pedestrian : MonoBehaviour {
 				r.enabled = false;
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
+
+		}
 
 	}
 
