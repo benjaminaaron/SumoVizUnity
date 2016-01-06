@@ -22,7 +22,7 @@ public class AgentView : MonoBehaviour
 			followPedestrian (currentPedestrian);
 		} else {
 
-			Debug.Log ("No valid pedestrian found");
+			//Debug.Log ("No valid pedestrian found");
 			findRandomPedestrian ();
 		}
 
@@ -53,7 +53,7 @@ public class AgentView : MonoBehaviour
 		GameObject[] pedestrians = GameObject.FindGameObjectsWithTag ("pedestrian"); 
 
 		if (pedestrians.Length == 0) {
-			Debug.LogError ("No game objects are tagged with pedestrian");
+			//Debug.LogError ("No game objects are tagged with pedestrian");
 		} else {
 
 			System.Random random = new System.Random ();
@@ -63,11 +63,11 @@ public class AgentView : MonoBehaviour
 			while (!isPedActive) {
 				position = random.Next (1, pedestrians.Length);
 				isPedActive = pedestrians [position].GetComponentInChildren<Pedestrian> ().isActive ();
-				Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
+				//Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
 			}
 
 			currentPedestrian = pedestrians [position];
-			Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
+			//Debug.Log ("Set new pedestrian to follow : " + currentPedestrian + ". Is active : " + isPedActive);
 
 		}
 					
