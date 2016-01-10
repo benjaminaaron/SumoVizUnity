@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class CameraTour : MonoBehaviour {
 	
-	private GameObject cameraObj;
+	//private GameObject cameraObj;
 	private PlaybackControlNonGUI pc;
 	private float currentTime = 0;
 
@@ -20,9 +20,9 @@ public class CameraTour : MonoBehaviour {
 
 	void Start () {
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
-		cameraObj = GameObject.Find ("Sphere"); //TODO
+		//cameraObj = GameObject.Find ("Sphere");
 
-		//TODO read this in from .scenario file
+		//TODO incorporate waiting times in points
 		waypoints.Add (new Vector3 (45, 5, 75));//5
 		waypoints.Add (new Vector3 (45, 2, 35));//0
 		waypoints.Add (new Vector3 (24, 2, 62));//5
@@ -68,8 +68,10 @@ public class CameraTour : MonoBehaviour {
 
 		float percBtwnWaypoints = (currentTourDist - entryPassed.Key) / (entryNext.Key - entryPassed.Key);
 		Vector3 newPos = Vector3.Lerp (entryPassed.Value, entryNext.Value, percBtwnWaypoints);
-		if(!float.IsNaN(newPos.x))
-			cameraObj.transform.position = newPos;
+		if (!float.IsNaN (newPos.x)) {
+			//cameraObj.transform.position = newPos;
+			transform.position = newPos;
+		}
 	}
 
 }
