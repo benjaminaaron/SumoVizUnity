@@ -50,6 +50,31 @@ public class ScenarioImporter : MonoBehaviour {
 		DestroyImmediate (GameObject.Find ("World"));
 	}
 
+
+	[MenuItem("Assets/switch camera mode")]// btwn AgentView & CameraTour
+
+	static void switchCameraMode() {
+		Walk walkComponent = GameObject.Find("CardboardMain").GetComponent<Walk>();
+		AgentView agentViewComponent = GameObject.Find("CardboardMain").GetComponent<AgentView>();
+		CameraTour cameraTourComponent = GameObject.Find("CardboardMain").GetComponent<CameraTour>();
+
+		var message = "";
+
+		if (agentViewComponent.enabled) {
+			agentViewComponent.enabled = false;
+			walkComponent.enabled = false;
+			cameraTourComponent.enabled = true;
+			message = "camera mode was AgentView, is now CameraTour";
+		} else {
+			agentViewComponent.enabled = true;
+			walkComponent.enabled = true;
+			cameraTourComponent.enabled = false;
+			message = "camera mode was CameraTour, is now AgentView";
+		}
+
+		EditorUtility.DisplayDialog("camera mode switched", message, "Ok");
+	}
+	
 /*
 	[MenuItem("Assets/test")]
 	
