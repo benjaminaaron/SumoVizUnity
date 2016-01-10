@@ -68,7 +68,7 @@ public class PedestrianLoader : MonoBehaviour {
 
 				//diff pedestrian prefabs
 				int gender = rnd.Next(0,1);
-				Debug.Log(gender);
+				//Debug.Log(gender);
 				if(gender == 0){
 					p = (GameObject) Instantiate(ped1);
 				}/*else{

@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using SimpleJSON;
 
 public class FileLoaderJSON : FileLoader {
-	
+
+	public const float tentheight = 4f;
 	JSONNode obstacles;
 	JSONArray sources;
 	JSONArray targets;
@@ -61,9 +62,14 @@ public class FileLoaderJSON : FileLoader {
 					//ModelGeometry.create("Fence", parsePoints(shape), 1.0f);
 
 					break;
-				default:
 
-					createWall("wall", parsePoints(shape), 6f);
+
+				default:
+			
+
+					createWall("wall", parsePoints(shape), tentheight);
+
+						
 					//ModelGeometry.create("TwoSideWall",parsePoints(shape), 6.0f);
 					break;			
 				}
@@ -73,7 +79,7 @@ public class FileLoaderJSON : FileLoader {
 		}
 
 		if (roofpoints.Count > 0)
-			createRoof ("Roof_FBX", roofpoints, 6f);
+			createRoof ("Roof_FBX", roofpoints, tentheight);
 	}
 
 	private void buildSources(){
