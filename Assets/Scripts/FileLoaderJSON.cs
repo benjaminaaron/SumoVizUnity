@@ -58,9 +58,13 @@ public class FileLoaderJSON : FileLoader {
 					break;
 				case "fence":
 					createWall("fence", parsePoints(shape), 1.0f);//only an assumption
+					//ModelGeometry.create("Fence", parsePoints(shape), 1.0f);
+
 					break;
 				default:
+
 					createWall("wall", parsePoints(shape), 6f);
+					//ModelGeometry.create("TwoSideWall",parsePoints(shape), 6.0f);
 					break;			
 				}
 			} else {
