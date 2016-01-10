@@ -38,9 +38,22 @@ public class Pedestrian : MonoBehaviour {
 	private bool active =true;
 	//GameObject cam;
 
+	private int gender;
+	AnimationState genderBasedAnim;
+
 	// Use this for initialization
 	void Start () { 
 		//cam =GameObject.Find("CardboardMain");
+
+		if(gender ==0){
+			genderBasedAnim = GetComponent<Animation>()["MaleArm|Walking"];
+		
+		}else{
+			//TODO rename walkig_grete to walking_grete in Blender file
+			genderBasedAnim = GetComponent<Animation>()["walkig_grete"];
+		}
+
+
 
 		last = positions.Last;
 		iterator = positions.First;
@@ -188,7 +201,7 @@ public class Pedestrian : MonoBehaviour {
 								speed = relativePos.magnitude;
 								//if (start != target)
 								transform.rotation = Quaternion.LookRotation (relativePos);
-								GetComponent<Animation> () ["MaleArm|Walking"].speed = getSpeed () / timeStepLength;
+								genderBasedAnim.speed = getSpeed () / timeStepLength;
 
 							}
 
@@ -298,6 +311,19 @@ public class Pedestrian : MonoBehaviour {
 	public void setVisible(bool visible){
 		this.visible = visible;
 	}
+
+
+	/*
+	 * Set the gender of an pedestrian 
+	 * 0 is male
+	 * 1 is female
+	 * 
+	 * */
+	public void setGender(int gender){
+		this.gender = gender;
+
+	}
+
 
 
 

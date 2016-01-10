@@ -10,7 +10,10 @@ public class PedestrianLoader : MonoBehaviour {
 	private List<PedestrianPosition> positions = new List<PedestrianPosition>();
 	public List<GameObject> pedestrians = new List<GameObject>();
 	public int[] population;
-	private Object ped;
+	//private Object ped;
+
+	private Object ped1;
+	private Object ped2;
 	private PlaybackControlNonGUI pc;
 	GameObject Pedestrians;
 
@@ -20,13 +23,14 @@ public class PedestrianLoader : MonoBehaviour {
 
 
 	void Awake(){
-		ped = Resources.Load ("Hans");
+		//ped = Resources.Load ("Hans");
 
-		/*
-		Preperations for later comming diff pedestrian prefabs
-		ped1 = Ressources.Load("Hans");
-		ped2 = Ressources.Load("Gretel")
-		*/
+
+		//diff pedestrian prefabs
+
+		ped1 =Resources.Load("Hans");
+		ped2 = Resources.Load("Grete");
+		
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 		Pedestrians = new GameObject("Pedestrians");
 	}
@@ -57,25 +61,30 @@ public class PedestrianLoader : MonoBehaviour {
 			population[(int) positions[i].getTime ()]++;
 			if ((i == (positions.Count-1) || positions[i].getID()!=positions[i+1].getID()) && currentList.Count>0) {
 
-				GameObject p = (GameObject) Instantiate(ped);
+				//GameObject p = (GameObject) Instantiate(ped);
 
 
+				GameObject p;
 
-				/*
-				Preperations for later comming diff pedestrian prefabs
+				//diff pedestrian prefabs
 				int gender = rnd.Next(0,2);
 				Debug.Log(gender);
 				if(gender == 0){
-					GameObject p = (GameObject) Instantiate(ped1);
+					p = (GameObject) Instantiate(ped1);
 				}else{
-					GameObject p = (GameObject) Instantiate(ped2);
+					p = (GameObject) Instantiate(ped2);
 				}
 
-				*/
+				if(p == null){
+
+					throw new UnityException("not initialized pedestrian");
+				}
 
 
 
-				p.transform.parent = null;
+
+				p.GetComponent<Pedestrian>().setGender(gender);
+				//p.transform.parent = null;
 				p.GetComponent<Pedestrian>().setPositions(currentList);
 				p.GetComponent<Pedestrian>().setID(positions[i].getID());
 				pedestrians.Add(p);

@@ -1003,9 +1003,9 @@ Animation:
   m_GameObject: {fileID: 112668}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 0cc9e48f639f4334ea2ece7362838636, type: 3}
+  m_Animation: {fileID: 7400000, guid: e90ca60259dddd645aa2e7395a3c85fc, type: 3}
   m_Animations:
-  - {fileID: 7400000, guid: 0cc9e48f639f4334ea2ece7362838636, type: 3}
+  - {fileID: 7400000, guid: e90ca60259dddd645aa2e7395a3c85fc, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -1089,6 +1089,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: m_Animations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_CullingType
       value: 1
       objectReference: {fileID: 0}
@@ -1124,6 +1128,30 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Animations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: e90ca60259dddd645aa2e7395a3c85fc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: e90ca60259dddd645aa2e7395a3c85fc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Animations.Array.data[2]
+      value: 
+      objectReference: {fileID: 7400000, guid: e90ca60259dddd645aa2e7395a3c85fc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Animations.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Animations.Array.data[4]
+      value: 
+      objectReference: {fileID: 7400000, guid: 0691964d5164a704a902a088051feb98, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: e90ca60259dddd645aa2e7395a3c85fc, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 112668}
