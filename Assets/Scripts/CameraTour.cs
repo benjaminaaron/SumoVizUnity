@@ -26,6 +26,7 @@ public class CameraTour : MonoBehaviour {
 		waypoints.Add (new Vector3 (39, 5, 50));
 		waypoints.Add (new Vector3 (39, 2, 0));
 		waypoints.Add (new Vector3 (39, 2, 17));
+		waypoints.Add (new Vector3 (19, 2, 17));
 		waypoints.Add (new Vector3 (19, 2, 39));
 		waypoints.Add (new Vector3 (0, 5, 39));
 		waypoints.Add (new Vector3 (19, 2, 39));
