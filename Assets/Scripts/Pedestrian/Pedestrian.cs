@@ -36,11 +36,11 @@ public class Pedestrian : MonoBehaviour {
 	private Renderer r;
 
 	private bool active =true;
-	Camera cam;
+	//GameObject cam;
 
 	// Use this for initialization
 	void Start () { 
-		cam =Camera.main;
+		//cam =GameObject.Find("CardboardMain");
 
 		last = positions.Last;
 		iterator = positions.First;
@@ -80,8 +80,7 @@ public class Pedestrian : MonoBehaviour {
 		}
 		*/
 
-
-	
+		//if(r.isVisible){
 		cur = _getTrait2 (pc.current_time);
 
 	
@@ -100,30 +99,36 @@ public class Pedestrian : MonoBehaviour {
 			}
 
 
+				//bool necessaryToTransform = false;
 
-			//if (r.isVisible) {
 
 
-				bool necessaryToTransform = false;
-
-			GetComponent<Animation>().Play();
 				
 				//Not On Trigger
 				//if(!animOn){
 
 					//same with ray
 
-			//var heading = this.gameObject.transform.position - cam.transform.position;
-			//if(Vector3.Dot(heading,cam.transform.forward)> 25){
-			float dist =Vector3.Distance(this.gameObject.transform.position ,cam.transform.position);
+			//var heading = new Vector3(cur.Value.getX(),cam.transform.position.y,cur.Value.getY()) - cam.transform.position;
+			//if(Vector3.Dot(heading,cam.transform.forward)> 40){
 
-			if(dist >50){
+			/*
+			int dist =(int)Vector3.Distance(new Vector3(cur.Value.getX(),cam.transform.position.y,cur.Value.getY()),cam.transform.position);
 
+
+			if(dist > 30){
 				GetComponent<Animation>().Stop();
 				return;
+
+
 			}
+
+			
+			GetComponent<Animation>().Play();
+			*/
+
 			/*
-			else if(dist> 25){
+			if(dist> 30){
 					necessaryToTransform = (pc.current_time - lastTime) > reducedStepTime;
 					GetComponent<Animation>().Stop();
 
@@ -134,8 +139,8 @@ public class Pedestrian : MonoBehaviour {
 				lastTime = pc.current_time;
 				}
 					
-				
-			*/
+				*/
+
 
 
 
@@ -196,7 +201,7 @@ public class Pedestrian : MonoBehaviour {
 			
 					}*/
 		
-			//}
+
 
 		
 			
@@ -213,9 +218,13 @@ public class Pedestrian : MonoBehaviour {
 				r.enabled = false;
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
+		
+		//}
 
 		
 	}
+
+
 
 
 	public float getSpeed() {
