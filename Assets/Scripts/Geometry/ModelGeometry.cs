@@ -36,11 +36,12 @@ public class ModelGeometry : Geometry {
 			case "wall":
 				//TODO find way to findout how to rotate the walls with UV
 			break;
-			case "tower":
-
+			case "Tower":
+			obj.transform.position = moveCenter(minmax[0],dim, height);
 			break;
 			*/
 			case "Table_FBX":
+
 
 
 			//there are five kinds of beer glasses on the table

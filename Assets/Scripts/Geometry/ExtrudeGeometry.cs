@@ -120,6 +120,8 @@ public class ExtrudeGeometry : Geometry  {
 		mesh.vertices = vertices.ToArray();
 		mesh.uv = verticesList.ToArray();
 		mesh.triangles = indices.ToArray();
+
+
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
 
