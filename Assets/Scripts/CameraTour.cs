@@ -23,10 +23,14 @@ public class CameraTour : MonoBehaviour {
 		cameraObj = GameObject.Find ("Sphere"); //TODO
 
 		//TODO read this in from .scenario file
-		waypoints.Add (new Vector3 (-10, 1, -10));
-		waypoints.Add (new Vector3 (-10, 8, 10));
-		waypoints.Add (new Vector3 (10, 3, 10));
-		waypoints.Add (new Vector3 (10, 9, -10));
+		waypoints.Add (new Vector3 (45, 5, 75));//5
+		waypoints.Add (new Vector3 (45, 2, 35));//0
+		waypoints.Add (new Vector3 (24, 2, 62));//5
+		waypoints.Add (new Vector3 (10, 2, 62));//5
+		waypoints.Add (new Vector3 (24, 2, 62));//0
+		waypoints.Add (new Vector3 (45, 2, 92));//5
+		waypoints.Add (new Vector3 (45, 5, 105));//5
+		waypoints.Add (new Vector3 (5, 10, 116));//5
 		waypoints.Add (waypoints[0]); //close the loop
 
 		waypointsDist.Add(0, waypoints [0]);
