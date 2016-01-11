@@ -10,13 +10,22 @@ public abstract class FileLoader {
 	public abstract string getInputfileExtension();
 
 	protected void createWall(string name, List<Vector2> verticesList, float height){
-		TwoSideWallGeometry.create(name, verticesList, height);
+		ObstacleExtrudeGeometry.create(name, verticesList, height);
 	}
 
 	protected void createTable(string name, List<Vector2> verticesList, float height){
 		ModelGeometry.create(name, verticesList, height); 
 	}
 
+	protected void createDoor(string name, List<Vector2> verticesList, float height){
+
+		Material doorMat = Resources.Load("Door")as Material;
+		ExtrudeGeometry.create(name,verticesList, height,doorMat,doorMat);
+	}
+
+	protected void createTwoSideWall(string name, List<Vector2> verticesList, float height){
+		TwoSideWallGeometry.create(name, verticesList, height);
+	}
 	protected void createBench(string name, List<Vector2> verticesList, float height){
 		ModelGeometry.create (name, verticesList, height); 
 	}

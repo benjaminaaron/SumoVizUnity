@@ -48,10 +48,10 @@ public class Pedestrian : MonoBehaviour {
 		if(gender ==0){
 			genderBasedAnim = GetComponent<Animation>()["MaleArm|Walking"];
 		
-		}/*else{
+		}else{
 			//TODO rename walkig_grete to walking_grete in Blender file
 			genderBasedAnim = GetComponent<Animation>()["FemaleArm|walkig_grete"];
-		}*/
+		}
 
 
 

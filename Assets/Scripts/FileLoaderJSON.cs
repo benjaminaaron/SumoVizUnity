@@ -57,9 +57,18 @@ public class FileLoaderJSON : FileLoader {
 				case "objects":
 					createWall("object", parsePoints(shape), 1.5f);//only an assumption
 					break;
+
+				case "TwoSideWall":
+					createTwoSideWall("TwoSideWall" ,parsePoints(shape), tentheight);
+
+						break;
 				case "fence":
 					createWall("fence", parsePoints(shape), 1.0f);//only an assumption
 					//ModelGeometry.create("Fence", parsePoints(shape), 1.0f);
+
+					break;
+				case "door" : 
+					createDoor("door" ,parsePoints(shape), tentheight);
 
 					break;
 
@@ -80,6 +89,7 @@ public class FileLoaderJSON : FileLoader {
 
 		if (roofpoints.Count > 0)
 			createRoof ("Roof_FBX", roofpoints, tentheight);
+			//createRoof ("Dach", roofpoints, tentheight);
 	}
 
 	private void buildSources(){
