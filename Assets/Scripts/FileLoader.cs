@@ -10,7 +10,7 @@ public abstract class FileLoader {
 	public abstract string getInputfileExtension();
 
 	protected void createWall(string name, List<Vector2> verticesList, float height){
-		ObstacleExtrudeGeometry.create(name, verticesList, height);
+		TwoSideWallGeometry.create(name, verticesList, height);
 	}
 
 	protected void createTable(string name, List<Vector2> verticesList, float height){
