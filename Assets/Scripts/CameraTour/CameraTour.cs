@@ -26,8 +26,8 @@ public class CameraTour : MonoBehaviour {
 
 	private float t_ges;
 
-	private float accelEndMarkerPerc = 1/5f;
-	private float decelStartMarkerPerc = 4/5f;
+	private float accelEndMarkerPerc = 0.2f;//   1/5
+	private float decelStartMarkerPerc = 0.8f;// 4/5
 
 
 	void Start () {
@@ -69,19 +69,19 @@ public class CameraTour : MonoBehaviour {
 			float s_accel = dist * accelEndMarkerPerc;
 			float s_decel = dist - (dist * decelStartMarkerPerc);
 			float s_const = dist - s_accel - s_decel;
-
 			//Debug.Log (string.Concat("s_accel: ", s_accel, " s_const: ", s_const, " s_decel: ", s_decel));
 
-			//public Section (Type type, Vector3 startWaypoint, float velocReducerStart, Vector3 endWaypoint, float velocReducerEnd, float s_upToHere, float s_inSection) {
+			Vector3 accelEndPoint = Vector3.Lerp (startWaypoint, endWaypoint, accelEndMarkerPerc);
+			Vector3 decelStartPoint = Vector3.Lerp (startWaypoint, endWaypoint, decelStartMarkerPerc);
 
 
-			Section accelSect = new Section(Section.Type.ACCELERATION, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges, s_accel);
+			Section accelSect = new Section(sections.Count, Section.Type.ACCELERATION, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges, s_accel);
 			Debug.Log ("ACCEL-SECT: " + accelSect);
 			sections.Add(accelSect);
-			Section constSect = new Section(Section.Type.CONSTANT, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges + s_accel, s_const);
+			Section constSect = new Section(sections.Count, Section.Type.CONSTANT, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges + s_accel, s_const);
 			Debug.Log ("CONST-SECT: " + constSect);
 			sections.Add(constSect);
-			Section decelSect = new Section(Section.Type.DECELERATION, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges + s_accel + s_const, s_decel);
+			Section decelSect = new Section(sections.Count, Section.Type.DECELERATION, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges + s_accel + s_const, s_decel);
 			Debug.Log ("DECEL-SECT: " + decelSect);
 			sections.Add(decelSect);
 
@@ -118,12 +118,30 @@ public class CameraTour : MonoBehaviour {
 			section.calcTinSection(v_max);
 		}
 
-		//TEST
 		float t_sum = 0;
 		foreach (var section in sections) {
+			section.setTupToHere(t_sum);
 			t_sum += section.getTinSection();
+			section.calcAccel();
 		}
 		Debug.Log ("sum of t_inSection's: " + t_sum + " <- must be " + t_ges);
+		foreach (var section in sections) {
+			Debug.Log(section.check());
+		}
+
+		/*
+		currentTime = 3f;
+
+		int i = 0;
+		Section sec = sections [i];
+		while (!sec.thatsMe(currentTime)){
+			sec = sections [++ i];
+		}
+
+		Debug.LogError ("" + sec);
+
+		sec.getCoordAtT (currentTime);*/
+
 	}
 
 
@@ -131,6 +149,12 @@ public class CameraTour : MonoBehaviour {
 	void Update () {
 		if (!firstUpdateDone)
 			onFirstUpdate ();
+
+		currentTime = pc.current_time;
+
+
+
+		/*
 
 		if (currentTime > pc.current_time) // reset when next loop starts
 			resetEnumerators ();
@@ -152,7 +176,7 @@ public class CameraTour : MonoBehaviour {
 		if (!float.IsNaN (newPos.x)) {
 			cameraObj.transform.position = newPos;
 			//transform.position = newPos;
-		}
+		}*/
 	}
 
 }
