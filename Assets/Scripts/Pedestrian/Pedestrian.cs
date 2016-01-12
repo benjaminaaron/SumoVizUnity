@@ -50,8 +50,8 @@ public class Pedestrian : MonoBehaviour {
 		
 		}else{
 			//TODO rename walkig_grete to walking_grete in Blender file
-			//genderBasedAnim = GetComponent<Animation>()["FemaleArm|walkig_grete"];
-			genderBasedAnim = GetComponent<Animation>()["FemaleArm|FemaleArmAction"];
+			genderBasedAnim = GetComponent<Animation>()["FemaleArm|walkig_grete"];
+
 		}
 
 

@@ -88,7 +88,7 @@ public class FileLoaderJSON : FileLoader {
 		}
 
 		if (roofpoints.Count > 0)
-			createRoof ("Ceiling", roofpoints, tentheight);
+			createRoof ("RoofV2", roofpoints, tentheight);
 			//createRoof ("Dach", roofpoints, tentheight);
 	}
 

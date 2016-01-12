@@ -26,7 +26,7 @@ public class ModelGeometry : Geometry {
 		Vector2 dim = getDim(minmax[0],minmax[1]);
 
 		switch (prefabName) {
-		case "Ceiling":
+		case "RoofV2":
 				obj.transform.position = moveCenter(minmax[0],dim, height);
 			Debug.Log (dim);
 				scaleObject(obj, dim);
@@ -73,7 +73,7 @@ public class ModelGeometry : Geometry {
 
 			case "Bench_FBX":
 
-			obj.transform.position = moveCenter(minmax[0],dim, height/2);
+			obj.transform.position = moveCenter(minmax[0],dim, height);
 			
 			//for benches and table needs to be rotated check the height and width to 
 			//know how to rotate the object the value dependants on output file from vadere
@@ -85,44 +85,6 @@ public class ModelGeometry : Geometry {
 			}
 			break;
 
-
-			case "TwoSideWall":
-
-			//TODO find a way to get the middle of the tent or other way
-			//values from the positon of the middle of an roof created in a run before
-			//x mitte = 45
-			//y mitte = 65
-			//dimx = 59.7
-			//dim y = 69.7
-
-
-			obj.transform.position = moveCenter(minmax[0],dim, height/2);
-			obj.transform.localScale = new Vector3(dim.x,height,dim.y);
-			//obj.GetComponent<MeshRenderer>().sharedMaterial = (Material)Resources.Load("TentWall 1");
-
-
-			//float texScale  = dim.x/10f * obj.transform.localScale.x ;
-
-
-			//obj.GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(10,1);
-			//obj.GetComponent<MeshRenderer>().sharedMaterial.SetTextureScale("_MainTex",new Vector2(texScale,1f));
-
-
-
-
-			break;
-
-			case "Fence": 
-
-			obj.transform.position = moveCenter(minmax[0],dim, height/2);
-
-				
-			obj.transform.localScale = new Vector3(dim.x,height,dim.y);
-
-			//obj.GetComponent<MeshRenderer>().sharedMaterial = (Material)Resources.Load("TentWall 1");
-
-			break;
-
 			default:
 
 			obj.transform.position = moveCenter(minmax[0],dim, height);
@@ -132,29 +94,7 @@ public class ModelGeometry : Geometry {
 
 	}
 
-	/* old code for producing the transformation
-		float minX = float.MaxValue;
-		float maxX = float.MinValue;
-		float minY = float.MaxValue;
-		float maxY = float.MinValue;
-		
-		foreach (Vector2 point in edges){ //edges = roofpoints
-			if(point.x < minX)
-				minX = point.x;
-			if(point.x > maxX)
-				maxX = point.x;
-			if(point.y < minY)
-				minY = point.y;
-			if(point.y > maxY)
-				maxY = point.y;
-		}
-		
-		float xDim = maxX - minX;
-		float yDim = maxY - minY;
-		float xCenter = minX + xDim / 2;
-		float yCenter = minY + yDim / 2;
 
-		*/
 
 	/**
 	 * This method calculates the max and min from an quatratic plane
