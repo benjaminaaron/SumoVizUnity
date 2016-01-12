@@ -9,15 +9,7 @@ public class CameraTour : MonoBehaviour {
 	private float currentTime = 0;
 
 	private List<Vector3> waypoints = new List<Vector3>();
-	private SortedList<float, Vector3> waypointsDist = new SortedList<float, Vector3> (); //waypoints and in addition the key is the running distance from start to end
 	float s_ges = 0;
-	
-	IEnumerator<KeyValuePair<float, Vector3>> enumeratorPassed;
-	IEnumerator<KeyValuePair<float, Vector3>> enumeratorNext;
-	KeyValuePair<float, Vector3> entryPassed;
-	KeyValuePair<float, Vector3> entryNext;
-	
-
 
 	private bool firstUpdateDone = false;
 
@@ -51,12 +43,12 @@ public class CameraTour : MonoBehaviour {
 		waypoints.Add (new Vector3 (0, 7, 5));
 		times.Add (0f);
 		waypoints.Add (new Vector3 (5, 7, 5));
-		times.Add (0.6f);
+		times.Add (0.4f);
 		waypoints.Add (new Vector3 (5, 7, -5));
+		times.Add (0.2f);
+		waypoints.Add (new Vector3 (5, 12, -5));
 		times.Add (0f);
-
-		//waypointsDist.Add(0, waypoints [0]);
-
+	
 		for (int i = 1; i < waypoints.Count; i ++) {
 			Vector3 startWaypoint = waypoints [i - 1];
 			float velocReducerStart = times[i - 1] < 0 ? 0 : times[i - 1]; // below 0 means waiting time TODO
@@ -74,7 +66,6 @@ public class CameraTour : MonoBehaviour {
 			Vector3 accelEndPoint = Vector3.Lerp (startWaypoint, endWaypoint, accelEndMarkerPerc);
 			Vector3 decelStartPoint = Vector3.Lerp (startWaypoint, endWaypoint, decelStartMarkerPerc);
 
-
 			Section accelSect = new Section(sections.Count, Section.Type.ACCELERATION, startWaypoint, accelEndPoint, velocReducerStart, s_ges, s_accel);
 			Debug.Log ("ACCEL-SECT: " + accelSect);
 			sections.Add(accelSect);
@@ -86,24 +77,10 @@ public class CameraTour : MonoBehaviour {
 			sections.Add(decelSect);
 
 			s_ges += dist;
-
-			//waypointsDist.Add(s_ges, waypoints [i]);
 		}
-
-		resetEnumerators ();
 	}
-
-	private void resetEnumerators() {
-		enumeratorPassed = waypointsDist.GetEnumerator ();
-		enumeratorNext = waypointsDist.GetEnumerator ();
-		entryPassed = enumeratorPassed.Current;
-		enumeratorNext.MoveNext (); // move this iterator one step further
-		entryNext = enumeratorNext.Current;
-	}
-
-
-	// because pc.total_time is not know when Start() is executed
-	private void onFirstUpdate(){
+	
+	private void onFirstUpdate(){// because pc.total_time is not know when Start() is executed
 		firstUpdateDone = true;
 
 		t_ges = pc.total_time;
@@ -128,55 +105,26 @@ public class CameraTour : MonoBehaviour {
 		foreach (var section in sections) {
 			Debug.Log(section.check());
 		}
-
-		/*
-		currentTime = 3f;
-
-		int i = 0;
-		Section sec = sections [i];
-		while (!sec.thatsMe(currentTime)){
-			sec = sections [++ i];
-		}
-
-		Debug.LogError ("" + sec);
-
-		sec.getCoordAtT (currentTime);*/
-
 	}
 
-
-	
 	void Update () {
 		if (!firstUpdateDone)
 			onFirstUpdate ();
 
 		currentTime = pc.current_time;
 
-
-
-		/*
-
-		if (currentTime > pc.current_time) // reset when next loop starts
-			resetEnumerators ();
-
-		currentTime = pc.current_time;
-		float lapsedPerc = currentTime / pc.total_time; // from 0 to 1
-		float currentTourDist = s_ges * lapsedPerc; // from 0 to wayLength
-
-		if (currentTourDist > entryNext.Key) {
-			enumeratorPassed.MoveNext();
-			enumeratorNext.MoveNext ();
-			entryPassed = enumeratorPassed.Current;
-			entryNext = enumeratorNext.Current;
+		int i = 0;
+		Section sec = sections [i];
+		while (!sec.thatsMe(currentTime)){
+			sec = sections [++ i];
 		}
-		//Debug.Log (currentTourDist + " >> passed: " + entryPassed.Key + " / " + entryPassed.Value + ", next: " + entryNext.Key + " / " + entryNext.Value);
+		
+		Vector3 pos = sec.getCoordAtT (currentTime);
 
-		float percBtwnWaypoints = (currentTourDist - entryPassed.Key) / (entryNext.Key - entryPassed.Key);
-		Vector3 newPos = Vector3.Lerp (entryPassed.Value, entryNext.Value, percBtwnWaypoints);
-		if (!float.IsNaN (newPos.x)) {
-			cameraObj.transform.position = newPos;
-			//transform.position = newPos;
-		}*/
+		//Debug.Log (currentTime + ": " + pos);
+
+		cameraObj.transform.position = pos;
+		//transform.position = newPos;
 	}
 
 }

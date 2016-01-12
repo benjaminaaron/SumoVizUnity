@@ -41,7 +41,7 @@ public class Section {
 	}
 
 	public override string ToString(){
-		return string.Concat("id: ", id, "  s_upToHere: ", s_upToHere, "  s_inSection: ", s_inSection, "  velocReducer: ", velocReducer);
+		return string.Concat("id: ", id, "  s_upToHere: ", s_upToHere, "  s_inSection: ", s_inSection, "  velocReducer: ", velocReducer, "  startCoord: ", sectionStartCoord, "  endCoord: ", sectionEndCoord);
 	}
 
 	//for testing
@@ -90,7 +90,7 @@ public class Section {
 			accel = (2f * (s_inSection - velocReducer * v_max * t_inSection)) / (float) Math.Pow(t_inSection, 2);
 			break;
 		case Type.DECELERATION:
-			accel = (2f * (s_inSection - v_max * t_inSection)) / (float) Math.Pow(t_inSection, 2);
+			accel = (2f * (s_inSection - v_max * t_inSection)) / (float) Math.Pow(t_inSection, 2); // can by definition never start from a v different to v_max -> no velocReducer
 			break;
 		}
 
@@ -102,18 +102,27 @@ public class Section {
 		return false;		
 	}
 
-	/*
-	public Vector3 getCoordAtT(float time){
-		float timepointWithinSection = time - t_upToHere;
-		return null;
-	}*/
 
+	public Vector3 getCoordAtT(float absoluteTime){
+		//Debug.LogError ("__ in section: " + id);
 
+		float relativeTime = absoluteTime - t_upToHere; // within section
+		float s_add = 0;
 
-
-
-
-
+		switch (type) {
+			case Type.ACCELERATION:
+				s_add = velocReducer * v_max * relativeTime + 0.5f * accel * (float) Math.Pow (relativeTime, 2);
+				break;
+			case Type.DECELERATION:
+				s_add = v_max * relativeTime + 0.5f * accel * (float) Math.Pow (relativeTime, 2);
+				break;
+			case Type.CONSTANT:
+				s_add = v_max * relativeTime;
+				break;
+		}
+		float s_relative = s_add / s_inSection;
+		return Vector3.Lerp (sectionStartCoord, sectionEndCoord, s_relative);
+	}
 
 
 
