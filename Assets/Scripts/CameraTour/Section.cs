@@ -40,8 +40,9 @@ public class Section {
 		this.s_inSection = s_inSection;
 	}
 
-	public void setT(){
-		//TODO
+	//for verifying that sum of t_inSection's = t_ges
+	public float getTinSection(){
+		return t_inSection;
 	}
 
 	public override string ToString(){
@@ -51,15 +52,31 @@ public class Section {
 	public float getFormulaContrib(){
 		switch (type) {
 			case Type.ACCELERATION:
-				return 0f;
+				return s_inSection / (0.5f * velocReducerStart + 0.5f);
 			case Type.CONSTANT:
 				return s_inSection;
 			case Type.DECELERATION:
-				return 0f;
+				return s_inSection / (0.5f * velocReducerEnd + 0.5f);
 			case Type.PAUSE:
-				return 0f; //TODO ??
+				return 0f;
 			default:
 				return 0f;		
+		}
+	}
+
+	public void calcTinSection(float v_max){
+		switch (type) {
+		case Type.ACCELERATION:
+			t_inSection = s_inSection / (v_max * (0.5f + 0.5f * velocReducerStart));
+			break;
+		case Type.CONSTANT:
+			t_inSection = s_inSection / v_max;
+			break;
+		case Type.DECELERATION:
+			t_inSection = s_inSection / (v_max * (0.5f + 0.5f * velocReducerEnd));
+			break;
+		case Type.PAUSE:
+			break;
 		}
 	}
 

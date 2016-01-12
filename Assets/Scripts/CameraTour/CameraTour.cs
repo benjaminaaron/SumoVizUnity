@@ -19,12 +19,16 @@ public class CameraTour : MonoBehaviour {
 	
 
 
+	private bool firstUpdateDone = false;
+
 	private List<Section> sections = new List<Section>();
 	private List<float> times = new List<float> (); //TODO find better name: stores either velocity percentage or in case of 0 the waiting time
 
+	private float t_ges;
 
 	private float accelEndMarkerPerc = 1/5f;
 	private float decelStartMarkerPerc = 4/5f;
+
 
 	void Start () {
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
@@ -86,13 +90,6 @@ public class CameraTour : MonoBehaviour {
 			//waypointsDist.Add(s_ges, waypoints [i]);
 		}
 
-
-
-
-
-
-
-
 		resetEnumerators ();
 	}
 
@@ -103,8 +100,38 @@ public class CameraTour : MonoBehaviour {
 		enumeratorNext.MoveNext (); // move this iterator one step further
 		entryNext = enumeratorNext.Current;
 	}
+
+
+	// because pc.total_time is not know when Start() is executed
+	private void onFirstUpdate(){
+		firstUpdateDone = true;
+
+		t_ges = pc.total_time;
+		float v_max = 0;
+		foreach (var section in sections) {
+			v_max += section.getFormulaContrib();		
+		}
+		v_max /= t_ges;
+		Debug.Log ("v_max: " + v_max);
+
+		foreach (var section in sections) {
+			section.calcTinSection(v_max);
+		}
+
+		//TEST
+		float t_sum = 0;
+		foreach (var section in sections) {
+			t_sum += section.getTinSection();
+		}
+		Debug.Log ("sum of t_inSection's: " + t_sum + " <- must be " + t_ges);
+	}
+
+
 	
 	void Update () {
+		if (!firstUpdateDone)
+			onFirstUpdate ();
+
 		if (currentTime > pc.current_time) // reset when next loop starts
 			resetEnumerators ();
 
