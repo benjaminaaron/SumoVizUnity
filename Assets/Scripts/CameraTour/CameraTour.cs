@@ -18,6 +18,10 @@ public class CameraTour : MonoBehaviour {
 	KeyValuePair<float, Vector3> entryNext;
 	
 
+	//TODO
+	private List<Section> sections = new List<Section>();
+
+
 	void Start () {
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
 		//cameraObj = GameObject.Find ("Sphere");
