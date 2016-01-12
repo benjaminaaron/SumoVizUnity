@@ -71,9 +71,10 @@ public class PedestrianLoader : MonoBehaviour {
 				//Debug.Log(gender);
 				if(gender == 0){
 					p = (GameObject) Instantiate(ped1);
+
 				}else{
 					p = (GameObject) Instantiate(ped2);
-}
+				}
 
 				if(p == null){
 

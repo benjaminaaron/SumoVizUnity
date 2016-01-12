@@ -1,0 +1,333 @@
+fileFormatVersion: 2
+guid: c16660d83ac549741b3b598ba77e3b73
+timeCreated: 1452550032
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Back
+    100002: FemaleArm
+    100004: Fingers1.Left
+    100006: Fingers1.Right
+    100008: Fingers2.Left
+    100010: Fingers2.Left_end
+    100012: Fingers2.Right
+    100014: Fingers2.Right_end
+    100016: Foot.Left
+    100018: Foot.Right
+    100020: Forearm.Left
+    100022: Forearm.Right
+    100024: //RootNode
+    100026: Hand.Left
+    100028: Hand.Right
+    100030: Head
+    100032: Head_end
+    100034: Hip
+    100036: Shin.Left
+    100038: Shin.Right
+    100040: Thigh.Left
+    100042: Thigh.Right
+    100044: Thumb1.Left
+    100046: Thumb1.Right
+    100048: Thumb2.Left
+    100050: Thumb2.Left_end
+    100052: Thumb2.Right
+    100054: Thumb2.Right_end
+    100056: Toes.Left
+    100058: Toes.Left_end
+    100060: Toes.Right
+    100062: Toes.Right_end
+    100064: Upperarm.Left
+    100066: Upperarm.Right
+    400000: Back
+    400002: FemaleArm
+    400004: Fingers1.Left
+    400006: Fingers1.Right
+    400008: Fingers2.Left
+    400010: Fingers2.Left_end
+    400012: Fingers2.Right
+    400014: Fingers2.Right_end
+    400016: Foot.Left
+    400018: Foot.Right
+    400020: Forearm.Left
+    400022: Forearm.Right
+    400024: //RootNode
+    400026: Hand.Left
+    400028: Hand.Right
+    400030: Head
+    400032: Head_end
+    400034: Hip
+    400036: Shin.Left
+    400038: Shin.Right
+    400040: Thigh.Left
+    400042: Thigh.Right
+    400044: Thumb1.Left
+    400046: Thumb1.Right
+    400048: Thumb2.Left
+    400050: Thumb2.Left_end
+    400052: Thumb2.Right
+    400054: Thumb2.Right_end
+    400056: Toes.Left
+    400058: Toes.Left_end
+    400060: Toes.Right
+    400062: Toes.Right_end
+    400064: Upperarm.Left
+    400066: Upperarm.Right
+    4300000: HumanFemale
+    7400000: FemaleArm|FemaleArmAction
+    7400002: FemaleArm|walkig_grete
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 2
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: FemaleArm|FemaleArmAction
+      takeName: FemaleArm|FemaleArmAction
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: FemaleArm
+        weight: 1
+      - path: FemaleArm/Back
+        weight: 1
+      - path: FemaleArm/Back/Head
+        weight: 1
+      - path: FemaleArm/Back/Head/Head_end
+        weight: 1
+      - path: FemaleArm/Back/Hip
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left/Foot.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left/Foot.Left/Toes.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left/Foot.Left/Toes.Left/Toes.Left_end
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right/Foot.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right/Foot.Right/Toes.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right/Foot.Right/Toes.Right/Toes.Right_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Fingers1.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Fingers1.Left/Fingers2.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Fingers1.Left/Fingers2.Left/Fingers2.Left_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Thumb1.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Thumb1.Left/Thumb2.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Thumb1.Left/Thumb2.Left/Thumb2.Left_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Fingers1.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Fingers1.Right/Fingers2.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Fingers1.Right/Fingers2.Right/Fingers2.Right_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Thumb1.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Thumb1.Right/Thumb2.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Thumb1.Right/Thumb2.Right/Thumb2.Right_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: FemaleArm|walkig_grete
+      takeName: FemaleArm|walkig_grete
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: FemaleArm
+        weight: 1
+      - path: FemaleArm/Back
+        weight: 1
+      - path: FemaleArm/Back/Head
+        weight: 1
+      - path: FemaleArm/Back/Head/Head_end
+        weight: 1
+      - path: FemaleArm/Back/Hip
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left/Foot.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left/Foot.Left/Toes.Left
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Left/Shin.Left/Foot.Left/Toes.Left/Toes.Left_end
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right/Foot.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right/Foot.Right/Toes.Right
+        weight: 1
+      - path: FemaleArm/Back/Hip/Thigh.Right/Shin.Right/Foot.Right/Toes.Right/Toes.Right_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Fingers1.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Fingers1.Left/Fingers2.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Fingers1.Left/Fingers2.Left/Fingers2.Left_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Thumb1.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Thumb1.Left/Thumb2.Left
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Left/Forearm.Left/Hand.Left/Thumb1.Left/Thumb2.Left/Thumb2.Left_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Fingers1.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Fingers1.Right/Fingers2.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Fingers1.Right/Fingers2.Right/Fingers2.Right_end
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Thumb1.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Thumb1.Right/Thumb2.Right
+        weight: 1
+      - path: FemaleArm/Back/Upperarm.Right/Forearm.Right/Hand.Right/Thumb1.Right/Thumb2.Right/Thumb2.Right_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

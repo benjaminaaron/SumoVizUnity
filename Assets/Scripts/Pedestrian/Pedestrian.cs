@@ -36,22 +36,24 @@ public class Pedestrian : MonoBehaviour {
 	private Renderer r;
 
 	private bool active =true;
-	//GameObject cam;
+	GameObject cam;
 
 	private int gender;
 	AnimationState genderBasedAnim;
 
 	// Use this for initialization
 	void Start () { 
-		//cam =GameObject.Find("CardboardMain");
+		cam =GameObject.Find("CardboardMain");
 
 		if(gender ==0){
 			genderBasedAnim = GetComponent<Animation>()["MaleArm|Walking"];
 		
 		}else{
 			//TODO rename walkig_grete to walking_grete in Blender file
-			genderBasedAnim = GetComponent<Animation>()["FemaleArm|walkig_grete"];
+			//genderBasedAnim = GetComponent<Animation>()["FemaleArm|walkig_grete"];
+			genderBasedAnim = GetComponent<Animation>()["FemaleArm|FemaleArmAction"];
 		}
+
 
 
 
@@ -69,6 +71,8 @@ public class Pedestrian : MonoBehaviour {
 		//set Tag of the game object in order to find gameobjects with the same tag
 		//gameObject.tag = "pedestrian";	
 	}
+
+	bool meshsSkinned;
 
 	// Update is called once per frame
 	void Update () {
@@ -93,7 +97,7 @@ public class Pedestrian : MonoBehaviour {
 		}
 		*/
 
-		//if(r.isVisible){
+
 		cur = _getTrait2 (pc.current_time);
 
 	
@@ -112,10 +116,17 @@ public class Pedestrian : MonoBehaviour {
 			}
 
 
+
+
+				move(cur);
+	 
+
+
 				//bool necessaryToTransform = false;
 
 
 
+			
 				
 				//Not On Trigger
 				//if(!animOn){
@@ -131,7 +142,7 @@ public class Pedestrian : MonoBehaviour {
 
 			if(dist > 30){
 				GetComponent<Animation>().Stop();
-				return;
+
 
 
 			}
@@ -157,16 +168,6 @@ public class Pedestrian : MonoBehaviour {
 
 
 
-
-
-
-
-
-				
-
-
-
-
 				//r.enabled = true;
 				//if(animOn){
 				//bool necessaryToTransform = (pc.current_time - lastTime) > reducedStepTime;
@@ -178,35 +179,11 @@ public class Pedestrian : MonoBehaviour {
 							//PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
 							//PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
 							
-							PedestrianPosition pos = (PedestrianPosition)cur.Value;
-							PedestrianPosition pos2 = (PedestrianPosition)cur.Next.Value;
-							start = new Vector3 (pos.getX (), 0, pos.getY ());
-							target = new Vector3 (pos2.getX (), 0, pos2.getY ());
-							float time = pc.current_time;
-							float timeStepLength = Mathf.Clamp (pos2.getTime () - pos.getTime (), 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
-							float movement_percentage = (time - pos.getTime ()) / timeStepLength;
-							Vector3 newPosition = Vector3.Lerp (start, target, movement_percentage);
-							//Debug.Log("Pos:/tx:" + newPosition.x +"y:/t" +newPosition.z + "id:/t" + id);
 							
-							gameObject.hideFlags = HideFlags.None;
-							transform.position = newPosition;
 
-							if (pos != lastPos) {
-								lastPos = pos;
+			
 
-								Vector3 relativePos = target - start;
-					
-									
-					
-								speed = relativePos.magnitude;
-								//if (start != target)
-								transform.rotation = Quaternion.LookRotation (relativePos);
-								genderBasedAnim.speed = getSpeed () / timeStepLength;
-
-							}
-
-				
-
+			
 							
 					/*}else {
 						if(GetComponent<Animation>().isPlaying)
@@ -232,9 +209,39 @@ public class Pedestrian : MonoBehaviour {
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
 		
-		//}
+		
 
 		
+	}
+
+	void move(LinkedListNode<PedestrianPosition> cur){
+		PedestrianPosition pos = (PedestrianPosition)cur.Value;
+		PedestrianPosition pos2 = (PedestrianPosition)cur.Next.Value;
+		start = new Vector3 (pos.getX (), 0, pos.getY ());
+		target = new Vector3 (pos2.getX (), 0, pos2.getY ());
+		float time = pc.current_time;
+		float timeStepLength = Mathf.Clamp (pos2.getTime () - pos.getTime (), 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
+		float movement_percentage = (time - pos.getTime ()) / timeStepLength;
+		Vector3 newPosition = Vector3.Lerp (start, target, movement_percentage);
+		//Debug.Log("Pos:/tx:" + newPosition.x +"y:/t" +newPosition.z + "id:/t" + id);
+		
+		gameObject.hideFlags = HideFlags.None;
+		transform.position = newPosition;
+		
+		if (pos != lastPos) {
+			lastPos = pos;
+			
+			Vector3 relativePos = target - start;
+			
+			
+			
+			speed = relativePos.magnitude;
+			//if (start != target)
+			transform.rotation = Quaternion.LookRotation (relativePos);
+			genderBasedAnim.speed = getSpeed () / timeStepLength;
+			
+		}
+
 	}
 
 

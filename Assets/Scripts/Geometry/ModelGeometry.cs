@@ -26,7 +26,7 @@ public class ModelGeometry : Geometry {
 		Vector2 dim = getDim(minmax[0],minmax[1]);
 
 		switch (prefabName) {
-			case "Roof_FBX":
+		case "Ceiling":
 				obj.transform.position = moveCenter(minmax[0],dim, height);
 			Debug.Log (dim);
 				scaleObject(obj, dim);
@@ -73,7 +73,7 @@ public class ModelGeometry : Geometry {
 
 			case "Bench_FBX":
 
-			obj.transform.position = moveCenter(minmax[0],dim, height);
+			obj.transform.position = moveCenter(minmax[0],dim, height/2);
 			
 			//for benches and table needs to be rotated check the height and width to 
 			//know how to rotate the object the value dependants on output file from vadere

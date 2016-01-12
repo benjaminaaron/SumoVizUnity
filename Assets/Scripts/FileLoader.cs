@@ -23,6 +23,13 @@ public abstract class FileLoader {
 		ExtrudeGeometry.create(name,verticesList, height,doorMat,doorMat);
 	}
 
+	protected void createFence(string name, List<Vector2> verticesList, float height){
+		Material wall = Resources.Load("FenceWall")as Material;
+		Material top = Resources.Load("FenceTop")as Material;
+		ExtrudeGeometry.create(name,verticesList, height,top,wall);
+
+	}
+
 	protected void createTwoSideWall(string name, List<Vector2> verticesList, float height){
 		TwoSideWallGeometry.create(name, verticesList, height);
 	}
