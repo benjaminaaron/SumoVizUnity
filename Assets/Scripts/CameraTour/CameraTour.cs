@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class CameraTour : MonoBehaviour {
 	
-	private GameObject cameraObj;
+	//private GameObject cameraObj;
 	private PlaybackControlNonGUI pc;
 	private float currentTime = 0;
 
@@ -25,26 +25,31 @@ public class CameraTour : MonoBehaviour {
 	
 	void Start () {
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
-		cameraObj = GameObject.Find ("Sphere");
+		//cameraObj = GameObject.Find ("Sphere");
+
+
+		//158.8 is total_time in TestKamerafahrt.unity
+		addWaypoint(39, 5, 50, 0f);
+		addWaypoint(39, 2, 0, -4f);
+		addWaypoint(39, 2, 17, 0.4f);
+		addWaypoint(19, 2, 17, 0.3f);
+		addWaypoint(19, 2, 39, 0.6f);
+		addWaypoint (0, 5, 39, 0f);
+		addWaypoint(19, 2, 39, 0f);
+		addWaypoint(19, 2, 64, 0f);
+		addWaypoint(39, 2, 64, 0f);
+		addWaypoint(39, 4, 82, 0f);
+		addWaypoint(0, 6, 82, 0f);
+		addWaypoint(39, 5, 50, 0f);
+
+		//waypoints.Add (waypoints[0]);
 
 		/*
-		waypoints.Add (new Vector3 (39, 5, 50));
-		waypoints.Add (new Vector3 (39, 2, 0));
-		waypoints.Add (new Vector3 (39, 2, 17));
-		waypoints.Add (new Vector3 (19, 2, 17));
-		waypoints.Add (new Vector3 (19, 2, 39));
-		waypoints.Add (new Vector3 (0, 5, 39));
-		waypoints.Add (new Vector3 (19, 2, 39));
-		waypoints.Add (new Vector3 (19, 2, 64));
-		waypoints.Add (new Vector3 (39, 2, 64));
-		waypoints.Add (new Vector3 (39, 4, 82));
-		waypoints.Add (new Vector3 (0, 6, 82));
-		waypoints.Add (waypoints[0]);*/
-
 		addWaypoint (0, 7, 5, 0f);
 		addWaypoint (5, 7, 5, -1.5f);
 		addWaypoint (5, 7, -5, 0.4f);
 		addWaypoint (5, 12, -5, 0f);
+		*/
 
 		if (times [0] < 0) // because i starts at 1 in for loop
 			addWaitSection (waypoints [0], Math.Abs(times [0]));
@@ -99,6 +104,7 @@ public class CameraTour : MonoBehaviour {
 		firstUpdateDone = true;
 
 		t_ges = pc.total_time - t_waitSum;
+		//Debug.LogError (pc.total_time);
 
 		if (t_ges <= 0)
 			throw new Exception ("The sum of waiting times in camera tour waypoints is bigger than the total simulation time.");
@@ -135,11 +141,11 @@ public class CameraTour : MonoBehaviour {
 			sec = sections [++ i];
 		}
 		
-		Vector3 pos = sec.getCoordAtT (currentTime);
-		//Debug.Log (currentTime + ": " + pos);
+		Vector3 newPos = sec.getCoordAtT (currentTime);
+		//Debug.Log (currentTime + ": " + newPos);
 
-		cameraObj.transform.position = pos;
-		//transform.position = newPos;
+		//cameraObj.transform.position = newPos;
+		transform.position = newPos;
 	}
 
 }
