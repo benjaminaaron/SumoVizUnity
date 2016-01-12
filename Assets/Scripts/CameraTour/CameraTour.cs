@@ -75,13 +75,13 @@ public class CameraTour : MonoBehaviour {
 			Vector3 decelStartPoint = Vector3.Lerp (startWaypoint, endWaypoint, decelStartMarkerPerc);
 
 
-			Section accelSect = new Section(sections.Count, Section.Type.ACCELERATION, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges, s_accel);
+			Section accelSect = new Section(sections.Count, Section.Type.ACCELERATION, startWaypoint, accelEndPoint, velocReducerStart, s_ges, s_accel);
 			Debug.Log ("ACCEL-SECT: " + accelSect);
 			sections.Add(accelSect);
-			Section constSect = new Section(sections.Count, Section.Type.CONSTANT, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges + s_accel, s_const);
+			Section constSect = new Section(sections.Count, Section.Type.CONSTANT, accelEndPoint, decelStartPoint, 0, s_ges + s_accel, s_const);
 			Debug.Log ("CONST-SECT: " + constSect);
 			sections.Add(constSect);
-			Section decelSect = new Section(sections.Count, Section.Type.DECELERATION, startWaypoint, velocReducerStart, endWaypoint, velocReducerEnd, s_ges + s_accel + s_const, s_decel);
+			Section decelSect = new Section(sections.Count, Section.Type.DECELERATION, decelStartPoint, endWaypoint, velocReducerEnd, s_ges + s_accel + s_const, s_decel);
 			Debug.Log ("DECEL-SECT: " + decelSect);
 			sections.Add(decelSect);
 

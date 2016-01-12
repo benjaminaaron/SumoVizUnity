@@ -12,11 +12,10 @@ public class Section {
 	private int id;
 	private Type type;
 
-	private Vector3 startWaypoint;
-	private Vector3 endWaypoint;
+	private Vector3 sectionStartCoord;
+	private Vector3 sectionEndCoord;
 
-	private float velocReducerStart;
-	private float velocReducerEnd;
+	private float velocReducer;
 
 	// s = distance
 	private float s_upToHere;
@@ -31,19 +30,18 @@ public class Section {
 	private float v_max;
 	private float accel = 0; // acceleration
 	
-	public Section (int id, Type type, Vector3 startWaypoint, float velocReducerStart, Vector3 endWaypoint, float velocReducerEnd, float s_upToHere, float s_inSection) {
+	public Section (int id, Type type, Vector3 sectionStartCoord, Vector3 sectionEndCoord, float velocReducer, float s_upToHere, float s_inSection) {
 		this.id = id;
 		this.type = type;
-		this.startWaypoint = startWaypoint;
-		this.velocReducerStart = velocReducerStart;
-		this.endWaypoint = endWaypoint;
-		this.velocReducerEnd = velocReducerEnd;
+		this.sectionStartCoord = sectionStartCoord;
+		this.sectionEndCoord = sectionEndCoord;
+		this.velocReducer = velocReducer;
 		this.s_upToHere = s_upToHere;
 		this.s_inSection = s_inSection;
 	}
 
 	public override string ToString(){
-		return string.Concat("id: ", id, "  s_upToHere: ", s_upToHere, "  s_inSection: ", s_inSection, "  velocReducerStart: ", velocReducerStart, "  velocReducerEnd: " + velocReducerEnd);
+		return string.Concat("id: ", id, "  s_upToHere: ", s_upToHere, "  s_inSection: ", s_inSection, "  velocReducer: ", velocReducer);
 	}
 
 	//for testing
@@ -54,13 +52,10 @@ public class Section {
 	public float getFormulaContrib(){
 		switch (type) {
 			case Type.ACCELERATION:
-				return s_inSection / (0.5f * velocReducerStart + 0.5f);
+			case Type.DECELERATION:
+				return s_inSection / (0.5f * velocReducer + 0.5f);
 			case Type.CONSTANT:
 				return s_inSection;
-			case Type.DECELERATION:
-				return s_inSection / (0.5f * velocReducerEnd + 0.5f);
-			case Type.PAUSE:
-				return 0f;
 			default:
 				return 0f;		
 		}
@@ -71,15 +66,11 @@ public class Section {
 
 		switch (type) {
 		case Type.ACCELERATION:
-			t_inSection = s_inSection / (v_max * (0.5f + 0.5f * velocReducerStart));
+		case Type.DECELERATION:
+			t_inSection = s_inSection / (v_max * (0.5f + 0.5f * velocReducer));
 			break;
 		case Type.CONSTANT:
 			t_inSection = s_inSection / v_max;
-			break;
-		case Type.DECELERATION:
-			t_inSection = s_inSection / (v_max * (0.5f + 0.5f * velocReducerEnd));
-			break;
-		case Type.PAUSE:
 			break;
 		}
 	}
@@ -96,7 +87,7 @@ public class Section {
 	public void calcAccel(){
 		switch (type) {
 		case Type.ACCELERATION:
-			accel = (2f * (s_inSection - velocReducerStart * v_max * t_inSection)) / (float) Math.Pow(t_inSection, 2);
+			accel = (2f * (s_inSection - velocReducer * v_max * t_inSection)) / (float) Math.Pow(t_inSection, 2);
 			break;
 		case Type.DECELERATION:
 			accel = (2f * (s_inSection - v_max * t_inSection)) / (float) Math.Pow(t_inSection, 2);
