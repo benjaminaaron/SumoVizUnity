@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 public class FileLoaderXML : FileLoader {
 	
 	// Listen anlegen für verschiedene Objekt-Typen aus dem accu:rate-output
+/*
 	List<XmlElement> openWalls;
 	List<XmlElement> walls;
 	List<XmlElement> origins;
@@ -22,7 +23,7 @@ public class FileLoaderXML : FileLoader {
 	List<XmlElement> queuingAreas;
 	List<XmlElement> obstacles;
 	float height;
-
+*/
 	// Neues Format: Dateien liegen im Speicher!!!!! nicht im xml!
 
 	public override string getInputfileExtension(){
@@ -191,12 +192,14 @@ public class FileLoaderXML : FileLoader {
 	}
 
 	public override void buildGeometry(){
+		/*
 		buildSources ();
 		buildTargets ();
 		buildObstacles ();
 		buildOtherObjects ();
+		*/
 	}
-
+	/*
 	private void buildTargets() {
 		if (destinations.Count != 0) {
 			foreach (var dest in destinations) {
@@ -248,7 +251,7 @@ public class FileLoaderXML : FileLoader {
 			}
 		}
 	}
-	
+	*/
 	// Parse an XmlElement full of <point> XmlElements into a coordinate list 
 	private static List<Vector2> parsePoints(XmlElement polyPoints) {
 		List<Vector2> list = new List<Vector2>();
