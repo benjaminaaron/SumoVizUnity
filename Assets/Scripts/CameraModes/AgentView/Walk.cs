@@ -22,9 +22,7 @@ public class Walk : MonoBehaviour {
 	[Tooltip("The height (y-coordinate) of the camera.")]
 	public float yOffset = 1.55f;
 	
-	// Use this for initialization
 	void Start () {
-		
 		head = Camera.main.GetComponent<StereoController>().Head;
 	}
 	
@@ -33,13 +31,9 @@ public class Walk : MonoBehaviour {
 	 * and translates it into coordinates to move to. */ 
 	
 	void Update () {
-		// Update is called once per frame
-		
 		//turn the movement on or off with a trigger/rap
-		if (Cardboard.SDK.Triggered) {
-			
+		if (Cardboard.SDK.Triggered)
 			isMoving = !isMoving;
-		}
 		
 		if (isMoving) {
 			Vector3 direction = new Vector3 (head.transform.forward.x, 0, head.transform.forward.z).normalized * speed * Time.deltaTime;
@@ -51,7 +45,5 @@ public class Walk : MonoBehaviour {
 			transform.position = new Vector3(transform.position.x, yOffset, transform.position.z);
 		}
 	}
-	
-	
-}
 
+}
