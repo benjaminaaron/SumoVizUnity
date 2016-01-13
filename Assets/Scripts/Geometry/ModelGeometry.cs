@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+
 public class ModelGeometry : Geometry {
 
 	
@@ -45,8 +46,7 @@ public class ModelGeometry : Geometry {
 
 
 			//there are five kinds of beer glasses on the table
-
-			System.Random rnd = new System.Random();
+			System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
 
 			int nbOfTable = rnd.Next(1,5);
 			
@@ -218,6 +218,10 @@ public class ModelGeometry : Geometry {
 
 
 	}
+
+
+	
+
 
 
 	
