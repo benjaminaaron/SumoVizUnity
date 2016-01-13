@@ -98,6 +98,7 @@ public class Pedestrian : MonoBehaviour {
 		*/
 
 
+
 		cur = _getTrait2 (pc.current_time);
 
 	
@@ -118,8 +119,7 @@ public class Pedestrian : MonoBehaviour {
 
 
 
-				move(cur);
-	 
+	 		
 
 
 				//bool necessaryToTransform = false;
@@ -137,6 +137,7 @@ public class Pedestrian : MonoBehaviour {
 			//if(Vector3.Dot(heading,cam.transform.forward)> 40){
 
 			/*
+
 			int dist =(int)Vector3.Distance(new Vector3(cur.Value.getX(),cam.transform.position.y,cur.Value.getY()),cam.transform.position);
 
 
@@ -149,22 +150,8 @@ public class Pedestrian : MonoBehaviour {
 
 			
 			GetComponent<Animation>().Play();
+
 			*/
-
-			/*
-			if(dist> 30){
-					necessaryToTransform = (pc.current_time - lastTime) > reducedStepTime;
-					GetComponent<Animation>().Stop();
-
-					if(!necessaryToTransform){
-						return;
-					}
-				//else
-				lastTime = pc.current_time;
-				}
-					
-				*/
-
 
 
 
@@ -178,10 +165,43 @@ public class Pedestrian : MonoBehaviour {
 							
 							//PedestrianPosition pos = (PedestrianPosition) positions.GetByIndex (index);
 							//PedestrianPosition pos2 = (PedestrianPosition) positions.GetByIndex (index+1);
-							
-							
+
+
 
 			
+			PedestrianPosition pos = (PedestrianPosition)cur.Value;
+			PedestrianPosition pos2 = (PedestrianPosition)cur.Next.Value;
+			start = new Vector3 (pos.getX (), 0, pos.getY ());
+			target = new Vector3 (pos2.getX (), 0, pos2.getY ());
+			float time = pc.current_time;
+			float timeStepLength = Mathf.Clamp (pos2.getTime () - pos.getTime (), 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
+			float movement_percentage = (time - pos.getTime ()) / timeStepLength;
+			Vector3 newPosition = Vector3.Lerp (start, target, movement_percentage);
+			//Debug.Log("Pos:/tx:" + newPosition.x +"y:/t" +newPosition.z + "id:/t" + id);
+			
+			gameObject.hideFlags = HideFlags.None;
+			transform.position = newPosition;
+
+
+
+			if (pos != lastPos) {
+
+				lastPos = pos;
+
+				Vector3 relativePos = target - start;
+
+				
+				
+				speed = relativePos.magnitude;
+				//if (start != target)
+				transform.rotation = Quaternion.LookRotation (relativePos);
+				genderBasedAnim.speed = getSpeed () / timeStepLength;
+			
+				
+			}
+
+						
+							
 
 			
 							
@@ -208,6 +228,8 @@ public class Pedestrian : MonoBehaviour {
 				r.enabled = false;
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
+
+		
 		
 		
 
@@ -215,33 +237,7 @@ public class Pedestrian : MonoBehaviour {
 	}
 
 	void move(LinkedListNode<PedestrianPosition> cur){
-		PedestrianPosition pos = (PedestrianPosition)cur.Value;
-		PedestrianPosition pos2 = (PedestrianPosition)cur.Next.Value;
-		start = new Vector3 (pos.getX (), 0, pos.getY ());
-		target = new Vector3 (pos2.getX (), 0, pos2.getY ());
-		float time = pc.current_time;
-		float timeStepLength = Mathf.Clamp (pos2.getTime () - pos.getTime (), 0.1f, 50f); // We don't want to divide by zero. OTOH, this results in pedestrians never standing still.
-		float movement_percentage = (time - pos.getTime ()) / timeStepLength;
-		Vector3 newPosition = Vector3.Lerp (start, target, movement_percentage);
-		//Debug.Log("Pos:/tx:" + newPosition.x +"y:/t" +newPosition.z + "id:/t" + id);
-		
-		gameObject.hideFlags = HideFlags.None;
-		transform.position = newPosition;
-		
-		if (pos != lastPos) {
-			lastPos = pos;
-			
-			Vector3 relativePos = target - start;
-			
-			
-			
-			speed = relativePos.magnitude;
-			//if (start != target)
-			transform.rotation = Quaternion.LookRotation (relativePos);
-			genderBasedAnim.speed = getSpeed () / timeStepLength;
-			
-		}
-
+	
 	}
 
 

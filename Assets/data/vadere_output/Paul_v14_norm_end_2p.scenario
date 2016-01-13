@@ -1,5 +1,5 @@
 {
-  "topographyhash": "9cd75cf067c4430b1de4a8f5860f7db3276d0b02",
+  "topographyhash": "462b59cdb17eb6fca578112dcf21ee0b6eefd3ba",
   "name": "Paul_v14_norm",
   "processWriters": [
     {
@@ -708,16 +708,6 @@
         },
         {
           "shape": {
-            "x": 8.600000000000001,
-            "y": 77.2,
-            "width": 9.0,
-            "height": 0.3,
-            "type": "RECTANGLE"
-          },
-          "id": 11
-        },
-        {
-          "shape": {
             "x": 17.299999999999997,
             "y": 77.5,
             "width": 0.3,
@@ -764,7 +754,7 @@
             "height": 0.3,
             "type": "RECTANGLE"
           },
-          "id": 5
+          "id": 11
         },
         {
           "shape": {
@@ -4054,7 +4044,7 @@
             "height": 0.3,
             "type": "RECTANGLE"
           },
-          "id": 5
+          "id": 9
         },
         {
           "shape": {
