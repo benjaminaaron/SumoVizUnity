@@ -26,10 +26,19 @@ public class PedestrianLoader : MonoBehaviour {
 		//ped = Resources.Load ("Hans");
 
 
-		//diff pedestrian prefabs
-
+		//diff gender pedestrian prefabs 
+		/*
 		ped1 =Resources.Load("Hans");
 		ped2 = Resources.Load("Grete");
+		*/
+
+
+		//Model based on http://opengameart.org/content/base-human-models-low-poly by Clint Bellanger
+
+		//for non PC app lower Poly model
+		ped1 =Resources.Load("Hans_easy");
+		ped2 = Resources.Load("Grete_easy");
+
 		
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 		Pedestrians = new GameObject("Pedestrians");
