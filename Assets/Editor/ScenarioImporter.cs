@@ -45,13 +45,12 @@ public class ScenarioImporter : MonoBehaviour {
 		}
 	}
 
-	/*
+
 	[MenuItem("Assets/delete imported objects")]
 	
 	static void deleteImportedObjects() {
 		DestroyImmediate (GameObject.Find ("World"));
 	}
-	*/
 
 
 	[MenuItem("Assets/switch camera mode")]// btwn AgentView & CameraTour

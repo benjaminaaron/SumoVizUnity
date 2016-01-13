@@ -6,6 +6,9 @@ using System.Linq;
 
 public class PedestrianLoader : MonoBehaviour {
 
+	[SerializeField]
+	private bool lowQualPedModel = false;
+
 	private List<PedestrianPosition> positions = new List<PedestrianPosition>();
 	public List<GameObject> pedestrians = new List<GameObject>();
 	public int[] population;
@@ -19,16 +22,16 @@ public class PedestrianLoader : MonoBehaviour {
 	System.Random rnd = new System.Random();
 	
 	void Awake(){
-		/*ped = Resources.Load ("Hans");
-		diff pedestrian prefabs
-		ped1 =Resources.Load("Hans");
-		ped2 = Resources.Load("Grete");
-		*/
 
-		//Model based on http://opengameart.org/content/base-human-models-low-poly by Clint Bellanger
-		ped1 = Resources.Load("Hans_easy");
-		ped2 = Resources.Load("Grete_easy");
-		
+		if (lowQualPedModel) {
+			//Model based on http://opengameart.org/content/base-human-models-low-poly by Clint Bellanger
+			ped1 = Resources.Load ("Hans_easy");
+			ped2 = Resources.Load ("Grete_easy");
+		} else {
+			ped1 = Resources.Load("Hans");
+			ped2 = Resources.Load("Grete");
+		}
+
 		pc = GameObject.Find("PlaybackControl").GetComponent<PlaybackControlNonGUI>();
 		Pedestrians = new GameObject("Pedestrians");
 	}
@@ -37,7 +40,8 @@ public class PedestrianLoader : MonoBehaviour {
 
 	public void addPedestrianPosition(PedestrianPosition p) {
 		positions.Add (p);
-		if (p.getTime ()>pc.total_time) pc.total_time = p.getTime ();
+		if (p.getTime () > pc.total_time) 
+			pc.total_time = p.getTime ();
 	}
 
 	public void createPedestrians() {
