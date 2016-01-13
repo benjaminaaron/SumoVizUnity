@@ -29,18 +29,18 @@ public class CameraTour : MonoBehaviour {
 
 
 		//158.8 is total_time in TestKamerafahrt.unity
-		addWaypoint(39, 5, 50, 0f);
+		addWaypoint(39, 5, 50, -5f);
 		addWaypoint(39, 2, 0, -4f);
 		addWaypoint(39, 2, 17, 0.4f);
-		addWaypoint(19, 2, 17, 0.3f);
+		addWaypoint(19, 2, 17, 0.2f);
 		addWaypoint(19, 2, 39, 0.6f);
-		addWaypoint (0, 5, 39, 0f);
-		addWaypoint(19, 2, 39, 0f);
-		addWaypoint(19, 2, 64, 0f);
-		addWaypoint(39, 2, 64, 0f);
-		addWaypoint(39, 4, 82, 0f);
-		addWaypoint(0, 6, 82, 0f);
-		addWaypoint(39, 5, 50, 0f);
+		addWaypoint (0, 5, 39, -5f);
+		addWaypoint(19, 2, 39, 0.5f);
+		addWaypoint(19, 2, 64, 0.5f);
+		addWaypoint(39, 2, 64, 0.5f);
+		addWaypoint(39, 4, 82, -2f);
+		addWaypoint(0, 6, 82, -5f);
+		addWaypoint(39, 5, 50, -3f);
 
 		//waypoints.Add (waypoints[0]);
 
