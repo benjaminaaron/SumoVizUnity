@@ -15,6 +15,7 @@ public class CameraTour : MonoBehaviour {
 	private bool firstUpdateDone = false;
 
 	private List<Section> sections = new List<Section>();
+	private int currentSectionIndex = 0;
 	private List<float> times = new List<float> (); //TODO find better name: stores either velocity percentage or in case of 0 the waiting time
 
 	private float t_ges;
@@ -22,13 +23,14 @@ public class CameraTour : MonoBehaviour {
 
 	private float accelEndMarkerPerc = 0.2f;//   1/5
 	private float decelStartMarkerPerc = 0.8f;// 4/5
-	
+
+
 	void Start () {
 		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
 		//cameraObj = GameObject.Find ("Sphere");
 
-
-		//158.8 is total_time in TestKamerafahrt.unity
+		//160ish total_time in big tent
+		//waypoints by @Xaverl:
 		addWaypoint(39, 5, 50, -5f);
 		addWaypoint(39, 2, 0, -4f);
 		addWaypoint(39, 2, 17, 0.4f);
@@ -41,8 +43,6 @@ public class CameraTour : MonoBehaviour {
 		addWaypoint(39, 4, 82, -2f);
 		addWaypoint(0, 6, 82, -5f);
 		addWaypoint(39, 5, 50, -3f);
-
-		//waypoints.Add (waypoints[0]);
 
 		/*
 		addWaypoint (0, 7, 5, 0f);
@@ -104,7 +104,7 @@ public class CameraTour : MonoBehaviour {
 		firstUpdateDone = true;
 
 		t_ges = pc.total_time - t_waitSum;
-		//Debug.LogError (pc.total_time);
+		//Debug.Log (pc.total_time);
 
 		if (t_ges <= 0)
 			throw new Exception ("The sum of waiting times in camera tour waypoints is bigger than the total simulation time.");
@@ -114,17 +114,16 @@ public class CameraTour : MonoBehaviour {
 			v_max += section.getFormulaContrib();		
 		v_max /= t_ges;
 		//Debug.Log ("v_max: " + v_max);
-
-		foreach (var section in sections)
-			section.calcTinSection(v_max);
-
+			
 		float t_sum = 0;
 		foreach (var section in sections) {
+			section.calcTinSection(v_max); //TODO consolidate these three method calls into one?
 			section.setTupToHere(t_sum);
-			t_sum += section.getTinSection();
 			section.calcAccel();
+			t_sum += section.getTinSection();
 		}
-		/*Debug.Log ("sum of t_inSection's: " + t_sum + " <- must be " + t_ges);
+		/*// TEST
+		Debug.Log ("sum of t_inSection's: " + t_sum + " <- must be " + t_ges);
 		foreach (var section in sections) {
 			Debug.Log(section.check());
 		}*/
@@ -134,12 +133,14 @@ public class CameraTour : MonoBehaviour {
 		if (!firstUpdateDone)
 			onFirstUpdate ();
 
+		if (currentTime > pc.current_time) // next loop starts
+			currentSectionIndex = 0;
+
 		currentTime = pc.current_time;
-		int i = 0;
-		Section sec = sections [i];
-		while (!sec.thatsMe(currentTime)){
-			sec = sections [++ i];
-		}
+
+		Section sec = sections [currentSectionIndex];
+		while (!sec.thatsMe(currentTime))
+			sec = sections [++ currentSectionIndex];
 		
 		Vector3 newPos = sec.getCoordAtT (currentTime);
 		//Debug.Log (currentTime + ": " + newPos);
