@@ -15,6 +15,8 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		Debug.Log (current_time);
+
 		
 		if (playing) {
 			try {
