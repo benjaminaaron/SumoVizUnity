@@ -9,3 +9,4 @@
 #8=bench 
 9=fence
 10=door
+11=TwoSideWall

@@ -64,16 +64,17 @@ public class ExtrudeGeometry : Geometry  {
 		MeshFilter mesh_filter_walls = walls.GetComponent<MeshFilter> ();
 
 		//Optimisation for setPass
-		walls.GetComponent<Renderer>().sharedMaterial = sideMaterial;
+		walls.GetComponent<MeshRenderer>().sharedMaterial = sideMaterial;
 		//Set static from begin
 		walls.isStatic =true;
-		walls.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+		walls.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 
 		List<Vector2> uvs_walls = new List<Vector2>();
 		List<Vector3> vertices_walls = new List<Vector3>();
 		List<int> indices_walls = new List<int>();
 
 		foreach (Vector3 v in vertices) {;
+
 			vertices_walls.Add(new Vector3(v.x,v.y,v.z));
 			vertices_walls.Add(new Vector3(v.x,v.y,v.z));
 			vertices_walls.Add(new Vector3(v.x, height, v.z));
@@ -85,9 +86,11 @@ public class ExtrudeGeometry : Geometry  {
 			indices_walls.Add((i+3)%vertices_walls.Count);
 			indices_walls.Add(i+2);
 
+
 			indices_walls.Add(i+2);
 			indices_walls.Add((i+3)%vertices_walls.Count);
 			indices_walls.Add((i+5)%vertices_walls.Count);
+
 		}
 
 		//double sided walls
@@ -97,6 +100,8 @@ public class ExtrudeGeometry : Geometry  {
 		}
 
 		for (int i =0;i<vertices_walls.Count;i++) {
+		
+
 			float uv_height = height;
 			int a = i-3;
 			if (a<0) a = a+vertices_walls.Count;
@@ -105,6 +110,7 @@ public class ExtrudeGeometry : Geometry  {
 			else if ((i-3)%4==0) uvs_walls.Add (new Vector2 (0, uv_height));
 			else if (i%4==0) uvs_walls.Add (new Vector2 (uv_width, 0)); 
 			else  uvs_walls.Add (new Vector2 (uv_width, uv_height));
+
 		}
 
 		Mesh mesh_walls = new Mesh();
@@ -120,8 +126,11 @@ public class ExtrudeGeometry : Geometry  {
 		mesh.vertices = vertices.ToArray();
 		mesh.uv = verticesList.ToArray();
 		mesh.triangles = indices.ToArray();
+
+
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
+		mesh.Optimize();
 
 		//flip if needed
 		if (mesh.normals [0].y == -1) {
