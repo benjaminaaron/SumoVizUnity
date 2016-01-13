@@ -45,17 +45,17 @@ public class ModelGeometry : Geometry {
 
 
 			//there are five kinds of beer glasses on the table
-			/*
+
 			System.Random rnd = new System.Random();
-			int nbOfTable = rnd.Next(0,5);
+
+			int nbOfTable = rnd.Next(1,5);
 			
-			string beerPrefix = "beerGlassesType";
+			string beerPrefix = "BeerGlassesType";
 			
 			GameObject beers = (GameObject) Instantiate (Resources.Load (beerPrefix + nbOfTable));
 
-
 			beers.transform.parent = obj.transform;
-*/
+
 			//transform the hole Table
 
 			obj.transform.position = moveCenter(minmax[0],dim, height);
