@@ -5,7 +5,7 @@ As task in the study project [Projektstudium Modellierungsseminar](http://fi.cs.
 We are building on the work of [Daniel Büchele](https://github.com/danielbuechele) and the additions made by [Florian Sesser](https://github.com/hacklschorsch) from [accu:rate](http://www.accu-rate.de/) regarding parsing files and a first version for Google Cardboard.
 
 Three `apk`'s (*AgentView*, *CameraTour* and *FreeWalk*) from our final presentation can be downloaded [here](https://github.com/benjaminaaron/SumoVizUnity/releases/tag/Sprint3Release).
-The 360° video as shown in the final presentation can be seen [here](https://youtu.be/bwgJue2mv8s). The unity asset *[360 Panorama Capture](https://www.assetstore.unity3d.com/en/#!/content/38755)* was used to create the 360° snapshots frame by frame.
+The 360° video as shown in the final presentation can be seen [here](https://youtu.be/5UxGIsptL5g). The unity asset *[360 Panorama Capture](https://www.assetstore.unity3d.com/en/#!/content/38755)* was used to create the 360° snapshots frame by frame.
 
 ![Screenshot](https://raw.githubusercontent.com/benjaminaaron/SumoVizUnity/master/BeerTentCardboardScreenshot.jpg)
 
