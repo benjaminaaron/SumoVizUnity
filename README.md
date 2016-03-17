@@ -1,3 +1,5 @@
+> *@benjaminaaron continued working on this for accu:rate, see [here](https://github.com/accu-rate/SumoVizUnity)*
+
 # visualizing a beer tent evacuation simulation
 
 As task in the study project [Projektstudium Modellierungsseminar](http://fi.cs.hm.edu/fi/rest/public/modul/title/projektstudiummodellierungsseminar) with [Prof. Köster](http://www.cs.hm.edu/die_fakultaet/ansprechpartner/professoren/koester/index.de.html) in the WS2015/16 at the [University of Applied Sciences Munich](http://hm.edu/), we (8 students) made output of a 2D pedestrian simulation viewable in 3D in a [Google Cardboard](https://www.google.com/get/cardboard/). The scenario is a big beer tent during evacuation. The input files are coming from the 2D scenario we are modelling using [VADERE](http://www.multikosi.de/teilvorhaben-der-hm), a pedestrian simulator that the research group around Prof. Köster is developing.
