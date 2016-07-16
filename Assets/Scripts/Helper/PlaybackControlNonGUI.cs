@@ -7,14 +7,14 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 	public float current_time;
 	public float total_time = 0;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
+	void Start () {}
+
+	int count = 0;
+
 	void Update () {
 
+		//comment in or out for taking screenshots at the resolution of the current window-size
+		//Application.CaptureScreenshot ("Screenshots/pic" + (count ++) + ".png", 1);
 		
 		if (playing) {
 			try {
