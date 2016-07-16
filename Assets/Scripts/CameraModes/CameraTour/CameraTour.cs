@@ -31,7 +31,7 @@ public class CameraTour : MonoBehaviour {
 
 
 	void Start () {
-		pc = GameObject.Find ("PlaybackControlNonGUI").GetComponent<PlaybackControlNonGUI> ();
+		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
 		focusPoint = GameObject.Find ("FocusPoint").transform;
 		cam = Camera.main.transform;
 
@@ -72,15 +72,13 @@ public class CameraTour : MonoBehaviour {
 		}
 	}
 
-	public string waypointsFile = "file.csv";
+	public string waypointsFile = "/Scripts/CameraModes/CameraTour/waypointsFile-final2000_werbefilm.csv";
 
 	private void importWaypoints() {	
-		//FileInfo fi = new FileInfo (utils.getStreamingAssetsPath ("CameraTourWaypoints/" + waypointsFile));
-		FileInfo fi = new FileInfo(waypointsFile);
+		FileInfo fi = new FileInfo(Application.dataPath + waypointsFile);
 		StreamReader reader = fi.OpenText ();
-
 		using (reader) {
-			string line = reader.ReadLine (); // skip the header
+			string line;
 			while((line = reader.ReadLine ()) != null) {
 				if (line.Length > 0) {
 					if (line.Substring (0, 1) != "#") {
