@@ -7,7 +7,9 @@ public class PlaybackControlNonGUI : MonoBehaviour {
 	public float current_time;
 	public float total_time = 0;
 
-	void Start () {}
+	void Start () {
+		//Time.captureFramerate = 25;
+	}
 
 	int count = 0;
 
