@@ -1,120 +1,132 @@
 ﻿using UnityEngine;
-using System;
+using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class CameraTour : MonoBehaviour {
-	
-	//private GameObject cameraObj;
+
 	private PlaybackControlNonGUI pc;
 	private float currentTime = 0;
 
-	private List<Vector3> waypoints = new List<Vector3>();
+	private List<Waypoint> waypoints = new List<Waypoint> ();
+
 	float s_ges = 0;
 
 	private bool firstUpdateDone = false;
 
 	private List<Section> sections = new List<Section>();
-	private int currentSectionIndex = 0;
-	private List<float> times = new List<float> (); //TODO find better name: stores either velocity percentage or in case of 0 the waiting time
+	private int currentSectionIndex;
 
 	private float t_ges;
 	private float t_waitSum; // sum of all waiting times in waypoints
 
-	private float accelEndMarkerPerc = 0.2f;//   1/5
-	private float decelStartMarkerPerc = 0.8f;// 4/5
+	private float accelEndMarkerPerc = 0.2f; // 1/5
+	private float decelStartMarkerPerc = 0.8f; // 4/5
+
+	private Transform focusPoint;
+	private Transform cam;
+	//private GameObject cameraObj;
 
 
 	void Start () {
-		pc = GameObject.Find ("PlaybackControl").GetComponent<PlaybackControlNonGUI> ();
-		//cameraObj = GameObject.Find ("Sphere");
+		pc = GameObject.Find ("PlaybackControlNonGUI").GetComponent<PlaybackControlNonGUI> ();
+		focusPoint = GameObject.Find ("FocusPoint").transform;
+		cam = Camera.main.transform;
 
-		//160ish total_time in big tent
-		//waypoints by @Xaverl:
-		addWaypoint(39, 5, 50, -5f);
-		addWaypoint(39, 2, 0, -4f);
-		addWaypoint(39, 2, 17, 0.4f);
-		addWaypoint(19, 2, 17, 0.2f);
-		addWaypoint(19, 2, 39, 0.6f);
-		addWaypoint (0, 5, 39, -5f);
-		addWaypoint(19, 2, 39, 0.5f);
-		addWaypoint(19, 2, 64, 0.5f);
-		addWaypoint(39, 2, 64, 0.5f);
-		addWaypoint(39, 4, 82, -2f);
-		addWaypoint(0, 6, 82, -5f);
-		addWaypoint(39, 5, 50, -3f);
+		importWaypoints ();
 
-		/*
-		addWaypoint (0, 7, 5, 0f);
-		addWaypoint (5, 7, 5, -1.5f);
-		addWaypoint (5, 7, -5, 0.4f);
-		addWaypoint (5, 12, -5, 0f);
-		*/
-
-		if (times [0] < 0) // because i starts at 1 in for loop
-			addWaitSection (waypoints [0], Math.Abs(times [0]));
+		if (waypoints[0].doWait()) // extra check this, because i starts at 1 in following for-loop
+			addWaitSection (waypoints[0]);
 
 		for (int i = 1; i < waypoints.Count; i ++) {
-			Vector3 startWaypoint = waypoints [i - 1];
-			float velocReducerStart = times[i - 1] < 0 ? 0 : times[i - 1]; // below 0 means waiting time
-			Vector3 endWaypoint = waypoints [i];
-			float velocReducerEnd = times[i] < 0 ? 0 : times[i];
+			Waypoint startWaypoint = waypoints[i - 1];
+			Vector3 startWaypointCoords = startWaypoint.getPoint();
+			float velocReducerStart = startWaypoint.getVelocReducer();
 
-			float dist = Vector3.Distance (startWaypoint, endWaypoint);
-			//Debug.Log ("dist: " + dist);
+			Waypoint endWaypoint = waypoints[i];
+			Vector3 endWaypointCoords = endWaypoint.getPoint();
+			float velocReducerEnd = endWaypoint.getVelocReducer();
+
+			float dist = Vector3.Distance (startWaypointCoords, endWaypointCoords);
 
 			float s_accel = dist * accelEndMarkerPerc;
 			float s_decel = dist - (dist * decelStartMarkerPerc);
 			float s_const = dist - s_accel - s_decel;
-			//Debug.Log (string.Concat("s_accel: ", s_accel, " s_const: ", s_const, " s_decel: ", s_decel));
 
-			Vector3 accelEndPoint = Vector3.Lerp (startWaypoint, endWaypoint, accelEndMarkerPerc);
-			Vector3 decelStartPoint = Vector3.Lerp (startWaypoint, endWaypoint, decelStartMarkerPerc);
+			Vector3 accelEndPoint = Vector3.Lerp (startWaypointCoords, endWaypointCoords, accelEndMarkerPerc);
+			Vector3 decelStartPoint = Vector3.Lerp (startWaypointCoords, endWaypointCoords, decelStartMarkerPerc);
 
-			Section accelSect = new Section(sections.Count, Section.Type.ACCELERATION, startWaypoint, accelEndPoint, velocReducerStart, s_ges, s_accel);
-			//Debug.Log ("ACCEL-SECT: " + accelSect);
+			Section accelSect = new Section(Section.Type.ACCELERATION, startWaypoint, endWaypoint, startWaypointCoords, accelEndPoint, velocReducerStart, s_accel);
 			sections.Add(accelSect);
-			Section constSect = new Section(sections.Count, Section.Type.CONSTANT, accelEndPoint, decelStartPoint, 1, s_ges + s_accel, s_const);
-			//Debug.Log ("CONST-SECT: " + constSect);
+			Section constSect = new Section(Section.Type.CONSTANT, startWaypoint, endWaypoint, accelEndPoint, decelStartPoint, 1, s_const);
 			sections.Add(constSect);
-			Section decelSect = new Section(sections.Count, Section.Type.DECELERATION, decelStartPoint, endWaypoint, velocReducerEnd, s_ges + s_accel + s_const, s_decel);
-			//Debug.Log ("DECEL-SECT: " + decelSect);
+			Section decelSect = new Section(Section.Type.DECELERATION, startWaypoint, endWaypoint, decelStartPoint, endWaypointCoords, velocReducerEnd, s_decel);
 			sections.Add(decelSect);
 
-			if (times [i] < 0)
-				addWaitSection (waypoints [i], Math.Abs(times [i]));
+			if (endWaypoint.doWait())
+				addWaitSection(endWaypoint);
 
 			s_ges += dist;
 		}
 	}
 
-	private void addWaitSection(Vector3 waypoint, float waitingTime){
-		Section waitSect = new Section(sections.Count, Section.Type.WAIT, waypoint, waypoint, 0, 0, 0);
-		waitSect.setTinSection(waitingTime);
-		sections.Add (waitSect);
-		t_waitSum += waitingTime;
+	public string waypointsFile = "file.csv";
+
+	private void importWaypoints() {	
+		//FileInfo fi = new FileInfo (utils.getStreamingAssetsPath ("CameraTourWaypoints/" + waypointsFile));
+		FileInfo fi = new FileInfo(waypointsFile);
+		StreamReader reader = fi.OpenText ();
+
+		using (reader) {
+			string line = reader.ReadLine (); // skip the header
+			while((line = reader.ReadLine ()) != null) {
+				if (line.Length > 0) {
+					if (line.Substring (0, 1) != "#") {
+						string[] values = line.Split(',');
+						float x, y, z, velocReducer, waitingTime;
+
+						float.TryParse(values[0].Trim(), out x);
+						float.TryParse(values[1].Trim(), out y);
+						float.TryParse(values[2].Trim(), out z);
+						float.TryParse(values[3].Trim(), out velocReducer);
+						float.TryParse(values[4].Trim(), out waitingTime);
+
+						Vector3 point = new Vector3 (x, y, z);
+
+						float.TryParse (values[5].Trim(), out x);
+						float.TryParse (values[6].Trim(), out y);
+						float.TryParse (values[7].Trim(), out z);
+
+						waypoints.Add (new Waypoint (waypoints.Count, point , velocReducer, waitingTime, new Vector3 (x, y, z)));
+					}
+				}
+			}
+			reader.Close ();
+		}
 	}
 
-	private void addWaypoint(float x, float y, float z, float timeVal){
-		waypoints.Add (new Vector3 (x, y, z));
-		times.Add (timeVal); // below 0 means waiting time
+	private void addWaitSection(Waypoint wp) {
+		Section waitSect = new Section(Section.Type.WAIT, null, null, wp.getPoint(), wp.getPoint(), 0, 0);
+		waitSect.setTinSection(wp.getWaitingTime());
+		sections.Add (waitSect);
+		t_waitSum += wp.getWaitingTime();
 	}
-	
-	private void onFirstUpdate(){// because pc.total_time is not know when Start() is executed
+
+	private void onFirstUpdate(){ // because pc.total_time is not know when Start() is executed
 		firstUpdateDone = true;
 
-		t_ges = pc.total_time - t_waitSum;
-		//Debug.Log (pc.total_time);
+		t_ges = (float) pc.total_time - t_waitSum; // Debug.Log (pc.total_time);
 
 		if (t_ges <= 0)
-			throw new Exception ("The sum of waiting times in camera tour waypoints is bigger than the total simulation time.");
+			throw new UnityException ("the sum of waiting times in camera tour waypoints is bigger than the total simulation time");
 
 		float v_max = 0;
 		foreach (var section in sections)
 			v_max += section.getFormulaContrib();		
-		v_max /= t_ges;
-		//Debug.Log ("v_max: " + v_max);
-			
+		v_max /= t_ges; // Debug.Log ("v_max: " + v_max);
+
 		float t_sum = 0;
 		foreach (var section in sections) {
 			section.calcTinSection(v_max); //TODO consolidate these three method calls into one?
@@ -122,31 +134,41 @@ public class CameraTour : MonoBehaviour {
 			section.calcAccel();
 			t_sum += section.getTinSection();
 		}
-		/*// TEST
-		Debug.Log ("sum of t_inSection's: " + t_sum + " <- must be " + t_ges);
-		foreach (var section in sections) {
-			Debug.Log(section.check());
-		}*/
+
+		newLoop ();
+	}
+
+	private void newLoop() {
+		currentSectionIndex = 0;
 	}
 
 	void Update () {
 		if (!firstUpdateDone)
 			onFirstUpdate ();
 
-		if (currentTime > pc.current_time) // next loop starts
-			currentSectionIndex = 0;
+		if (currentTime > (float) pc.current_time) // next loop starts
+			newLoop();
 
-		currentTime = pc.current_time;
+		currentTime = (float) pc.current_time;
 
 		Section sec = sections [currentSectionIndex];
-		while (!sec.thatsMe(currentTime))
+		while (!sec.thatsMe (currentTime))
 			sec = sections [++ currentSectionIndex];
-		
+
 		Vector3 newPos = sec.getCoordAtT (currentTime);
-		//Debug.Log (currentTime + ": " + newPos);
+		cam.position = newPos; //Debug.Log (currentTime + ": " + newPos);
 
-		//cameraObj.transform.position = newPos;
-		transform.position = newPos;
+		Waypoint secStartWp = sec.sectionStartWaypoint;
+		Waypoint secEndWp = sec.sectionEndWaypoint;
+
+		if (!sec.isWaitSection ()) {
+			float distBtwnWps = Vector3.Distance (secStartWp.getPoint (), secEndWp.getPoint ());
+			float distToSecStartWp = Vector3.Distance (secStartWp.getPoint (), newPos);
+			float perc = distToSecStartWp / distBtwnWps;
+			//Debug.Log (dist + "  /  " + distToStart + "  /  " + perc);
+			focusPoint.position = Vector3.Lerp (secStartWp.getFocusPoint (), secEndWp.getFocusPoint (), perc);
+		}
+
+		cam.LookAt (focusPoint);
 	}
-
 }
